@@ -20,10 +20,25 @@ dosyanın sonundaki `EN` sözlüğünde duruyor; metinler `data-t="anahtar"`
   ```
   Boş dizi basmalı.
 
-**Görseller altı dilde değil, İngilizce.** `gorsel/` altındaki ekran
-görüntüleri App Store vitrini için üretildi, içlerindeki yazılar İngilizce.
-Türkçe sayfada da İngilizce görünüyorlar. Türkçesi istenirse
-`scripts/vitrin-gorsel.mjs` ikinci bir takım üretebilir.
+**Görseller de dile göre değişiyor.** İki takım var, ikisi de 1600×900:
+
+| Dil | Klasör | Üreten komut |
+|---|---|---|
+| Türkçe | `gorsel/tr/` | `node scripts/vitrin-gorsel.mjs --tr` |
+| İngilizce | `gorsel/` | `node scripts/vitrin-gorsel.mjs` |
+
+`<img data-gorsel="01-form.png">` özniteliği taşıyor; dil değişince `src`
+ve `alt` birlikte güncelleniyor. Görsel ekler ya da adını değiştirirsen
+**iki klasörde de** aynı dosya adı bulunmalı, yoksa dil değiştirince
+kırık görsel çıkar.
+
+Türkçe takımda tutarlar ₺ ve ondalık ayracı virgül (699,90 ₺); dolar
+göstermek Türk mağazası anlatırken sahte duruyordu. Dil panosu
+(`05-dil`) her iki takımda da Arapça ve dolar — anlatılan şey sağdan
+sola yerleşim, oraya ₺ koymak anlamsız.
+
+Kaynak dosyalar `marka/vitrin/` ve `marka/vitrin/tr/`; `site/gorsel/`
+oradan kopya. Görselleri yeniden üretirsen kopyalamayı unutma.
 
 ## Hareket
 

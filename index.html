@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="gorsel/simge-192.png">
 <meta property="og:title" content="Codship — Shopify için kapıda ödeme formu ve upsell">
 <meta property="og:description" content="Kapıda ödeme satar — ta ki kargolar geri dönene kadar.">
-<meta property="og:image" content="gorsel/00-kapak.png">
+<meta property="og:image" content="gorsel/tr/00-kapak.png">
 <meta property="og:type" content="website">
 <style>
   :root{
@@ -330,7 +330,7 @@
     <a class="btn ikincil" href="#koruma" data-t="hero.cta2">Ortak uyarı nasıl çalışıyor?</a>
   </div>
   <div class="ekran">
-    <img src="gorsel/00-kapak.png" alt="Codship kapıda ödeme formu" width="1600" height="900">
+    <img src="gorsel/tr/00-kapak.png" data-gorsel="00-kapak.png" data-alt="alt.kapak" alt="Codship kapıda ödeme formu" width="1600" height="900">
   </div>
 </div>
 
@@ -409,7 +409,7 @@
           <b>Katılım isteğe bağlı ve karşılıklıdır.</b> Ortak uyarıyı yalnızca siz de katkı verdiğiniz sürece görürsünüz. Mağazalar birbirinin adını, siparişini, müşterisini ya da cirosunu asla görmez — yalnızca bir risk puanı. Alıcı itiraz edip kaydının silinmesini isteyebilir.
         </div>
       </div>
-      <img class="gorun" src="gorsel/04-dogrulama.png" alt="Kargoya vermeden önce görünen risk puanı" width="1600" height="900">
+      <img class="gorun" src="gorsel/tr/04-dogrulama.png" data-gorsel="04-dogrulama.png" data-alt="alt.risk" alt="Kargoya vermeden önce görünen risk puanı" width="1600" height="900">
     </div>
   </div>
 </section>
@@ -418,7 +418,7 @@
 <section>
   <div class="kap">
     <div class="ikili">
-      <img class="gorun" src="gorsel/01-form.png" alt="Tek adımlı kapıda ödeme formu" width="1600" height="900">
+      <img class="gorun" src="gorsel/tr/01-form.png" data-gorsel="01-form.png" data-alt="alt.form" alt="Tek adımlı kapıda ödeme formu" width="1600" height="900">
       <div class="gorun">
         <h2 data-t="form.title">Tek adımda sipariş. Ödeme sayfası yok.</h2>
         <p class="govde" data-t="form.p1">Shopify'ın ödeme sayfası kart için tasarlandı. Kapıda ödeyecek bir alıcı için bu, ihtiyacı olmayan alanlardan oluşan üç ekran demek. Codship onun yerine ürün sayfasına tek bir kısa form koyar.</p>
@@ -435,7 +435,7 @@
         <h2 data-t="bump.title">Ödemeden önce sepeti büyütün</h2>
         <p class="govde" data-t="bump.p1">Adet indirimleri formun içinde durur, iki tane almak tek dokunuş. Onaydan hemen önce bir eklenti teklifi çıkar. Satın alma sonrası teklif <em>aynı</em> siparişe eklenir — tek teslimat, tek tahsilat, ikinci kargo ücreti yok.</p>
       </div>
-      <img class="gorun" src="gorsel/03-teklif.png" alt="Adet indirimleri ve sipariş eklentisi" width="1600" height="900">
+      <img class="gorun" src="gorsel/tr/03-teklif.png" data-gorsel="03-teklif.png" data-alt="alt.teklif" alt="Adet indirimleri ve sipariş eklentisi" width="1600" height="900">
     </div>
   </div>
 </section>
@@ -682,6 +682,11 @@ const EN = {
   "foot.l3":"How we process data","foot.l4":"Data request / objection",
   "foot.copy":"© 2026 Codship. Not affiliated with or endorsed by Shopify Inc. Shopify is a trademark of Shopify Inc.",
 
+  "alt.kapak":"The Codship cash-on-delivery form",
+  "alt.risk":"The risk score shown before you ship",
+  "alt.form":"One-step cash-on-delivery form",
+  "alt.teklif":"Quantity tiers and an order bump",
+
   "serit":["One-step form","Upsells","Quantity tiers","Shared blocklist","COD fees","Six languages"]
 };
 
@@ -691,6 +696,7 @@ const SERIT_TR = ["Tek adımlı form","Upsell","Adet indirimi","Ortak kara liste
    sözlüğü iki yerde tutmak zorunda kalmayalım. */
 const TR = {};
 document.querySelectorAll("[data-t]").forEach(el => { TR[el.dataset.t] = el.innerHTML; });
+document.querySelectorAll("[data-alt]").forEach(el => { TR[el.dataset.alt] = el.alt; });
 
 const SAYFA_BASLIK = {
   tr: document.title,
@@ -705,6 +711,13 @@ function dilUygula(d){
   });
   document.documentElement.lang = d;
   document.title = SAYFA_BASLIK[d];
+  /* Ekran görüntülerinin içindeki yazılar da dile uyuyor: Türkçe takım
+     gorsel/tr/, İngilizce takım gorsel/ altında. İkisi de 1600×900. */
+  document.querySelectorAll("[data-gorsel]").forEach(img => {
+    img.src = (d === "tr" ? "gorsel/tr/" : "gorsel/") + img.dataset.gorsel;
+    const a = s[img.dataset.alt];
+    if (a != null) img.alt = a;
+  });
   document.querySelectorAll(".dil button").forEach(b => {
     b.setAttribute("aria-pressed", String(b.dataset.dil === d));
   });
