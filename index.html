@@ -216,10 +216,14 @@
   .not b{color:var(--metin)}
 
   /* ── fiyat ─────────────────────────────────────────── */
-  .fiyatlar{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));align-items:start}
+  /* align-items:stretch — kutular aynı boyda dursun. Madde sayısı
+     plandan plana değişiyor; start olunca kartlar farklı boyda kalıyordu
+     ve fiyat karşılaştırması dağınık görünüyordu. */
+  .fiyatlar{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));align-items:stretch}
   .plan{
     background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);
     padding:28px 24px;box-shadow:var(--golge);position:relative;
+    display:flex;flex-direction:column;
     transition:transform .35s cubic-bezier(.16,1,.3,1),box-shadow .35s;
   }
   .plan:hover{transform:translateY(-6px);box-shadow:var(--golge-kalk)}
