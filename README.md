@@ -53,19 +53,46 @@ kıvrımlar SVG, `stroke-dashoffset` ile çiziliyor.
 Telefon yüksekliği `aspect-ratio` ile sabit; metin uzayınca
 (ör. İngilizce) içerik `margin-top:auto` sayesinde alta yaslanıyor.
 
-## Yorumlar bölümü
+## Kapsama bölümü
 
-`#yorumlar` bölümü yayında, ama içinde **gerçek yorum yok** — olmayan
-mağaza adıyla referans yazmak sahteciliktir ve Shopify incelemesinde ret
-sebebidir. Şu an görünen şey bunu açıkça söyleyen `.yorum-yok` bloğu.
+Rakipte (Releasit) bu yerde *"100'den fazla ülkeden 115.000 mutlu
+işletme"* yazıyor. O bir **kullanım rakamı**; bizde sıfır, yazılamaz.
+Aynı alanı doğrulanabilir bir **ürün gerçeğiyle** doldurduk: hangi
+ülkede hazır idari birim listesi var, form kaç dilde.
 
-Altında `.yorumlar` ızgarası `hidden` ile kapalı duruyor; içinde tek bir
-**yer tutucu kart** var. İlk gerçek yorumlar gelince:
+| Ülke | Birim | Sayı |
+|---|---|---|
+| Türkiye | il | 81 |
+| Fas | vilayet / prefektörlük | 75 |
+| Mısır | valilik | 27 |
+| Suudi Arabistan | bölge | 13 |
 
-1. `.yorum-yok` bloğunu sil
-2. `.yorumlar`dan `hidden`i kaldır
-3. Kartları Shopify App Store'daki yorumlardan **olduğu gibi** doldur —
+Sayılar `app/lib/regions.ts` dosyasından **sayıldı**, tahmin değil.
+Diller `extensions/cod-form/locales` altından. **O dosyalar değişirse
+buradaki sayılar da güncellenmeli** — bu bölümün tek değeri
+doğrulanabilir olması.
+
+Listesi olmayan ülkede bölge alanı serbest metne düşüyor
+(`regionsFor()` boş dizi döndürüyor); bölümdeki not bunu söylüyor.
+
+## Yorumlar bölümü (GİZLİ)
+
+`#yorumlar` bölümü **`hidden` ile kapalı** — sayfada görünmüyor.
+İçinde gerçek yorum yok; olmayan mağaza adıyla referans yazmak
+sahteciliktir ve Shopify incelemesinde ret sebebidir.
+
+Bölümün içinde iki parça var: görünen `.yorum-yok` bloğu (durumu
+dürüstçe açıklayan metin) ve onun altında `hidden` duran `.yorumlar`
+ızgarası (tek bir **yer tutucu kart**). İlk gerçek yorumlar gelince:
+
+1. `<section id="yorumlar">` üzerindeki `hidden`i kaldır
+2. `.yorum-yok` bloğunu sil
+3. `.yorumlar`dan `hidden`i kaldır
+4. Kartları Shopify App Store'daki yorumlardan **olduğu gibi** doldur —
    mağaza adı, ülke, puan, metin. Kırpıp güzelleştirme.
+
+Bölüm `.alt-zemin` taşıyor: açıldığında zemin sırası koyu-açık-koyu
+diye devam etsin diye.
 
 > **Dikkat:** `.yorumlar{display:grid}` tarayıcının kendi `[hidden]`
 > kuralını eziyor; `hidden` yazmak tek başına yetmiyor, yer tutucu kart
@@ -119,8 +146,7 @@ bağlama — kırık bağlantı, olmayan bir yere giden düğmeden iyidir.
 
 - **Müşteri yorumu yok.** Henüz kullanıcımız yok; uydurma referans
   koymadık. Rakip (Releasit) sayfasının yarısı yorum. Bizde `#yorumlar`
-  bölümü var ama içinde **"henüz yorum yok" diyen dürüst bir blok**
-  duruyor — bkz. aşağıdaki "Yorumlar bölümü".
+  bölümü hazır ama **gizli** — bkz. "Yorumlar bölümü".
 - **"115.000 mağaza", "dönüşümü %X artırır" gibi rakam yok.** Kanıtlanamaz
   iddia hem yanlış hem de Shopify incelemesinde sorun çıkarıyor.
 - **Rakip metni kopyalanmadı.** Yapı benzer (hero → özellik → fiyat →

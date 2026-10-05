@@ -297,6 +297,37 @@
   .kart:hover .ikon{transform:scale(1.12) rotate(-6deg)}
   .kart p{color:var(--metin-soluk);font-size:15px;margin-top:9px}
 
+  /* ── kapsama ───────────────────────────────────────────
+     Rakipte bu yerde "100+ ülkeden 115.000 işletme" yazıyor. O bir
+     KULLANIM rakamı; bizde sıfır, yazılamaz. Aynı alanı doğrulanabilir
+     bir ürün gerçeğiyle dolduruyoruz: hangi ülkede hazır bölge listesi
+     var, form kaç dilde. Sayılar `app/lib/regions.ts`ten geliyor —
+     orası değişirse buradaki sayılar da güncellenmeli. */
+  .kapsama{
+    display:grid;gap:16px;
+    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  }
+  .ulke{
+    background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);
+    padding:20px;box-shadow:var(--golge);display:flex;flex-direction:column;
+    transition:transform .35s cubic-bezier(.16,1,.3,1),border-color .35s;
+  }
+  .ulke:hover{transform:translateY(-4px);border-color:var(--yesil)}
+  .ulke .bayrak{font-size:26px;line-height:1}
+  .ulke b{display:block;margin-top:10px;font-size:16px}
+  .ulke span{display:block;margin-top:3px;font-size:14px;color:var(--metin-soluk)}
+  .kapsama-not{
+    margin-top:22px;text-align:center;color:var(--metin-soluk);font-size:15px;
+  }
+  .diller{
+    display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:16px;
+  }
+  .diller li{
+    list-style:none;font-size:13px;font-weight:600;
+    background:var(--zemin-alt);border:1px solid var(--cizgi);
+    border-radius:999px;padding:6px 13px;
+  }
+
   /* ── yorumlar (GİZLİ) ──────────────────────────────────
      Bölüm `hidden` ile kapalı duruyor; aşağıdaki kurallar açıldığı gün
      çalışsın diye şimdiden yazıldı. Açma yöntemi için bölümün kendi
@@ -655,6 +686,54 @@
   </div>
 </section>
 
+<!-- ─────────────────────── kapsama ───────────────────────────
+     Buradaki sayılar `app/lib/regions.ts` dosyasından sayıldı:
+     TR 81, MA 75, EG 27, SA 13. Diller `extensions/cod-form/locales`.
+     Oralar değişirse burası da değişmeli — kullanım rakamı değil,
+     ürün gerçeği olduğu için doğrulanabilir kalmalı. -->
+<!-- Zemin sırası: bir önceki bölüm (.alt-zemin) koyu, burası açık.
+     Yorumlar bölümü koyu ama şu an `hidden`; açıldığı gün sıra
+     koyu-açık-koyu diye devam etsin diye böyle bırakıldı. -->
+<section id="kapsama">
+  <div class="kap">
+    <div class="baslik gorun">
+      <h2 data-t="kapsama.title">Kapıda ödemenin yoğun olduğu pazarlar için hazır</h2>
+      <p data-t="kapsama.sub">Bu ülkelerde idari birim listesi formun içinde hazır geliyor; alıcı yazmıyor, listeden seçiyor. Yanlış yazılan il, yanlış kargo ücreti demek.</p>
+    </div>
+
+    <div class="kapsama gorun">
+      <article class="ulke">
+        <span class="bayrak" aria-hidden="true">🇹🇷</span>
+        <b data-t="kapsama.tr">Türkiye</b><span data-t="kapsama.trAlt">81 il</span>
+      </article>
+      <article class="ulke">
+        <span class="bayrak" aria-hidden="true">🇲🇦</span>
+        <b data-t="kapsama.ma">Fas</b><span data-t="kapsama.maAlt">75 vilayet ve prefektörlük</span>
+      </article>
+      <article class="ulke">
+        <span class="bayrak" aria-hidden="true">🇪🇬</span>
+        <b data-t="kapsama.eg">Mısır</b><span data-t="kapsama.egAlt">27 valilik</span>
+      </article>
+      <article class="ulke">
+        <span class="bayrak" aria-hidden="true">🇸🇦</span>
+        <b data-t="kapsama.sa">Suudi Arabistan</b><span data-t="kapsama.saAlt">13 bölge</span>
+      </article>
+    </div>
+
+    <p class="kapsama-not gorun" data-t="kapsama.not">Başka bir ülkede satıyorsanız form yine çalışır — bölge alanı serbest metne döner. Listesi olmayan ülke engel değil, yalnızca bir kolaylık eksik.</p>
+
+    <ul class="diller gorun" aria-label="Formun dilleri">
+      <li data-t="kapsama.d1">Türkçe</li>
+      <li data-t="kapsama.d2">English</li>
+      <li data-t="kapsama.d3">العربية</li>
+      <li data-t="kapsama.d4">Français</li>
+      <li data-t="kapsama.d5">Español</li>
+      <li data-t="kapsama.d6">Italiano</li>
+    </ul>
+    <p class="kapsama-not gorun" data-t="kapsama.rtl">Arapçada sağdan sola yerleşim de düzgün çalışıyor.</p>
+  </div>
+</section>
+
 <!-- ─────────────────────── yorumlar ──────────────────────────
      Şu an YAYINDA olan: "henüz yorum yok" bloğu. Uydurma referans
      konmadı — olmayan bir mağazanın adıyla yorum yazmak sahteciliktir
@@ -667,7 +746,7 @@
           (mağaza adı, ülke, puan, metin) — kırpılmış alıntı değil
      Kart kalıbı aşağıda hazır duruyor; örnek metinler yer tutucudur,
      birebir kopyalanmaz. -->
-<section id="yorumlar">
+<section id="yorumlar" class="alt-zemin" hidden>
   <div class="kap">
     <div class="baslik gorun">
       <h2 data-t="yorum.title">Mağazalar ne diyor?</h2>
@@ -904,6 +983,17 @@ const EN = {
 
   "bump.title":"Raise the basket before they pay",
   "bump.p1":"Quantity tiers sit inside the form, so buying two is a single tap. An order bump appears before they confirm. A post-purchase offer is added to the <em>same</em> order — one delivery, one collection, no second shipping cost.",
+
+  "kapsama.title":"Ready for the markets where COD is normal",
+  "kapsama.sub":"In these countries the administrative regions ship inside the form — the buyer picks from a list instead of typing. A mistyped province is a mispriced delivery.",
+  "kapsama.tr":"Türkiye","kapsama.trAlt":"81 provinces",
+  "kapsama.ma":"Morocco","kapsama.maAlt":"75 provinces and prefectures",
+  "kapsama.eg":"Egypt","kapsama.egAlt":"27 governorates",
+  "kapsama.sa":"Saudi Arabia","kapsama.saAlt":"13 regions",
+  "kapsama.not":"Selling somewhere else? The form still works — the region field falls back to free text. A missing list is an inconvenience, not a blocker.",
+  "kapsama.d1":"Türkçe","kapsama.d2":"English","kapsama.d3":"العربية",
+  "kapsama.d4":"Français","kapsama.d5":"Español","kapsama.d6":"Italiano",
+  "kapsama.rtl":"Arabic gets proper right-to-left layout too.",
 
   "yorum.title":"What do stores say?",
   "yorum.yok1":"<strong>No reviews yet — because we have no customers yet.</strong>",
