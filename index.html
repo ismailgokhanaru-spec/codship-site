@@ -463,6 +463,33 @@
   footer h4{font-size:13px;text-transform:uppercase;letter-spacing:.07em;margin:0 0 14px;color:var(--metin)}
   .telif{margin-top:40px;padding-top:24px;border-top:1px solid var(--cizgi);font-size:13.5px}
 
+  /* ── telefonda yan yana kaydırma ────────────────────────
+     Altı özellik kartı ve dört plan, telefonda alt alta dizilince
+     bölümler ekranlarca uzuyordu; kullanıcı fiyatları görmek için
+     uzun uzun kaydırıyordu. Burada yatay kaydırmaya çevriliyor.
+
+     BU BLOK DOSYANIN SONUNDA DURMALI. `.izgara` ve `.fiyatlar`
+     tanımları yukarıda; bu kurallar onlardan ÖNCE gelseydi eşit
+     ağırlıkta olup ezilirdi. (Aynı tuzağa `.kivrim`de düşülmüştü.)
+
+     Kart genişliği %78: sağdaki kartın kenarı görünüyor, böylece
+     kaydırılabildiği belli oluyor. Tam genişlikte olsaydı tek kart
+     gibi durur, kimse kaydırmayı denemezdi. */
+  @media(max-width:620px){
+    .izgara,.fiyatlar{
+      display:flex;overflow-x:auto;gap:14px;
+      scroll-snap-type:x mandatory;
+      /* Kaba taşsın: kartlar ekranın kenarından başlayıp kenarında
+         bitsin, ortada sıkışmış bir kutu gibi durmasın. */
+      margin-inline:-24px;padding:4px 24px 10px;
+      scrollbar-width:none;-ms-overflow-style:none;
+    }
+    .izgara::-webkit-scrollbar,.fiyatlar::-webkit-scrollbar{display:none}
+    .izgara>*,.fiyatlar>*{flex:0 0 78%;scroll-snap-align:center}
+    /* Yukarı kalkma efekti yatay kaydırmada kartı kesiyordu. */
+    .kart:hover,.plan:hover{transform:none}
+  }
+
   /* Hareketi azalt diyen kullanıcıda her şey sabit durur. */
   @media (prefers-reduced-motion: reduce){
     *,*::before,*::after{animation:none !important;transition:none !important}
