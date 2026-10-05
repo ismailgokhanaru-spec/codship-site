@@ -40,6 +40,19 @@ sola yerleşim, oraya ₺ koymak anlamsız.
 Kaynak dosyalar `marka/vitrin/` ve `marka/vitrin/tr/`; `site/gorsel/`
 oradan kopya. Görselleri yeniden üretirsen kopyalamayı unutma.
 
+## Hero'daki telefon
+
+Sayfanın üstündeki telefon **görsel değil, canlı HTML**. Böylece dil
+düğmesi formun içindeki yazıları da çeviriyor — ekran görüntüsü olsaydı
+Türkçe sayfada İngilizce form kalırdı.
+
+Form dolduruluyormuş gibi sırayla beliriyor; ad alanında daktilo
+efekti var, eklenti kutusu kendi kendine işaretleniyor. Arkadaki
+kıvrımlar SVG, `stroke-dashoffset` ile çiziliyor.
+
+Telefon yüksekliği `aspect-ratio` ile sabit; metin uzayınca
+(ör. İngilizce) içerik `margin-top:auto` sayesinde alta yaslanıyor.
+
 ## Hareket
 
 Belirme animasyonları `IntersectionObserver` ile; şerit saf CSS.

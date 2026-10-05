@@ -39,7 +39,7 @@
     }
   }
   *{box-sizing:border-box}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:hidden}
   body{
     margin:0;
     font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
@@ -144,12 +144,112 @@
     max-width:660px;margin:22px auto 0;animation:yukari .8s .18s both;
   }
   .cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:32px;animation:yukari .8s .28s both}
-  .ekran{
-    margin:56px auto 0;max-width:980px;border-radius:var(--r);
-    overflow:hidden;box-shadow:var(--golge);border:1px solid var(--cizgi);
-    animation:yukari 1s .36s both;
+
+  /* ── hero: solda söz, sağda canlı telefon ──────────────
+     Telefonun içi görsel değil HTML. Böylece dil düğmesi
+     formun içindeki yazıları da çeviriyor. */
+  .hero-ic{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;text-align:left}
+  .hero-metin .cta{justify-content:flex-start}
+  .hero-metin p.alt{margin-inline:0}
+  @media(max-width:900px){
+    .hero-ic{grid-template-columns:1fr;text-align:center;gap:52px}
+    .hero-metin .cta{justify-content:center}
+    .hero-metin p.alt{margin-inline:auto}
   }
-  .ekran img{display:block;width:100%;height:auto}
+  /* Başlıktaki <br> dar ekranda satırı taşırıyordu: "Ta ki kargolar geri
+     dönene kadar." tek satıra sığmıyor, metin ekranın dışına çıkıyordu.
+     Küçük ekranda zorlanmış satır sonunu kaldırıp metni kendi akışına
+     bırakıyoruz. */
+  @media(max-width:620px){
+    h1{font-size:clamp(28px,8vw,40px)}
+    .hero h1 br{display:none}
+    /* Kıvrımlar dar ekranda sayfayı yatayda taşırıyordu (scrollWidth
+       375 yerine 428). İçeri çekildi. Seçici `.telefon-alan .kivrim`:
+       bu kural dosyada temel `.kivrim` kuralından ÖNCE geliyor, eşit
+       ağırlıkta olsa sonraki kazanırdı. */
+    .telefon-alan .kivrim{inset:0;width:100%;height:100%}
+  }
+
+  .telefon-alan{position:relative;display:grid;place-items:center;animation:yukari 1s .3s both}
+  /* Kıvrımlar telefonun dışına taşsın diye çerçeveden geniş. */
+  .kivrim{
+    position:absolute;inset:-4% -14%;width:128%;height:108%;pointer-events:none;
+    stroke-dasharray:420;stroke-dashoffset:420;
+    animation:ciz 2.6s .5s cubic-bezier(.16,1,.3,1) forwards;
+  }
+  .kivrim path:nth-child(2){animation-delay:.7s}
+  @keyframes ciz{to{stroke-dashoffset:0}}
+
+  .telefon{
+    position:relative;width:min(320px,82vw);aspect-ratio:320/588;
+    background:#fff;border-radius:42px;padding:14px;
+    border:9px solid #10211c;
+    box-shadow:0 30px 70px rgba(20,61,51,.3), 0 2px 0 rgba(255,255,255,.25) inset;
+    animation:sal 7s ease-in-out infinite;
+  }
+  .ada{
+    position:absolute;top:14px;left:50%;translate:-50% 0;
+    width:86px;height:22px;background:#10211c;border-radius:999px;z-index:2;
+  }
+  .telefon-ic{
+    height:100%;border-radius:30px;background:#fff;color:#143D33;
+    padding:42px 16px 18px;overflow:hidden;
+    font-size:12px;line-height:1.35;
+    display:flex;flex-direction:column;
+  }
+  .t-ust{
+    text-align:center;font-size:10.5px;font-weight:700;letter-spacing:.2px;
+    color:var(--yesil-koyu);background:#eef7f4;border-radius:8px;padding:6px 8px;margin-bottom:10px;
+  }
+  .t-baslik{font-size:14px;font-weight:700;margin-bottom:10px}
+  .t-alan,.t-ek{
+    display:flex;align-items:center;gap:8px;
+    border:1px solid #dfe9e6;border-radius:9px;padding:9px 10px;margin-bottom:7px;
+  }
+  .t-ikon{color:#9db5ad;font-size:8px}
+  .t-yaz{color:#143D33}
+  .t-ikili{display:flex;gap:7px}
+  .t-ikili .t-alan{flex:1}
+  /* Yazılıyormuş gibi: alan belirdikten sonra metin soldan açılıyor. */
+  .yazan{
+    display:inline-block;overflow:hidden;white-space:nowrap;vertical-align:bottom;
+    width:0;animation:yaz 1.1s 1.5s steps(14) forwards;
+    border-right:1.5px solid var(--yesil);
+  }
+  @keyframes yaz{to{width:4.9em;border-right-color:transparent}}
+
+  .t-ek{border-style:dashed;border-color:var(--yesil);background:#f4faf8;gap:7px}
+  .t-kutu{
+    flex:none;width:13px;height:13px;border-radius:3.5px;border:1.5px solid var(--yesil);
+    position:relative;
+  }
+  .t-kutu::after{
+    content:"";position:absolute;inset:0;border-radius:2.5px;background:var(--yesil);
+    opacity:0;animation:isaretle .3s 3.1s forwards;
+  }
+  @keyframes isaretle{to{opacity:1}}
+  .t-ek-yaz{flex:1;display:flex;flex-direction:column;font-size:10.5px}
+  .t-ek-yaz b{font-size:11px}
+  .t-ek-yaz span{color:#6b857c}
+  .t-ek-fiyat{font-weight:700;font-size:11px}
+
+  /* margin-top:auto — özet ve buton telefonun altına yaslansın,
+     ekranın dibinde boş beyaz alan kalmasın. */
+  .t-ozet{border-top:1px solid #e7efec;margin-top:auto;padding-top:11px;font-size:11px}
+  .t-ozet div{display:flex;justify-content:space-between;color:#6b857c;margin-bottom:4px}
+  .t-ozet .t-toplam{color:#143D33;font-size:12.5px}
+  .t-buton{
+    margin-top:10px;background:var(--yesil);color:#fff;border-radius:9px;
+    text-align:center;padding:11px;font-weight:700;font-size:12px;
+  }
+  .t-guven{text-align:center;font-size:9.5px;color:#9db5ad;margin-top:7px}
+
+  /* Alanlar sırayla beliriyor — form dolduruluyormuş gibi. */
+  .g1,.g2,.g3,.g4,.g5,.g6,.g7,.g8{animation:yukari .5s both}
+  .g1{animation-delay:1.1s} .g2{animation-delay:1.9s}
+  .g3{animation-delay:2.2s} .g4{animation-delay:2.35s}
+  .g5{animation-delay:2.5s} .g6{animation-delay:2.8s}
+  .g7{animation-delay:3.3s} .g8{animation-delay:3.5s}
 
   /* ── akan şerit ────────────────────────────────────── */
   .serit{
@@ -319,23 +419,80 @@
 
 <!-- ─────────────────────────── hero ─────────────────────────── -->
 <div class="kap hero">
-  <div class="rozet">
-    <span class="nokta"></span>
-    <span data-t="hero.badge">Kapıda ödemeyle satan Shopify mağazaları için</span>
+ <div class="hero-ic">
+  <div class="hero-metin">
+    <div class="rozet">
+      <span class="nokta"></span>
+      <span data-t="hero.badge">Kapıda ödemeyle satan Shopify mağazaları için</span>
+    </div>
+    <h1 data-t="hero.h1">Kapıda ödeme satar. <br>Ta ki kargolar geri dönene kadar.</h1>
+    <p class="alt" data-t="hero.sub">
+      Codship ürün sayfanıza tek adımlı bir kapıda ödeme formu koyar, adet
+      indirimleri ve upsell'lerle sepeti büyütür — ve hangi telefon
+      numarasının başka mağazalarda kargo reddettiğini söyler.
+    </p>
+    <div class="cta">
+      <a class="btn" href="#fiyat" data-t="hero.cta1">Ücretsiz başla — ayda 60 sipariş</a>
+      <a class="btn ikincil" href="#koruma" data-t="hero.cta2">Ortak uyarı nasıl çalışıyor?</a>
+    </div>
   </div>
-  <h1 data-t="hero.h1">Kapıda ödeme satar.<br>Ta ki kargolar geri dönene kadar.</h1>
-  <p class="alt" data-t="hero.sub">
-    Codship ürün sayfanıza tek adımlı bir kapıda ödeme formu koyar, adet
-    indirimleri ve upsell'lerle sepeti büyütür — ve hangi telefon
-    numarasının başka mağazalarda kargo reddettiğini söyler.
-  </p>
-  <div class="cta">
-    <a class="btn" href="#fiyat" data-t="hero.cta1">Ücretsiz başla — ayda 60 sipariş</a>
-    <a class="btn ikincil" href="#koruma" data-t="hero.cta2">Ortak uyarı nasıl çalışıyor?</a>
+
+  <!-- Telefon: form ekran görüntüsü değil, canlı HTML. Dil değişince
+       içindeki yazılar da değişiyor; görsel dosyası olsa değişmezdi. -->
+  <div class="telefon-alan" aria-hidden="true">
+    <svg class="kivrim" viewBox="0 0 520 620" fill="none" stroke-linecap="round">
+      <path d="M60 160 C-10 230 30 330 110 340 C190 350 210 250 150 230 C90 210 40 300 110 360"
+            stroke="var(--yesil-acik)" stroke-width="5" opacity=".55"/>
+      <path d="M470 120 C540 190 500 290 420 300 C340 310 320 210 380 190"
+            stroke="#E8A33D" stroke-width="5" opacity=".5"/>
+      <path d="M40 470 C120 520 170 440 120 410 C70 380 20 450 90 500"
+            stroke="#C96A5B" stroke-width="5" opacity=".45"/>
+      <path d="M460 430 C520 480 480 560 410 540"
+            stroke="var(--yesil)" stroke-width="5" opacity=".45"/>
+    </svg>
+
+    <div class="telefon">
+      <div class="ada"></div>
+      <div class="telefon-ic">
+        <p class="t-ust" data-t="tel.ust">Türkiye'nin her yerine kapıda ödeme 🚚</p>
+        <h3 class="t-baslik" data-t="tel.baslik">Hemen sipariş ver — kapıda öde</h3>
+
+        <div class="t-alan g1">
+          <span class="t-ikon">●</span>
+          <span class="t-yaz"><span class="yazan" data-t="tel.ad">Elif Demir</span></span>
+        </div>
+        <div class="t-alan g2">
+          <span class="t-ikon">●</span>
+          <span class="t-yaz">+90 532 111 99 88</span>
+        </div>
+        <div class="t-ikili">
+          <div class="t-alan g3"><span class="t-yaz" data-t="tel.il">İstanbul</span></div>
+          <div class="t-alan g4"><span class="t-yaz" data-t="tel.ilce">Kadıköy</span></div>
+        </div>
+        <div class="t-alan g5">
+          <span class="t-ikon">●</span>
+          <span class="t-yaz" data-t="tel.adres">Bağdat Cd. 128, D:4</span>
+        </div>
+
+        <div class="t-ek g6">
+          <span class="t-kutu"></span>
+          <span class="t-ek-yaz"><b data-t="tel.ekAd">Yedek filtre ekle</b>
+            <span data-t="tel.ekAlt">Bugüne özel yarı fiyatına</span></span>
+          <span class="t-ek-fiyat">99,90&nbsp;₺</span>
+        </div>
+
+        <div class="t-ozet g7">
+          <div><span data-t="tel.kargo">Kargo</span><span>49,90 ₺</span></div>
+          <div><span data-t="tel.ucret">Kapıda ödeme ücreti</span><span>24,90 ₺</span></div>
+          <div class="t-toplam"><span data-t="tel.toplam">Toplam</span><strong>874,60 ₺</strong></div>
+        </div>
+
+        <div class="t-buton g8" data-t="tel.buton">Siparişi tamamla</div>
+        <p class="t-guven g8" data-t="tel.guven">Bilgileriniz yalnızca bu teslimat için kullanılır.</p>
+      </div>
+    </div>
   </div>
-  <div class="ekran">
-    <img src="gorsel/tr/00-kapak.png" data-gorsel="00-kapak.png" data-alt="alt.kapak" alt="Codship kapıda ödeme formu" width="1600" height="900">
-  </div>
+ </div>
 </div>
 
 <!-- ─────────────────────── akan şerit ───────────────────────── -->
@@ -605,10 +762,24 @@ const EN = {
   "nav.faq":"FAQ","nav.cta":"Start free",
 
   "hero.badge":"For Shopify stores selling cash on delivery",
-  "hero.h1":"Cash on delivery converts.<br>Until the parcels come back.",
+  "hero.h1":"Cash on delivery converts. <br>Until the parcels come back.",
   "hero.sub":"Codship puts a one-step COD order form on your product page, raises the basket with upsells and quantity tiers — and tells you which phone numbers have already refused a parcel at other stores.",
   "hero.cta1":"Start free — 60 orders a month",
   "hero.cta2":"How the shared signal works",
+
+  "tel.ust":"Cash on delivery, nationwide 🚚",
+  "tel.baslik":"Order now — pay on delivery",
+  "tel.ad":"Elif Demir",
+  "tel.il":"İstanbul",
+  "tel.ilce":"Kadıköy",
+  "tel.adres":"Bağdat Cd. 128, D:4",
+  "tel.ekAd":"Add a spare filter",
+  "tel.ekAlt":"Half price today",
+  "tel.kargo":"Shipping",
+  "tel.ucret":"Cash on delivery fee",
+  "tel.toplam":"Total",
+  "tel.buton":"Complete order",
+  "tel.guven":"Your details are only used for this delivery.",
 
   "feat.title":"Everything a COD store actually needs",
   "feat.sub":"No checkout detour, no half-finished orders, no guessing which parcels will come back.",
