@@ -303,9 +303,12 @@
      bir ürün gerçeğiyle dolduruyoruz: hangi ülkede hazır bölge listesi
      var, form kaç dilde. Sayılar `app/lib/regions.ts`ten geliyor —
      orası değişirse buradaki sayılar da güncellenmeli. */
+  /* 150px taban: 375'lik telefonda ikişerli diziliyor (2×150+16=316),
+     masaüstünde dördü tek sıra. 210px'te telefonda alt alta dizilip
+     bölüm gereksiz yere dört ekran boyu uzuyordu. */
   .kapsama{
     display:grid;gap:16px;
-    grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
   }
   .ulke{
     background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);
