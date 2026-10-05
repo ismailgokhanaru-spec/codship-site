@@ -53,6 +53,25 @@ kıvrımlar SVG, `stroke-dashoffset` ile çiziliyor.
 Telefon yüksekliği `aspect-ratio` ile sabit; metin uzayınca
 (ör. İngilizce) içerik `margin-top:auto` sayesinde alta yaslanıyor.
 
+## Yorumlar bölümü
+
+`#yorumlar` bölümü yayında, ama içinde **gerçek yorum yok** — olmayan
+mağaza adıyla referans yazmak sahteciliktir ve Shopify incelemesinde ret
+sebebidir. Şu an görünen şey bunu açıkça söyleyen `.yorum-yok` bloğu.
+
+Altında `.yorumlar` ızgarası `hidden` ile kapalı duruyor; içinde tek bir
+**yer tutucu kart** var. İlk gerçek yorumlar gelince:
+
+1. `.yorum-yok` bloğunu sil
+2. `.yorumlar`dan `hidden`i kaldır
+3. Kartları Shopify App Store'daki yorumlardan **olduğu gibi** doldur —
+   mağaza adı, ülke, puan, metin. Kırpıp güzelleştirme.
+
+> **Dikkat:** `.yorumlar{display:grid}` tarayıcının kendi `[hidden]`
+> kuralını eziyor; `hidden` yazmak tek başına yetmiyor, yer tutucu kart
+> sayfada görünüyor. Bunun için `.yorumlar[hidden]{display:none}` kuralı
+> kondu. Izgaraya benzer bir bölüm daha eklersen aynı tuzağa dikkat.
+
 ## Hareket
 
 Belirme animasyonları `IntersectionObserver` ile; şerit saf CSS.
@@ -99,8 +118,9 @@ bağlama — kırık bağlantı, olmayan bir yere giden düğmeden iyidir.
 ## Bilerek yapmadıklarımız
 
 - **Müşteri yorumu yok.** Henüz kullanıcımız yok; uydurma referans
-  koymadık. Rakip (Releasit) sayfasının yarısı yorum; biz o bölümü
-  gerçek yorumlar gelene kadar boş bırakıyoruz.
+  koymadık. Rakip (Releasit) sayfasının yarısı yorum. Bizde `#yorumlar`
+  bölümü var ama içinde **"henüz yorum yok" diyen dürüst bir blok**
+  duruyor — bkz. aşağıdaki "Yorumlar bölümü".
 - **"115.000 mağaza", "dönüşümü %X artırır" gibi rakam yok.** Kanıtlanamaz
   iddia hem yanlış hem de Shopify incelemesinde sorun çıkarıyor.
 - **Rakip metni kopyalanmadı.** Yapı benzer (hero → özellik → fiyat →

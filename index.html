@@ -297,6 +297,52 @@
   .kart:hover .ikon{transform:scale(1.12) rotate(-6deg)}
   .kart p{color:var(--metin-soluk);font-size:15px;margin-top:9px}
 
+  /* ── yorumlar (GİZLİ) ──────────────────────────────────
+     Bölüm `hidden` ile kapalı duruyor; aşağıdaki kurallar açıldığı gün
+     çalışsın diye şimdiden yazıldı. Açma yöntemi için bölümün kendi
+     HTML yorumuna bak. */
+  .yorumlar{
+    display:grid;gap:18px;align-items:stretch;
+    grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  }
+  /* `display:grid` tarayıcının kendi [hidden] kuralını eziyor: sınıf
+     seçicisi daha ağır basıyor ve `hidden` yazsan da kutu görünüyor.
+     Yer tutucu kart bu yüzden bir kere sayfada göründü. */
+  .yorumlar[hidden]{display:none}
+  .yorum{
+    background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);
+    padding:22px;box-shadow:var(--golge);
+    display:flex;flex-direction:column;
+  }
+  .yorum-ust{display:flex;align-items:center;gap:11px}
+  .yorum-ust .rumuz{
+    flex:none;width:34px;height:34px;border-radius:9px;display:grid;place-items:center;
+    background:linear-gradient(180deg,var(--yesil-acik),var(--yesil-koyu));
+    color:#fff;font-size:14px;font-weight:700;
+  }
+  .yorum-ust b{display:block;font-size:15px}
+  .yorum-ust span{display:block;font-size:13px;color:var(--metin-soluk)}
+  /* Yıldızlar yazıyla da okunuyor: ekran okuyucuda "5 üzerinden 5"
+     duyulsun diye görsel yıldızlar aria-hidden, asıl değer metinde. */
+  .yildiz{color:#E8A33D;font-size:13px;letter-spacing:1px;margin-top:9px}
+  /* Gözden gizli ama ekran okuyucuya okunur. display:none DEĞİL —
+     o, okuyucudan da gizlerdi ve puan duyulmazdı. */
+  .gizli-okuyucu{
+    position:absolute;width:1px;height:1px;overflow:hidden;
+    clip-path:inset(50%);white-space:nowrap;
+  }
+  .yorum p{color:var(--metin-soluk);font-size:15px;margin-top:10px}
+
+  /* Yorum yokken gösterilen dürüst blok. Gerçek yorumlar geldiğinde
+     bu kutu silinir, yerine .yorumlar ızgarası açılır. */
+  .yorum-yok{
+    max-width:720px;margin:0 auto;text-align:center;
+    background:var(--kart);border:1px dashed var(--yesil);border-radius:var(--r);
+    padding:32px 26px;box-shadow:var(--golge);
+  }
+  .yorum-yok p{color:var(--metin-soluk);font-size:16px;margin-top:12px}
+  .yorum-yok p:first-child{margin-top:0}
+
   /* ── ikili anlatım ─────────────────────────────────── */
   .ikili{display:grid;gap:48px;grid-template-columns:1fr 1fr;align-items:center}
   @media(max-width:860px){.ikili{grid-template-columns:1fr;gap:32px}}
@@ -609,6 +655,44 @@
   </div>
 </section>
 
+<!-- ─────────────────────── yorumlar ──────────────────────────
+     Şu an YAYINDA olan: "henüz yorum yok" bloğu. Uydurma referans
+     konmadı — olmayan bir mağazanın adıyla yorum yazmak sahteciliktir
+     ve Shopify incelemesinde ret sebebidir.
+
+     İlk gerçek yorumlar gelince yapılacak iş:
+       1. .yorum-yok bloğunu sil
+       2. Altındaki <div class="yorumlar"> bloğundan `hidden`i kaldır
+       3. Kartları Shopify App Store'daki yorumlardan OLDUĞU GİBİ doldur
+          (mağaza adı, ülke, puan, metin) — kırpılmış alıntı değil
+     Kart kalıbı aşağıda hazır duruyor; örnek metinler yer tutucudur,
+     birebir kopyalanmaz. -->
+<section id="yorumlar">
+  <div class="kap">
+    <div class="baslik gorun">
+      <h2 data-t="yorum.title">Mağazalar ne diyor?</h2>
+    </div>
+
+    <div class="yorum-yok gorun">
+      <p data-t="yorum.yok1"><strong>Henüz yorum yok — çünkü henüz müşterimiz yok.</strong></p>
+      <p data-t="yorum.yok2">Codship yeni yayımlandı. Buraya uydurma referans koymaktansa boş bırakmayı seçtik: ilk mağazalar Shopify App Store'a yazdığında yorumlar olduğu gibi buraya taşınacak — seçilmiş güzel cümleler değil, hepsi.</p>
+      <p data-t="yorum.yok3">İlk kullananlardan biri olmak isterseniz kurulum tek tık, ayda 60 siparişe kadar ücretsiz.</p>
+    </div>
+
+    <div class="yorumlar" hidden>
+      <article class="yorum">
+        <div class="yorum-ust">
+          <span class="rumuz" aria-hidden="true">M</span>
+          <span><b>Mağaza adı</b><span>Ülke</span></span>
+        </div>
+        <div class="yildiz" aria-hidden="true">★★★★★</div>
+        <span class="gizli-okuyucu">5 üzerinden 5</span>
+        <p>Yorum metni buraya — Shopify App Store'dan olduğu gibi.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────────────────── fiyat ──────────────────────────── -->
 <section id="fiyat">
   <div class="kap">
@@ -820,6 +904,11 @@ const EN = {
 
   "bump.title":"Raise the basket before they pay",
   "bump.p1":"Quantity tiers sit inside the form, so buying two is a single tap. An order bump appears before they confirm. A post-purchase offer is added to the <em>same</em> order — one delivery, one collection, no second shipping cost.",
+
+  "yorum.title":"What do stores say?",
+  "yorum.yok1":"<strong>No reviews yet — because we have no customers yet.</strong>",
+  "yorum.yok2":"Codship has just launched. Rather than inventing testimonials, we left this empty: when the first stores write on the Shopify App Store, those reviews land here as they are — not a handful of flattering lines, all of them.",
+  "yorum.yok3":"If you'd like to be one of the first, setup is one click and the first 60 orders a month are free.",
 
   "price.title":"Pricing",
   "price.sub":"Billed by Shopify, in USD, on your existing Shopify invoice. Paid plans include a 14-day free trial.",
