@@ -494,6 +494,10 @@
   .egik.ac{transform:none}
   /* A/B ekranı panelin üstüne binmesin: yan yana, dar ekranda alt alta (Gökhan 24.11). */
   .egik .ikinci{position:relative;width:auto;right:auto;bottom:auto;top:auto;left:auto;margin:0;animation:none}
+  /* İki ekran aynı boyda: eşit sütun, aynı çerçeve, aynı görüntü oranı (Gökhan 24.11 "orantıla"). */
+  .egik{grid-template-columns:1fr 1fr;align-items:stretch}
+  .egik>.tarayici{display:flex;flex-direction:column;background:#fff}
+  .egik>.tarayici>img{width:100%;height:auto;aspect-ratio:1400/1092;object-fit:contain;object-position:top center;background:#fff}
   @media(max-width:900px){.egik{grid-template-columns:1fr;gap:16px}}
   .ozet-kartlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:120px}
   @media(max-width:820px){.ozet-kartlar{grid-template-columns:1fr;margin-top:40px}}
@@ -1026,7 +1030,7 @@
       <div class="egik" id="egik">
         <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span>admin.shopify.com · Codship</span></div>
           <img src="../gorsel/tr/s-pano.webp" data-gorsel="s-pano.webp" data-alt="alt.pano" alt="Codship paneli: siparişler, tahsil edilen, teklif geliri, teslim oranı" width="1400" height="973" loading="lazy" decoding="async"></div>
-        <div class="ikinci"><img src="../gorsel/tr/s-abtest.webp" data-gorsel="s-abtest.webp" data-alt="alt.abtest" alt="A/B testi: iki sürüm ve kazanan" width="1400" height="1092" loading="lazy" decoding="async"></div>
+        <div class="tarayici ikinci"><div class="tarayici-ust"><i></i><i></i><i></i><span>admin.shopify.com · Codship</span></div><img src="../gorsel/tr/s-abtest.webp" data-gorsel="s-abtest.webp" data-alt="alt.abtest" alt="A/B testi: iki sürüm ve kazanan" width="1400" height="1092" loading="lazy" decoding="async"></div>
       </div>
     </div>
     <div class="ozet-kartlar">
