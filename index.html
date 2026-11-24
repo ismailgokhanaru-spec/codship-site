@@ -488,10 +488,12 @@
 
   /* ── panel vitrini (3B eğik görüntü düzleşir) ───────── */
   .ust-goruntu{perspective:1600px;margin-top:10px}
-  .egik{position:relative;transform:rotateX(18deg) scale(.92);transform-origin:50% 0;transition:transform 1.3s var(--egri);max-width:980px;margin:0 auto}
+  .egik{position:relative;transform:rotateX(18deg) scale(.92);transform-origin:50% 0;transition:transform 1.3s var(--egri);max-width:1120px;margin:0 auto;
+    display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start}
   .egik.ac{transform:none}
-  .egik .ikinci{width:40%;right:-3%;bottom:-8%}
-  @media(max-width:900px){.egik .ikinci{width:80%;right:auto;bottom:auto;margin:-30px 0 0 auto}}
+  /* A/B ekranı panelin üstüne binmesin: yan yana, dar ekranda alt alta (Gökhan 24.11). */
+  .egik .ikinci{position:relative;width:auto;right:auto;bottom:auto;top:auto;left:auto;margin:0;animation:none}
+  @media(max-width:900px){.egik{grid-template-columns:1fr;gap:16px}}
   .ozet-kartlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:120px}
   @media(max-width:820px){.ozet-kartlar{grid-template-columns:1fr;margin-top:40px}}
 
