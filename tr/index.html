@@ -1,0 +1,1870 @@
+<!doctype html>
+<!-- ÜRETİLMİŞ DOSYA — elle düzenleme. Kaynak: site/index.html, üretici: node scripts/site-tr-sayfa.mjs -->
+<html lang="tr" data-kok="../">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Codship — Kapıda ödeme mağazaları için adet teklifleri ve upsell</title>
+<meta name="description" content="Shopify için kapıda ödeme ücreti, adet teklifleri, upsell ve downsell, teşekkür sayfası teklifi ve kurallarla gizleme. Her sipariş normal Shopify ödeme sayfasında tamamlanır.">
+<link rel="canonical" href="https://cod-ship.com/tr/">
+<link rel="alternate" hreflang="en" href="https://cod-ship.com/">
+<link rel="alternate" hreflang="tr" href="https://cod-ship.com/tr/">
+<link rel="alternate" hreflang="x-default" href="https://cod-ship.com/">
+<link rel="icon" href="../gorsel/simge-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="../gorsel/simge-192.png">
+<meta property="og:title" content="Codship — Kapıda ödeme mağazaları için adet teklifleri ve upsell">
+<meta property="og:description" content="Kapıda ödemede daha büyük sepet; sipariş normal Shopify ödeme sayfasında tamamlanır.">
+<meta property="og:image" content="https://cod-ship.com/gorsel/tr/og-kapak.jpg">
+<meta property="og:url" content="https://cod-ship.com/tr/">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#1F8A70">
+<style>
+  /* ═══════════════════════════════════════════════════════════
+     Codship tanıtım sayfası — tek dosya, dış kaynak yok.
+     Ayrıntı: README.md. Rakip incelemesi: docs/site-rakip-inceleme.md
+     ═══════════════════════════════════════════════════════════ */
+  :root{
+    --yesil:#1F8A70;
+    --yesil-acik:#25A385;
+    --yesil-koyu:#166B57;
+    --amber:#E8A33D;
+    --mor:#7B61FF;
+    --metin:#143D33;
+    --metin-soluk:#4a6b62;
+    --zemin:#ffffff;
+    --zemin-alt:#f4f8f6;
+    --cizgi:#dfeae6;
+    --kart:#ffffff;
+    --golge:0 1px 2px rgba(20,61,51,.05), 0 8px 24px rgba(20,61,51,.06);
+    --golge-kalk:0 14px 40px rgba(20,61,51,.16);
+    --golge-buyuk:0 40px 90px -20px rgba(20,61,51,.35);
+    --r:16px;
+    --egri:cubic-bezier(.16,1,.3,1);
+    --yay:cubic-bezier(.34,1.56,.64,1);
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --metin:#e8f2ee;
+      --metin-soluk:#9db5ad;
+      --zemin:#0e1a17;
+      --zemin-alt:#13231f;
+      --cizgi:#233b34;
+      --kart:#152824;
+      --golge:0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.25);
+      --golge-kalk:0 14px 40px rgba(0,0,0,.45);
+      --golge-buyuk:0 40px 90px -20px rgba(0,0,0,.7);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;overflow-x:hidden;scroll-padding-top:76px}
+  body{
+    margin:0;
+    font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--metin);background:var(--zemin);
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .kap{max-width:1180px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+  img{max-width:100%}
+  h1,h2,h3{line-height:1.12;letter-spacing:-.025em;margin:0}
+  h1{font-size:clamp(36px,5.6vw,64px);font-weight:820}
+  h2{font-size:clamp(28px,3.6vw,44px);font-weight:780}
+  h3{font-size:19px;font-weight:700}
+  p{margin:0}
+  .vurgu{
+    background:linear-gradient(100deg,var(--yesil-acik) 10%,#2fc49d 45%,var(--amber) 95%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    background-size:200% 100%;animation:parilti 8s ease-in-out infinite alternate;
+  }
+  @keyframes parilti{to{background-position:100% 0}}
+  .ust-yazi{
+    display:inline-block;font-size:13px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--yesil);margin-bottom:14px;
+  }
+
+  /* ── hareket ───────────────────────────────────────── */
+  .gorun{
+    opacity:0;transform:translateY(26px);
+    transition:opacity .8s var(--egri),transform .8s var(--egri);
+  }
+  .gorun.ac{opacity:1;transform:none}
+  .gorun.sol{transform:translateX(-30px)}
+  .gorun.sag{transform:translateX(30px)}
+  .gorun.sol.ac,.gorun.sag.ac{transform:none}
+
+  @keyframes yukari{from{opacity:0;transform:translateY(26px)}to{opacity:1;transform:none}}
+  @keyframes kay{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  @keyframes sal{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+  @keyframes nabiz{0%,100%{box-shadow:0 0 0 0 rgba(37,163,133,.45)}70%{box-shadow:0 0 0 14px rgba(37,163,133,0)}}
+
+  /* ── üst bar ───────────────────────────────────────── */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:color-mix(in srgb,var(--zemin) 84%,transparent);
+    backdrop-filter:saturate(180%) blur(14px);-webkit-backdrop-filter:saturate(180%) blur(14px);
+    border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s;
+  }
+  header.kaydi{border-bottom-color:var(--cizgi);box-shadow:0 2px 18px rgba(20,61,51,.06)}
+  /* Sayfa ilerleme çizgisi: kaydırdıkça soldan dolar. */
+  .ilerleme{position:absolute;left:0;bottom:-1px;height:2px;width:100%;transform-origin:0 50%;transform:scaleX(0);
+    background:linear-gradient(90deg,var(--yesil-acik),var(--amber))}
+  .bar{display:flex;align-items:center;gap:22px;height:66px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.02em;text-decoration:none}
+  .logo svg{width:32px;height:32px;border-radius:8px;flex:none;transition:transform .4s var(--yay)}
+  .logo:hover svg{transform:rotate(-8deg) scale(1.08)}
+  nav{display:flex;gap:22px;margin-left:auto;font-size:15px}
+  nav a{text-decoration:none;color:var(--metin-soluk);position:relative}
+  nav a::after{content:"";position:absolute;left:0;right:100%;bottom:-5px;height:2px;background:var(--yesil);border-radius:2px;transition:right .28s var(--egri)}
+  nav a:hover{color:var(--yesil)}
+  nav a:hover::after{right:0}
+  @media(max-width:960px){nav{display:none}.dil{margin-left:auto}}
+
+  .dil{display:flex;gap:2px;padding:3px;border-radius:999px;background:var(--zemin-alt);border:1px solid var(--cizgi)}
+  .dil button{border:none;background:none;cursor:pointer;color:var(--metin-soluk);font:600 13px/1 inherit;padding:7px 12px;border-radius:999px;transition:background .25s,color .25s}
+  .dil button[aria-pressed="true"]{background:var(--yesil);color:#fff}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:999px;
+    background:linear-gradient(180deg,var(--yesil-acik),var(--yesil-koyu));
+    color:#fff;text-decoration:none;font-weight:650;font-size:15.5px;border:none;cursor:pointer;
+    box-shadow:0 2px 10px rgba(31,138,112,.3),inset 0 1px 0 rgba(255,255,255,.2);
+    transition:transform .25s var(--yay),box-shadow .25s,filter .25s;
+    position:relative;overflow:hidden;
+  }
+  /* Düğmenin üstünden geçen ışık. */
+  .btn::after{content:"";position:absolute;inset:0;transform:translateX(-120%) skewX(-20deg);
+    background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:transform .7s var(--egri)}
+  .btn:hover::after{transform:translateX(120%) skewX(-20deg)}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 10px 26px rgba(31,138,112,.4)}
+  .btn:active{transform:translateY(0)}
+  .btn svg{width:18px;height:18px;flex:none}
+  .btn.ikincil{background:transparent;color:var(--metin);border:1px solid var(--cizgi);box-shadow:none}
+  .btn.ikincil:hover{border-color:var(--yesil);box-shadow:none}
+  .btn.kucuk{padding:9px 18px;font-size:14px}
+  @media(max-width:520px){.bar .btn.kucuk{display:none}}
+
+  /* ── hero ──────────────────────────────────────────── */
+  .hero{padding:64px 0 40px;position:relative;overflow-x:clip}
+  .hero::before{
+    content:"";position:absolute;inset:-200px 0 auto 50%;translate:-50% 0;
+    width:min(1200px,140vw);height:760px;z-index:-1;pointer-events:none;
+    background:
+      radial-gradient(circle at 30% 40%,rgba(37,163,133,.20),transparent 55%),
+      radial-gradient(circle at 75% 35%,rgba(232,163,61,.14),transparent 50%);
+    filter:blur(8px);
+  }
+  /* İnce ızgara deseni: hero'ya derinlik verir, görsel değil CSS. */
+  .hero::after{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:.5;
+    background-image:linear-gradient(var(--cizgi) 1px,transparent 1px),linear-gradient(90deg,var(--cizgi) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(ellipse at 60% 30%,#000 10%,transparent 65%);
+    -webkit-mask-image:radial-gradient(ellipse at 60% 30%,#000 10%,transparent 65%);
+  }
+  .hero-ic{display:grid;grid-template-columns:1.02fr .98fr;gap:40px;align-items:center}
+  .rozet{
+    display:inline-flex;align-items:center;gap:9px;flex-wrap:wrap;
+    padding:6px 14px 6px 8px;border-radius:999px;font-size:13px;font-weight:600;
+    background:var(--kart);border:1px solid var(--cizgi);color:var(--metin-soluk);
+    margin-bottom:22px;animation:yukari .7s both;box-shadow:var(--golge);text-decoration:none;
+  }
+  .rozet .nokta{width:7px;height:7px;border-radius:50%;background:var(--yesil-acik);animation:nabiz 2.4s infinite;margin-left:6px}
+  .rozet .yildizlar{color:var(--amber);letter-spacing:1px}
+  .rozet b{color:var(--metin)}
+  .hero h1{animation:yukari .8s .08s both}
+  .hero p.alt{font-size:clamp(17px,1.9vw,20px);color:var(--metin-soluk);max-width:560px;margin-top:22px;animation:yukari .8s .18s both}
+  .cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:32px;animation:yukari .8s .28s both}
+  .guvenceler{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:26px;font-size:14px;color:var(--metin-soluk);animation:yukari .8s .38s both;padding:0;list-style:none}
+  .guvenceler li{display:flex;align-items:center;gap:7px}
+  .guvenceler svg{width:16px;height:16px;color:var(--yesil);flex:none}
+  @media(max-width:960px){
+    .hero-ic{grid-template-columns:1fr;text-align:center;gap:40px}
+    .hero p.alt{margin-inline:auto}
+    .cta,.guvenceler,.rozet{justify-content:center}
+  }
+  @media(max-width:620px){
+    h1{font-size:clamp(32px,9vw,42px)}
+    .hero{padding-top:40px}
+  }
+
+  /* ── hero: canlı demo telefonu ─────────────────────────
+     Ekran görüntüsü değil, canlı HTML: dil düğmesi telefonun içini
+     de çeviriyor. Yazılar gerçek blok metinleri
+     (extensions/cod-form/locales/tr.json, cod-thankyou/locales/tr.json).
+     Akış: paket seçimi → sipariş eki → "Sipariş Ver" → upsell penceresi
+     → Shopify ödeme sayfası (kapıda ödeme) → teşekkür sayfası. */
+  .demo{position:relative;display:grid;place-items:center;animation:yukari 1s .3s both;padding:10px 0}
+  .demo-hale{position:absolute;width:420px;height:420px;max-width:100%;border-radius:50%;z-index:-1;
+    background:conic-gradient(from 0deg,rgba(37,163,133,.0),rgba(37,163,133,.28),rgba(232,163,61,.22),rgba(37,163,133,0));
+    filter:blur(40px);animation:don 14s linear infinite}
+  @keyframes don{to{transform:rotate(360deg)}}
+  .telefon{
+    position:relative;width:min(304px,84vw);aspect-ratio:304/560;
+    background:#0f1f1b;border-radius:46px;padding:11px;
+    box-shadow:var(--golge-buyuk),0 0 0 1.5px #2c443d inset;
+    animation:sal 8s ease-in-out infinite;
+  }
+  .ada{position:absolute;top:19px;left:50%;translate:-50% 0;width:84px;height:22px;background:#0f1f1b;border-radius:999px;z-index:6}
+  .ekran{position:relative;height:100%;border-radius:36px;overflow:hidden;background:#fff;color:#1a2b27;font-size:11.5px;line-height:1.35}
+  .sahne{position:absolute;inset:0;padding:44px 14px 14px;display:flex;flex-direction:column;
+    transition:transform .65s var(--egri),opacity .5s;background:#fff}
+  .sahne[data-s="b"],.sahne[data-s="c"]{transform:translateX(100%)}
+  .ekran[data-adim="2"] .sahne[data-s="a"]{transform:translateX(-30%);opacity:0}
+  .ekran[data-adim="2"] .sahne[data-s="b"]{transform:none}
+  .ekran[data-adim="3"] .sahne[data-s="a"]{transform:translateX(-30%);opacity:0}
+  .ekran[data-adim="3"] .sahne[data-s="b"]{transform:translateX(-30%);opacity:0}
+  .ekran[data-adim="3"] .sahne[data-s="c"]{transform:none}
+
+  /* Sahne A — ürün sayfasındaki blok (gerçek bloğun görünümü) */
+  .d-zaman{display:flex;justify-content:space-between;align-items:center;background:#1a2b27;color:#fff;border-radius:8px;padding:6px 9px;font-size:9.5px;margin-bottom:9px}
+  .d-zaman b{font-variant-numeric:tabular-nums;font-size:11px;letter-spacing:.04em}
+  .d-hediye{margin:0 0 8px;font-size:10px}
+  .d-tasarruf{font-size:10px;font-weight:700;text-align:center;color:var(--yesil);background:#eef7f3;border-radius:7px;padding:5px;margin:0 0 8px;
+    max-height:0;opacity:0;overflow:hidden;padding-block:0;transition:max-height .4s var(--egri),opacity .4s,padding .4s}
+  .d-tasarruf.ac{max-height:30px;opacity:1;padding-block:5px}
+  .d-hediye-yazi{display:flex;align-items:center;gap:5px;min-height:14px;transition:color .3s}
+  .d-hediye-yazi svg{width:12px;height:12px;flex:none;display:none}
+  .d-hediye.tamam .d-hediye-yazi{color:var(--yesil);font-weight:700}
+  .d-hediye.tamam .d-hediye-yazi svg{display:block}
+  .d-cubuk{height:5px;border-radius:999px;background:#e9eeec;margin-top:5px;overflow:hidden}
+  .d-cubuk i{display:block;height:100%;width:0;border-radius:inherit;background:var(--yesil)}
+  .d-bas{font-size:14.5px;font-weight:750;letter-spacing:-.01em}
+  .d-alt{color:#6b7a76;font-size:10.5px;margin:2px 0 9px}
+  .d-kart{position:relative;display:flex;align-items:center;gap:8px;border:1.5px solid #e3e8e6;border-radius:9px;padding:8px 9px;margin-bottom:7px;
+    transition:border-color .3s,background .3s,box-shadow .3s,transform .2s}
+  .d-kart.secili{border-color:#1a2b27;background:#f6f7f6;box-shadow:0 0 0 1px #1a2b27}
+  .d-radyo{flex:none;width:13px;height:13px;border-radius:50%;border:1.5px solid #8a9692;position:relative;transition:border-color .3s}
+  .d-radyo::after{content:"";position:absolute;inset:2px;border-radius:50%;background:#1a2b27;transform:scale(0);transition:transform .3s var(--yay)}
+  .secili .d-radyo{border-color:#1a2b27}
+  .secili .d-radyo::after{transform:scale(1)}
+  .d-kart-ad{flex:1;display:flex;flex-direction:column}
+  .d-kart-ad b{font-size:11.5px}
+  .d-kazan{font-size:9.5px;font-weight:700;color:#1a2b27;display:flex;gap:3px}
+  html[lang="en"] .d-kazan .kz{order:-1}
+  .d-fiyat{text-align:right;display:flex;flex-direction:column;font-weight:700;font-size:11.5px}
+  .d-fiyat s{font-weight:400;color:#8a9692;font-size:9.5px}
+  .d-rozet{position:absolute;top:-8px;right:9px;background:#1a2b27;color:#fff;font-size:8.5px;font-weight:700;padding:2px 7px;border-radius:999px}
+  .d-ek{display:flex;align-items:center;gap:8px;border:1.5px dashed #b8c3bf;border-radius:9px;padding:8px 9px;margin:2px 0 8px;transition:border-color .3s,background .3s}
+  .d-ek.secili{border-color:#1a2b27;background:#f6f7f6}
+  .d-kutu{flex:none;width:13px;height:13px;border-radius:3px;border:1.5px solid #8a9692;position:relative;transition:background .25s,border-color .25s}
+  .d-ek.secili .d-kutu{background:#1a2b27;border-color:#1a2b27}
+  .d-ek.secili .d-kutu::after{content:"";position:absolute;left:3.5px;top:1px;width:3px;height:6px;border:solid #fff;border-width:0 1.5px 1.5px 0;transform:rotate(45deg)}
+  .d-ek-yaz{flex:1;font-size:10px;line-height:1.3}
+  .d-ek-yaz b{display:block;font-size:10.5px}
+  .d-ek-yaz span{color:#6b7a76}
+  .d-ozet{margin-top:auto;border-top:1px solid #e9eeec;padding-top:8px}
+  .d-satir{display:flex;justify-content:space-between;font-size:11px}
+  .d-satir b{font-size:12px}
+  .d-not{color:#6b7a76;font-size:9.5px;margin-top:3px}
+  .d-dugme{margin-top:8px;border:1.5px solid #1a2b27;border-radius:8px;text-align:center;padding:9px;font-weight:700;font-size:11.5px;
+    display:flex;align-items:center;justify-content:center;gap:6px;transition:transform .15s,background .2s}
+  .d-dugme svg{width:12px;height:12px}
+  .d-dugme.basili{transform:scale(.96);background:#eef1f0}
+  .d-guven{text-align:center;color:#6b7a76;font-size:9px;margin-top:6px}
+
+  /* Upsell penceresi (gerçek pencerenin görünümü) */
+  .d-perde{position:absolute;inset:0;background:rgba(20,30,28,.45);opacity:0;pointer-events:none;transition:opacity .4s;z-index:3}
+  .d-pencere{position:absolute;left:10px;right:10px;bottom:16px;background:#fff;border-radius:14px;padding:13px;z-index:4;
+    transform:translateY(115%);transition:transform .55s var(--egri);box-shadow:0 -10px 40px rgba(0,0,0,.2)}
+  .ekran[data-adim="1"] .d-perde{opacity:1}
+  .ekran[data-adim="1"] .d-pencere{transform:none}
+  .d-pencere h4{margin:0;font-size:13px;letter-spacing:-.01em}
+  .d-pencere p{color:#6b7a76;font-size:9.5px;margin-top:4px}
+  .d-sayac{display:inline-flex;align-items:center;gap:5px;margin-top:7px;background:#fdecec;color:#c22f2f;font-weight:700;font-size:9.5px;padding:3px 7px;border-radius:6px}
+  .d-sayac svg{width:10px;height:10px}
+  .d-urun{display:flex;gap:9px;align-items:center;border:1.5px dashed var(--yesil);border-radius:10px;padding:8px;margin-top:9px;position:relative}
+  .d-urun-gorsel{flex:none;width:38px;height:38px;border-radius:8px;background:#eef1f0;display:grid;place-items:center;color:#8a9692}
+  .d-urun-gorsel svg{width:15px;height:15px}
+  .d-urun b{display:block;font-size:11px}
+  .d-urun .yeni{color:var(--yesil);font-weight:800;font-size:12px}
+  .d-urun s{color:#8a9692;font-size:9.5px;margin-left:4px}
+  .d-urun .d-rozet{background:var(--yesil);top:8px;right:8px}
+  .d-evet{margin-top:9px;background:var(--yesil);color:#fff;border-radius:9px;text-align:center;padding:9px;font-weight:700;font-size:11.5px;transition:transform .15s}
+  .d-evet.basili{transform:scale(.96)}
+  .d-hayir{text-align:center;color:#6b7a76;text-decoration:underline;font-size:9.5px;margin-top:7px}
+
+  /* Sahne B — Shopify ödeme sayfası. Müşteri bilgisi alanları bilerek
+     boş çubuk: o form Shopify'ın, uygulamanın değil (K-242). */
+  .d-etiket{align-self:flex-start;display:inline-flex;align-items:center;gap:5px;font-size:9.5px;font-weight:700;color:#5b6b67;
+    background:#f1f4f3;border-radius:999px;padding:3px 9px;margin-bottom:9px}
+  .d-etiket svg{width:10px;height:10px}
+  .d-bolum{font-size:11.5px;font-weight:750;margin:6px 0 5px}
+  .d-alan{height:24px;border:1px solid #e3e8e6;border-radius:7px;margin-bottom:5px;position:relative;overflow:hidden}
+  .d-alan::after{content:"";position:absolute;left:9px;top:9px;height:5px;border-radius:3px;background:#e7ecea;width:var(--g,46%)}
+  .d-ikili{display:flex;gap:5px}.d-ikili .d-alan{flex:1}
+  .d-aciklama{font-size:9px;color:#6b7a76;margin:-1px 0 4px}
+  .d-yontem{display:flex;align-items:center;gap:8px;border:1px solid #e3e8e6;padding:8px 9px;font-size:10.5px;transition:background .3s,border-color .3s}
+  .d-yontem:first-of-type{border-radius:7px 7px 0 0}
+  .d-yontem + .d-yontem{border-top:none;border-radius:0 0 7px 7px}
+  .d-yontem.secili{background:#f2f8f6;border-color:var(--yesil)}
+  .d-yontem.secili .d-radyo{border-color:var(--yesil)}
+  .d-yontem.secili .d-radyo::after{transform:scale(1);background:var(--yesil)}
+  .d-yontem-not{max-height:0;overflow:hidden;font-size:9px;color:#5b6b67;background:#f2f8f6;border:1px solid var(--yesil);border-top:none;border-radius:0 0 7px 7px;
+    padding:0 9px;transition:max-height .4s var(--egri),padding .4s}
+  .d-yontem-not.ac{max-height:60px;padding:6px 9px}
+  .d-tamamla{margin-top:auto;background:#1a2b27;color:#fff;border-radius:8px;text-align:center;padding:10px;font-weight:700;font-size:11.5px;transition:transform .15s}
+  .d-tamamla.basili{transform:scale(.96)}
+
+  /* Sahne C — teşekkür sayfası */
+  .d-tesekkur{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .d-tik{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--yesil);display:grid;place-items:center;color:var(--yesil)}
+  .d-tik svg{width:15px;height:15px;stroke-dasharray:24;stroke-dashoffset:24}
+  .ekran[data-adim="3"] .d-tik svg{animation:tikciz .6s .5s forwards}
+  @keyframes tikciz{to{stroke-dashoffset:0}}
+  .d-tesekkur small{display:block;color:#6b7a76;font-size:9.5px}
+  .d-tesekkur b{font-size:13px}
+  .d-kutu2{border:1px solid #e3e8e6;border-radius:10px;padding:9px;margin-bottom:8px;opacity:0;transform:translateY(10px);transition:opacity .5s,transform .5s var(--egri)}
+  .ekran[data-adim="3"] .d-kutu2{opacity:1;transform:none}
+  .ekran[data-adim="3"] .d-kutu2:nth-of-type(3){transition-delay:.25s}
+  .ekran[data-adim="3"] .d-kutu2:nth-of-type(4){transition-delay:.5s}
+  .d-kutu2 .d-satir{padding:3px 0}
+  .d-kutu2 .d-satir + .d-satir{border-top:1px solid #eef1f0}
+  .d-kutu2 h5{margin:5px 0 3px;font-size:11px}
+  .d-kutu2 p{font-size:9.5px;color:#5b6b67}
+  .d-wa{margin-top:8px;background:var(--yesil);color:#fff;border-radius:8px;text-align:center;padding:9px;font-weight:700;font-size:11px;
+    display:flex;align-items:center;justify-content:center;gap:6px}
+  .d-wa svg{width:12px;height:12px}
+  .d-wa.nabiz{animation:nabiz 1.6s 2}
+
+  /* Parmak: ekrandaki hedefin üstüne kayar, dokununca halka açar. */
+  .parmak{position:absolute;left:0;top:0;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;z-index:9;pointer-events:none;
+    background:rgba(26,43,39,.28);border:2px solid rgba(255,255,255,.9);box-shadow:0 4px 14px rgba(0,0,0,.25);
+    opacity:0;transition:left .7s var(--egri),top .7s var(--egri),opacity .3s,transform .15s}
+  .parmak.gor{opacity:1}
+  .parmak.bas{transform:scale(.78)}
+  .parmak::after{content:"";position:absolute;inset:-2px;border-radius:50%;border:2px solid rgba(37,163,133,.9);opacity:0}
+  .parmak.bas::after{animation:halka .55s ease-out}
+  @keyframes halka{from{transform:scale(.6);opacity:1}to{transform:scale(2.4);opacity:0}}
+
+  /* Telefonun çevresinde yüzen etiketler — sıradaki adımda yanar. */
+  .yuzen{position:absolute;display:flex;align-items:center;gap:8px;padding:9px 13px;border-radius:12px;
+    background:var(--kart);border:1px solid var(--cizgi);box-shadow:var(--golge-kalk);font-size:13px;font-weight:650;white-space:nowrap;
+    opacity:.55;transform:scale(.94);transition:opacity .4s,transform .5s var(--yay),border-color .4s;z-index:2}
+  .yuzen i{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;color:#fff;font-style:normal;flex:none}
+  .yuzen i svg{width:14px;height:14px}
+  .yuzen.yanik{opacity:1;transform:scale(1);border-color:var(--yesil)}
+  .yuzen.y1{left:-4%;top:16%}
+  .yuzen.y2{left:-10%;top:52%}
+  .yuzen.y3{right:-6%;top:26%}
+  .yuzen.y4{right:-19%;top:58%}
+  .yuzen.y5{right:-24%;top:76%}
+  @media(max-width:1180px){.yuzen.y2{left:-2%}.yuzen.y4{right:-8%}}
+  @media(max-width:1320px){.yuzen.y5{display:none}}
+  @media(max-width:1100px){.yuzen{display:none}}
+
+  .adimlar{display:flex;gap:6px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+  .adimlar > span{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--metin-soluk);
+    padding:5px 11px;border-radius:999px;border:1px solid var(--cizgi);background:var(--kart);transition:background .3s,color .3s,border-color .3s}
+  .adimlar > span b{width:17px;height:17px;border-radius:50%;display:grid;place-items:center;font-size:10px;background:var(--zemin-alt);color:var(--metin-soluk);transition:inherit}
+  .adimlar > span.yanik{background:var(--yesil);border-color:var(--yesil);color:#fff}
+  .adimlar > span.yanik b{background:rgba(255,255,255,.25);color:#fff}
+
+  /* ── akan şerit ────────────────────────────────────── */
+  .serit{
+    overflow:hidden;padding:18px 0;border-block:1px solid var(--cizgi);background:var(--zemin-alt);
+    mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
+  }
+  .serit-ic{display:flex;width:max-content;animation:kay 38s linear infinite}
+  .serit span{display:inline-flex;align-items:center;gap:16px;padding:0 24px;font-size:clamp(17px,2.2vw,22px);font-weight:720;letter-spacing:-.02em;white-space:nowrap}
+  .serit span::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--yesil)}
+  .serit:hover .serit-ic{animation-play-state:paused}
+
+  /* ── bölümler ──────────────────────────────────────── */
+  section{padding:96px 0}
+  .alt-zemin{background:var(--zemin-alt);border-block:1px solid var(--cizgi)}
+  .baslik{max-width:720px;margin:0 auto 52px;text-align:center}
+  .baslik p{color:var(--metin-soluk);font-size:18px;margin-top:16px}
+  @media(max-width:620px){section{padding:68px 0}.baslik{margin-bottom:36px}}
+
+  /* ── gerçekler (sayaçlar) ─────────────────────────────
+     Kullanım rakamı yok (bizde yok, yazılamaz). Yalnız ürün gerçekleri:
+     blok dili (extensions/cod-form/locales), panel dili (app/lib/i18n),
+     ücretsiz plan sınırı ve yıllık indirim (app/lib/constants.ts, plan.ts). */
+  .gercekler{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:44px 0}
+  .gercek{text-align:center;padding:8px}
+  .gercek b{display:block;font-size:clamp(34px,4.4vw,50px);font-weight:820;letter-spacing:-.03em;line-height:1;
+    background:linear-gradient(180deg,var(--metin),var(--yesil));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .gercek span{display:block;margin-top:8px;font-size:14.5px;color:var(--metin-soluk)}
+  @media(max-width:700px){.gercekler{grid-template-columns:repeat(2,1fr);gap:26px 12px}}
+
+  /* ── nasıl çalışır ─────────────────────────────────── */
+  .uc-adim{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;position:relative;counter-reset:adim}
+  /* Adımları bağlayan çizgi: bölüm görününce soldan çizilir. */
+  .uc-adim::before{content:"";position:absolute;left:16%;right:16%;top:38px;height:2px;z-index:0;
+    background:linear-gradient(90deg,var(--yesil-acik),var(--amber));transform:scaleX(0);transform-origin:0 50%;transition:transform 1.4s .3s var(--egri)}
+  .uc-adim.ac::before{transform:scaleX(1)}
+  .adim-kart{position:relative;z-index:1;text-align:center;padding:0 10px}
+  .adim-no{width:76px;height:76px;margin:0 auto 20px;border-radius:22px;display:grid;place-items:center;
+    background:var(--kart);border:1px solid var(--cizgi);box-shadow:var(--golge-kalk);color:var(--yesil);position:relative}
+  .adim-no svg{width:30px;height:30px}
+  .adim-no::after{counter-increment:adim;content:counter(adim);position:absolute;top:-9px;right:-9px;width:26px;height:26px;border-radius:50%;
+    background:var(--yesil);color:#fff;font-size:13px;font-weight:800;display:grid;place-items:center;box-shadow:0 0 0 4px var(--zemin)}
+  .adim-kart p{color:var(--metin-soluk);font-size:15.5px;margin-top:10px}
+  @media(max-width:820px){
+    .uc-adim{grid-template-columns:1fr;gap:34px}
+    .uc-adim::before{left:50%;right:auto;top:38px;bottom:38px;width:2px;height:auto;transform:scaleY(0);transform-origin:50% 0}
+    .uc-adim.ac::before{transform:scaleY(1)}
+    .adim-kart{background:var(--zemin);padding:6px 10px}
+  }
+
+  /* ── sekmeli özellik vitrini ───────────────────────────
+     Sekme süresi dolunca kendiliğinden sıradakine geçer (ilerleme
+     çubuğu sekmenin altında dolar). Üstüne gelince durur; ziyaretçi
+     bir sekmeye tıklarsa otomatik geçiş tamamen kapanır. */
+  .sekmeler{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:34px}
+  .sekme{
+    position:relative;overflow:hidden;border:1px solid var(--cizgi);background:var(--kart);color:var(--metin-soluk);
+    font:600 14.5px/1 inherit;padding:12px 16px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:8px;
+    transition:color .25s,border-color .25s,background .25s,transform .25s var(--yay)}
+  .sekme svg{width:16px;height:16px;flex:none}
+  .sekme:hover{color:var(--metin);transform:translateY(-1px)}
+  .sekme[aria-selected="true"]{color:#fff;background:var(--metin);border-color:var(--metin)}
+  @media (prefers-color-scheme: dark){.sekme[aria-selected="true"]{color:#0e1a17;background:#e8f2ee;border-color:#e8f2ee}}
+  .sekme .cubuk{position:absolute;left:0;bottom:0;height:3px;width:100%;background:var(--amber);transform:scaleX(0);transform-origin:0 50%}
+  .vitrin.oto .sekme[aria-selected="true"] .cubuk{animation:dol var(--sure,7s) linear forwards}
+  .vitrin.oto:hover .sekme .cubuk,.vitrin.durdu .sekme .cubuk{animation-play-state:paused}
+  @keyframes dol{to{transform:scaleX(1)}}
+  @media(max-width:760px){
+    .sekmeler{flex-wrap:nowrap;justify-content:flex-start;overflow-x:auto;margin-inline:-24px;padding:2px 24px 8px;scrollbar-width:none;scroll-snap-type:x proximity}
+    .sekmeler::-webkit-scrollbar{display:none}
+    .sekme{flex:none;scroll-snap-align:start}
+  }
+  .panel{display:grid;grid-template-columns:.85fr 1.15fr;gap:48px;align-items:center}
+  .panel[hidden]{display:none}
+  .panel.giris .panel-metin{animation:yukari .6s var(--egri) both}
+  .panel.giris .sahnecik{animation:sahne-gir .8s var(--egri) both}
+  @keyframes sahne-gir{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+  .panel-metin h3{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.02em}
+  .panel-metin > p{color:var(--metin-soluk);font-size:17px;margin-top:14px}
+  .tikler{list-style:none;padding:0;margin:22px 0 0}
+  .tikler li{position:relative;padding-left:32px;margin-bottom:12px;color:var(--metin-soluk);font-size:15.5px}
+  .tikler li::before{content:"";position:absolute;left:0;top:2px;width:21px;height:21px;border-radius:50%;background:rgba(37,163,133,.14)}
+  .tikler li::after{content:"";position:absolute;left:7px;top:8px;width:7px;height:4px;border-left:2px solid var(--yesil);border-bottom:2px solid var(--yesil);transform:rotate(-45deg)}
+  .tikler b{color:var(--metin)}
+  .plan-etiket{display:inline-block;font-size:11px;font-weight:700;color:var(--yesil-koyu);background:rgba(37,163,133,.14);border-radius:999px;padding:2px 8px;margin-left:4px;vertical-align:1px}
+  @media (prefers-color-scheme: dark){.plan-etiket{color:#6fd3b5}}
+
+  /* Görsel sahnesi: renkli zemin + tarayıcı/telefon çerçevesi + isteğe
+     bağlı ikinci, yüzen ekran. Çerçeveler CSS; içleri gerçek ekran. */
+  .sahnecik{position:relative;border-radius:24px;padding:34px;min-height:440px;display:grid;place-items:center;
+    background:
+      radial-gradient(circle at 20% 15%,rgba(255,255,255,.55),transparent 45%),
+      linear-gradient(135deg,#d9f1e9,#eef7f3 55%,#fbefd9);
+    border:1px solid var(--cizgi);overflow:hidden}
+  @media (prefers-color-scheme: dark){
+    .sahnecik{background:radial-gradient(circle at 20% 15%,rgba(37,163,133,.25),transparent 50%),linear-gradient(135deg,#123129,#13231f 55%,#2a2414)}
+  }
+  .tarayici{width:100%;border-radius:12px;background:#fff;box-shadow:var(--golge-buyuk);overflow:hidden;border:1px solid rgba(20,61,51,.12)}
+  .tarayici-ust{height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#f3f5f4;border-bottom:1px solid #e3e8e6}
+  .tarayici-ust i{width:9px;height:9px;border-radius:50%;background:#e1e6e4}
+  .tarayici-ust i:nth-child(1){background:#ff6058}.tarayici-ust i:nth-child(2){background:#ffbd2e}.tarayici-ust i:nth-child(3){background:#29c940}
+  .tarayici-ust span{margin-left:10px;flex:1;max-width:260px;height:16px;border-radius:6px;background:#e7ecea;font-size:9.5px;color:#7d8b87;display:flex;align-items:center;padding:0 8px;overflow:hidden;white-space:nowrap}
+  .tarayici img{display:block;width:100%;height:auto}
+  .tarayici.dar{max-width:420px}
+  .tarayici.dar.sola{justify-self:start;max-width:56%}
+  /* Uzun ekran: çerçevenin içinde yavaşça aşağı kayar. */
+  .kayan{height:var(--kh,400px);overflow:hidden;position:relative}
+  .kayan img{display:block;width:100%;height:auto;animation:kaydir 14s ease-in-out infinite alternate}
+  @keyframes kaydir{0%,12%{transform:translateY(0)}88%,100%{transform:translateY(calc(-100% + var(--kh,400px)))}}
+  .mini-tel{width:250px;border-radius:34px;background:#0f1f1b;padding:9px;box-shadow:var(--golge-buyuk)}
+  .mini-tel .kayan{border-radius:26px;background:#fff;--kh:440px}
+  .ikinci{position:absolute;right:18px;bottom:18px;width:var(--w,46%);border-radius:12px;overflow:hidden;background:#fff;
+    box-shadow:var(--golge-buyuk);border:1px solid rgba(20,61,51,.12);animation:sal 7s ease-in-out infinite}
+  .ikinci img{display:block;width:100%;height:auto}
+  .ikinci.sol-ust{right:auto;left:18px;bottom:auto;top:18px}
+  @media(max-width:900px){
+    .panel{grid-template-columns:1fr;gap:28px}
+    .sahnecik{min-height:0;padding:20px}
+    .ikinci{position:relative;right:auto;left:auto;bottom:auto;top:auto;width:78%;margin:-34px 0 0 auto;animation:none}
+    .ikinci.sol-ust{margin:-34px auto 0 0}
+    .sahnecik{display:block}
+    .mini-tel{margin:0 auto}
+  }
+  @media(max-width:900px){.tarayici.dar.sola{max-width:none}}
+  /* Dar ekranda geniş panel görüntüsü çerçeveden kısa kalıyor; kaydırma kapanır. */
+  @media(max-width:620px){.mini-tel{width:220px}.mini-tel .kayan{--kh:380px}.tarayici .kayan{height:auto}.tarayici .kayan img{animation:none}}
+
+  /* ── panel vitrini (3B eğik görüntü düzleşir) ───────── */
+  .ust-goruntu{perspective:1600px;margin-top:10px}
+  .egik{position:relative;transform:rotateX(18deg) scale(.92);transform-origin:50% 0;transition:transform 1.3s var(--egri);max-width:980px;margin:0 auto}
+  .egik.ac{transform:none}
+  .egik .ikinci{width:40%;right:-3%;bottom:-8%}
+  @media(max-width:900px){.egik .ikinci{width:80%;right:auto;bottom:auto;margin:-30px 0 0 auto}}
+  .ozet-kartlar{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:120px}
+  @media(max-width:820px){.ozet-kartlar{grid-template-columns:1fr;margin-top:40px}}
+
+  .kart{
+    background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);padding:26px;box-shadow:var(--golge);
+    display:flex;flex-direction:column;transition:transform .4s var(--egri),box-shadow .4s,border-color .4s;position:relative;overflow:hidden}
+  /* İmleç kartın neresindeyse orada yumuşak bir ışık. */
+  .kart::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;
+    background:radial-gradient(360px circle at var(--mx,50%) var(--my,0%),rgba(37,163,133,.13),transparent 60%)}
+  .kart:hover::before{opacity:1}
+  .kart:hover{transform:translateY(-5px);box-shadow:var(--golge-kalk);border-color:var(--yesil)}
+  .kart .ikon{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;
+    background:linear-gradient(180deg,var(--yesil-acik),var(--yesil-koyu));color:#fff;margin-bottom:16px;transition:transform .4s var(--yay)}
+  .kart .ikon svg{width:21px;height:21px}
+  .kart:hover .ikon{transform:scale(1.1) rotate(-6deg)}
+  .kart p{color:var(--metin-soluk);font-size:15px;margin-top:9px}
+  .izgara{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+  @media(max-width:960px){.izgara{grid-template-columns:repeat(2,1fr)}}
+
+  /* ── entegrasyonlar ────────────────────────────────── */
+  .entegre{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:960px){.entegre{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.entegre{grid-template-columns:1fr}}
+  .ent{display:flex;gap:14px;align-items:flex-start;padding:20px;border-radius:var(--r);background:var(--kart);border:1px solid var(--cizgi);box-shadow:var(--golge);
+    transition:transform .35s var(--egri),border-color .35s}
+  .ent:hover{transform:translateY(-3px);border-color:var(--yesil)}
+  .ent-ikon{flex:none;width:46px;height:46px;border-radius:13px;display:grid;place-items:center;color:#fff}
+  .ent-ikon svg{width:22px;height:22px}
+  .ent b{display:block;font-size:16px}
+  .ent p{color:var(--metin-soluk);font-size:14.5px;margin-top:4px}
+  .diller{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:34px auto 0;padding:0;max-width:820px}
+  .diller li{list-style:none;font-size:13px;font-weight:600;background:var(--kart);border:1px solid var(--cizgi);border-radius:999px;padding:6px 13px}
+  .diller-not{text-align:center;color:var(--metin-soluk);font-size:14.5px;margin-top:14px}
+
+  /* ── yorumlar ──────────────────────────────────────────
+     Metinler apps.shopify.com/codship-cod-form-upsells/reviews'dan
+     24.11.2026'da OLDUĞU GİBİ alındı (yazım hataları dahil). Kırpma,
+     güzelleştirme, çeviri yok. Yeni yorum gelince aynı biçimde eklenir. */
+  .puan-ozet{display:inline-flex;align-items:center;gap:10px;margin-top:18px;font-size:15px;color:var(--metin-soluk)}
+  .puan-ozet .yildizlar{color:var(--amber);font-size:18px;letter-spacing:2px}
+  .puan-ozet b{color:var(--metin);font-size:18px}
+  .yorumlar{display:grid;gap:20px;grid-template-columns:repeat(3,1fr);align-items:start}
+  @media(max-width:960px){.yorumlar{grid-template-columns:1fr;max-width:640px;margin:0 auto}}
+  .yorum{background:var(--kart);border:1px solid var(--cizgi);border-radius:var(--r);padding:26px;box-shadow:var(--golge);position:relative;
+    transition:transform .4s var(--egri),box-shadow .4s}
+  .yorum:hover{transform:translateY(-4px);box-shadow:var(--golge-kalk)}
+  .yorum::before{content:"\201C";position:absolute;right:22px;top:6px;font:800 72px/1 Georgia,serif;color:rgba(37,163,133,.16)}
+  .yorum .yildiz{color:var(--amber);font-size:15px;letter-spacing:2px}
+  .yorum p{color:var(--metin);font-size:15.5px;margin-top:12px}
+  .yorum-alt{display:flex;align-items:center;gap:11px;margin-top:18px;padding-top:16px;border-top:1px solid var(--cizgi)}
+  .rumuz{flex:none;width:38px;height:38px;border-radius:11px;display:grid;place-items:center;
+    background:linear-gradient(180deg,var(--yesil-acik),var(--yesil-koyu));color:#fff;font-size:15px;font-weight:750}
+  .yorum-alt b{display:block;font-size:15px}
+  .yorum-alt span{display:block;font-size:13px;color:var(--metin-soluk)}
+  .yorum-alt span.rumuz{display:grid;font-size:15px;color:#fff}
+  .gizli-okuyucu{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .yorum-not{text-align:center;margin-top:28px;font-size:14.5px;color:var(--metin-soluk)}
+  .yorum-not a{color:var(--yesil);font-weight:650}
+
+  /* ── fiyat ─────────────────────────────────────────── */
+  .donem{display:inline-flex;gap:3px;padding:4px;border-radius:999px;background:var(--zemin-alt);border:1px solid var(--cizgi);margin-top:24px;position:relative}
+  .donem button{position:relative;z-index:1;border:none;background:none;cursor:pointer;font:650 14px/1 inherit;color:var(--metin-soluk);padding:10px 18px;border-radius:999px;transition:color .3s}
+  .donem button[aria-pressed="true"]{color:#fff}
+  .donem .kizak{position:absolute;top:4px;bottom:4px;left:4px;border-radius:999px;background:var(--yesil);transition:transform .45s var(--egri),width .45s var(--egri)}
+  .donem em{font-style:normal;font-size:11.5px;font-weight:750;background:var(--amber);color:#3a2604;padding:3px 7px;border-radius:999px;margin-left:6px}
+  .fiyatlar{display:grid;gap:22px;grid-template-columns:repeat(3,1fr);align-items:stretch;max-width:1040px;margin:0 auto}
+  @media(max-width:900px){.fiyatlar{grid-template-columns:1fr;max-width:440px}}
+  .plan{background:var(--kart);border:1px solid var(--cizgi);border-radius:20px;padding:30px 26px;box-shadow:var(--golge);position:relative;
+    display:flex;flex-direction:column;transition:transform .4s var(--egri),box-shadow .4s}
+  .plan:hover{transform:translateY(-6px);box-shadow:var(--golge-kalk)}
+  .plan.one{border:2px solid var(--yesil);box-shadow:0 20px 50px -18px rgba(31,138,112,.45)}
+  .plan .etiket{position:absolute;top:-13px;left:26px;background:linear-gradient(90deg,var(--yesil-acik),var(--yesil-koyu));color:#fff;font-size:12px;font-weight:700;padding:5px 12px;border-radius:999px}
+  .plan .ad{font-size:14px;font-weight:750;text-transform:uppercase;letter-spacing:.08em;color:var(--metin-soluk)}
+  .plan .ucret{font-size:44px;font-weight:820;margin-top:12px;letter-spacing:-.035em;line-height:1.1;min-height:49px}
+  .plan .ucret small{font-size:15px;font-weight:600;color:var(--metin-soluk);letter-spacing:0}
+  .plan .yil,.fiyat-alan.yillik .plan .ay{display:none}
+  .fiyat-alan.yillik .plan .yil{display:inline}
+  .plan .esdeger{font-size:13.5px;color:var(--yesil);font-weight:650;min-height:21px;margin-top:2px}
+  .plan .adet{font-size:15px;color:var(--metin);font-weight:650;margin-top:6px}
+  .plan ul{list-style:none;padding:0;margin:20px 0 24px;font-size:14.5px;flex:1}
+  .plan li{padding-left:25px;position:relative;margin-bottom:10px;color:var(--metin-soluk)}
+  .plan li::before{content:"";position:absolute;left:4px;top:8px;width:9px;height:5px;border-left:2px solid var(--yesil);border-bottom:2px solid var(--yesil);transform:rotate(-45deg)}
+  .plan .btn{justify-content:center}
+  .not{margin:30px auto 0;max-width:820px;padding:18px 20px;border-radius:12px;background:var(--zemin-alt);border:1px solid var(--cizgi);font-size:14px;color:var(--metin-soluk)}
+  .not b{color:var(--metin)}
+
+  /* ── sss ───────────────────────────────────────────── */
+  .sss{max-width:820px;margin:0 auto}
+  .sss details{background:var(--kart);border:1px solid var(--cizgi);border-radius:14px;margin-bottom:12px;transition:border-color .3s,box-shadow .3s}
+  .sss details[open]{border-color:var(--yesil);box-shadow:var(--golge)}
+  .sss summary{cursor:pointer;list-style:none;padding:19px 56px 19px 22px;font-weight:650;font-size:16.5px;position:relative}
+  .sss summary::-webkit-details-marker{display:none}
+  .sss summary::after{content:"";position:absolute;right:22px;top:50%;width:10px;height:10px;margin-top:-7px;border-right:2px solid var(--yesil);border-bottom:2px solid var(--yesil);transform:rotate(45deg);transition:transform .3s var(--egri)}
+  .sss details[open] summary::after{transform:rotate(225deg);margin-top:-2px}
+  .sss details p{padding:0 22px 20px;color:var(--metin-soluk);font-size:15.5px}
+
+  /* ── kapanış ───────────────────────────────────────── */
+  .kapanis{padding:0 0 96px}
+  .kapanis-kutu{
+    position:relative;overflow:hidden;border-radius:28px;padding:72px 32px;text-align:center;color:#fff;
+    background:linear-gradient(135deg,#1c9a7b,var(--yesil-koyu) 60%,#0f4d3e);box-shadow:var(--golge-buyuk)}
+  .kapanis-kutu::before,.kapanis-kutu::after{content:"";position:absolute;border-radius:50%;pointer-events:none;filter:blur(10px)}
+  .kapanis-kutu::before{width:520px;height:520px;left:-160px;top:-260px;background:radial-gradient(circle,rgba(255,255,255,.18),transparent 62%);animation:sal 9s ease-in-out infinite}
+  .kapanis-kutu::after{width:460px;height:460px;right:-140px;bottom:-240px;background:radial-gradient(circle,rgba(232,163,61,.35),transparent 62%);animation:sal 11s ease-in-out infinite reverse}
+  .kapanis-kutu h2{color:#fff;position:relative;max-width:760px;margin:0 auto}
+  .kapanis-kutu p{color:rgba(255,255,255,.88);margin:16px auto 0;font-size:18px;position:relative;max-width:620px}
+  .kapanis-kutu .btn{background:#fff;color:var(--yesil-koyu);margin-top:32px;box-shadow:0 6px 22px rgba(0,0,0,.2);position:relative}
+  @media(max-width:620px){.kapanis-kutu{padding:52px 22px;border-radius:22px}}
+
+  footer{padding:20px 0 52px;font-size:14.5px;color:var(--metin-soluk)}
+  .footbar{display:flex;flex-wrap:wrap;gap:28px;align-items:flex-start;justify-content:space-between;padding-top:44px;border-top:1px solid var(--cizgi)}
+  footer a{color:var(--metin-soluk);text-decoration:none;display:block;margin-bottom:8px;transition:color .2s,transform .2s}
+  footer a:hover{color:var(--yesil);transform:translateX(3px)}
+  footer .logo:hover{transform:none}
+  footer h4{font-size:13px;text-transform:uppercase;letter-spacing:.07em;margin:0 0 14px;color:var(--metin)}
+  .telif{margin-top:40px;padding-top:24px;border-top:1px solid var(--cizgi);font-size:13.5px}
+
+  /* Hareketi azalt diyen ziyaretçide her şey sabit durur; demo
+     telefonu son kareyle değil, okunur ilk kareyle (paket seçili) kalır. */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none !important;transition:none !important}
+    .gorun{opacity:1;transform:none}
+    .egik{transform:none}
+    .uc-adim::before{transform:none}
+    .d-tik svg{stroke-dashoffset:0}
+    html{scroll-behavior:auto}
+  }
+</style>
+<!-- JavaScript kapalıysa belirme animasyonu hiç başlamaz; içerik
+     görünmez kalmasın diye .gorun burada sabitleniyor. -->
+<noscript><style>.gorun{opacity:1;transform:none}.egik{transform:none}.dil,.donem{display:none}.uc-adim::before{transform:none}</style></noscript>
+</head>
+<body>
+
+<!-- SVG simgeleri bir kez tanımlanır, <use> ile çağrılır. Hepsi elde
+     çizildi; marka logosu yok. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-paket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5 9 5 9-5z"/><path d="M3 8v8l9 5 9-5V8"/><path d="M12 13v8"/></symbol>
+    <symbol id="i-yukari" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></symbol>
+    <symbol id="i-hediye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v9H5v-9"/><path d="M7.5 8a2.5 2.5 0 010-5C11 3 12 8 12 8s1-5 4.5-5a2.5 2.5 0 010 5"/></symbol>
+    <symbol id="i-ucret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="13" rx="2"/><circle cx="12" cy="12.5" r="2.5"/><path d="M6 10v5M18 10v5"/></symbol>
+    <symbol id="i-kalkan" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M9 12h6"/></symbol>
+    <symbol id="i-grafik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="i-mesaj" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L3 20.5l1.6-5.2A8.5 8.5 0 1121 11.5z"/><path d="M8.5 11.5l2.3 2.3 4.7-4.6"/></symbol>
+    <symbol id="i-tik" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-kilit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+    <symbol id="i-canta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 7h12l1 14H5L6 7z"/><path d="M9 10V6a3 3 0 016 0v4"/></symbol>
+    <symbol id="i-saat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-etiket" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.4L13.4 20.6a2 2 0 01-2.8 0L3 13V3h10l7.6 7.6a2 2 0 010 2.8z"/><circle cx="8" cy="8" r="1.5"/></symbol>
+    <symbol id="i-indir" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M7 10l5 5 5-5M4 21h16"/></symbol>
+    <symbol id="i-ayar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></symbol>
+    <symbol id="i-sepet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.5"/><circle cx="18" cy="20" r="1.5"/><path d="M2 3h3l2.7 12.4a2 2 0 002 1.6h8.6a2 2 0 002-1.6L22 7H6"/></symbol>
+    <symbol id="i-ab" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="8" height="16" rx="2"/><rect x="13" y="4" width="8" height="16" rx="2"/><path d="M15.5 12l1.5 1.5 2.5-3"/></symbol>
+    <symbol id="i-dil" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3z"/></symbol>
+    <symbol id="i-sinyal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5a7 7 0 0114 0M8.5 12.5a3.5 3.5 0 017 0"/><circle cx="12" cy="17" r="1.6"/></symbol>
+    <symbol id="i-sayfa" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 14h8"/></symbol>
+    <symbol id="i-destek" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-1a8 8 0 0116 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></symbol>
+  </defs>
+</svg>
+
+<header>
+  <div class="kap bar">
+    <a class="logo" href="#">
+      <svg viewBox="0 0 512 512" aria-label="Codship">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#25A385"/><stop offset="1" stop-color="#166B57"/>
+        </linearGradient></defs>
+        <rect width="512" height="512" rx="112" fill="url(#g)"/>
+        <path d="M256 92 L398 140 V268 c0 82 -58 126 -142 160 c-84 -34 -142 -78 -142 -160 V140 Z" fill="#fff"/>
+        <rect x="196" y="176" width="120" height="180" rx="12" fill="#1F8A70"/>
+        <circle cx="292" cy="272" r="13" fill="#fff"/>
+      </svg>
+      Codship
+    </a>
+    <nav>
+      <a href="#ozellikler" data-t="nav.feat">Özellikler</a>
+      <a href="#nasil" data-t="nav.how">Nasıl çalışır</a>
+      <a href="#fiyat" data-t="nav.price">Fiyat</a>
+      <a href="#yorumlar" data-t="nav.reviews">Yorumlar</a>
+      <a href="#sss" data-t="nav.faq">SSS</a>
+    </nav>
+    <div class="dil" role="group" aria-label="Dil / Language">
+      <button type="button" data-dil="tr" aria-pressed="true">TR</button>
+      <button type="button" data-dil="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn kucuk magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr" data-t="nav.cta">Ücretsiz kur</a>
+  </div>
+  <div class="ilerleme" id="ilerleme"></div>
+</header>
+
+<!-- ─────────────────────────── hero ─────────────────────────── -->
+<div class="hero">
+ <div class="kap hero-ic">
+  <div class="hero-metin">
+    <a class="rozet magaza-yorum" href="https://apps.shopify.com/codship-cod-form-upsells/reviews?locale=tr">
+      <span class="nokta"></span>
+      <span data-t="hero.badge">Shopify App Store'da yayında</span>
+      <span class="yildizlar" aria-hidden="true">★★★★★</span>
+      <span data-t="hero.rating"><b>5,0</b> · 3 değerlendirme</span>
+    </a>
+    <h1 data-t="hero.h1">Kapıda ödemede <span class="vurgu">daha büyük sepet.</span></h1>
+    <p class="alt" data-t="hero.sub">Ürün sayfanızda adet teklifleri, upsell ve hediye; ödenmemiş kapıda ödeme siparişlerine ücret, kurallarla kapıda ödemeyi gizleme ve WhatsApp onayı. Her sipariş normal Shopify ödeme sayfasında tamamlanır.</p>
+    <div class="cta">
+      <a class="btn magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr">
+        <svg aria-hidden="true"><use href="#i-indir"/></svg><span data-t="hero.cta1">Shopify App Store'dan ücretsiz kur</span>
+      </a>
+      <a class="btn ikincil" href="#ozellikler" data-t="hero.cta2">Özellikleri görün</a>
+    </div>
+    <ul class="guvenceler">
+      <li><svg aria-hidden="true"><use href="#i-tik"/></svg><span data-t="hero.g1">Ayda 60 siparişe kadar ücretsiz</span></li>
+      <li><svg aria-hidden="true"><use href="#i-tik"/></svg><span data-t="hero.g2">Kurulum ücreti yok</span></li>
+      <li><svg aria-hidden="true"><use href="#i-tik"/></svg><span data-t="hero.g3">Müşteri bilgisi yalnız Shopify'da</span></li>
+    </ul>
+  </div>
+
+  <!-- Canlı demo. aria-hidden: ekran okuyucu için anlatım hero metninde. -->
+  <div class="demo" aria-hidden="true">
+    <div class="demo-hale"></div>
+    <div class="yuzen y1" data-adim-yak="0"><i style="background:var(--yesil)"><svg><use href="#i-paket"/></svg></i><span data-t="demo.c1">Adet teklifi</span></div>
+    <div class="yuzen y2" data-adim-yak="0"><i style="background:var(--amber)"><svg><use href="#i-sepet"/></svg></i><span data-t="demo.c2">Sipariş eki</span></div>
+    <div class="yuzen y3" data-adim-yak="1"><i style="background:var(--mor)"><svg><use href="#i-yukari"/></svg></i><span data-t="demo.c3">Upsell penceresi</span></div>
+    <div class="yuzen y4" data-adim-yak="2"><i style="background:#2f6fd6"><svg><use href="#i-kilit"/></svg></i><span data-t="demo.c4">Shopify ödeme sayfası</span></div>
+    <div class="yuzen y5" data-adim-yak="3"><i style="background:#25a35a"><svg><use href="#i-mesaj"/></svg></i><span data-t="demo.c5">Ücret + WhatsApp onayı</span></div>
+
+    <div class="telefon">
+      <div class="ada"></div>
+      <div class="ekran" id="ekran" data-adim="0">
+
+        <!-- A: ürün sayfasındaki blok -->
+        <div class="sahne" data-s="a">
+          <div class="d-zaman"><span data-t="demo.zaman">Kampanyanın bitmesine kalan süre</span><b id="d-zaman">02:14:37</b></div>
+          <div class="d-bas" data-t="demo.h">Paketinizi seçin</div>
+          <div class="d-alt" data-t="demo.sub">Ödeme adımında kapıda ödemeyi seçebilirsiniz.</div>
+          <div class="d-kart secili" data-k="0">
+            <span class="d-radyo"></span>
+            <span class="d-kart-ad"><b data-t="demo.k1">1 adet</b></span>
+            <span class="d-fiyat"><span data-tutar="p0">699,90 ₺</span></span>
+          </div>
+          <div class="d-kart" data-k="1">
+            <span class="d-rozet" data-t="demo.r1">%10 indirim</span>
+            <span class="d-radyo"></span>
+            <span class="d-kart-ad"><b data-t="demo.k2">2 adet</b><span class="d-kazan"><span data-tutar="s1">139,98 ₺</span> <span class="kz" data-t="demo.kazan">kazanın</span></span></span>
+            <span class="d-fiyat"><span data-tutar="p1">1.259,82 ₺</span><s data-tutar="o1">1.399,80 ₺</s></span>
+          </div>
+          <div class="d-kart" data-k="2">
+            <span class="d-rozet" data-t="demo.r2">%18 indirim</span>
+            <span class="d-radyo"></span>
+            <span class="d-kart-ad"><b data-t="demo.k3">3 adet</b><span class="d-kazan"><span data-tutar="s2">377,95 ₺</span> <span class="kz" data-t="demo.kazan2">kazanın</span></span></span>
+            <span class="d-fiyat"><span data-tutar="p2">1.721,75 ₺</span><s data-tutar="o2">2.099,70 ₺</s></span>
+          </div>
+          <div class="d-ek" id="d-ek">
+            <span class="d-kutu"></span>
+            <span class="d-ek-yaz"><b data-t="demo.ek">Siparişinize bakım kiti ekleyin</b><span data-t="demo.ekAlt">Yalnız bu siparişe özel fiyat</span></span>
+            <span class="d-fiyat"><span data-tutar="ek">99,90 ₺</span></span>
+          </div>
+          <div class="d-tasarruf" id="d-tasarruf"></div>
+          <div class="d-hediye" id="d-hediye"><div class="d-hediye-yazi"><svg><use href="#i-tik"/></svg><span id="d-hediye-yazi" data-t="demo.hediye">600,10 ₺ daha ekleyin, bez çanta hediye</span></div><div class="d-cubuk"><i id="d-hediye-cubuk"></i></div></div>
+          <div class="d-ozet">
+            <div class="d-satir"><span data-t="demo.ara">Ara toplam</span><b id="d-ara">699,90 ₺</b></div>
+            <div class="d-not" data-t="demo.kargo">Kargo ücreti ödeme adımında hesaplanır.</div>
+            <div class="d-dugme" id="d-siparis"><svg><use href="#i-canta"/></svg><span data-t="demo.btn">Sipariş Ver</span></div>
+            <div class="d-guven" data-t="demo.trust">Teslimat bilgilerinizi bir sonraki adımda gireceksiniz.</div>
+          </div>
+          <div class="d-perde"></div>
+          <div class="d-pencere">
+            <h4 data-t="demo.upH">Bunu da ekleyin, %20 indirimli</h4>
+            <p data-t="demo.upP">Bu siparişe özel fiyat. Tek dokunuşla sepetinize ekleyip sizi ödeme adımına yönlendiriyoruz.</p>
+            <span class="d-sayac"><svg><use href="#i-saat"/></svg><span data-t="demo.upT">Teklifin bitmesine</span> <span id="d-sure">14:57</span></span>
+            <div class="d-urun">
+              <span class="d-urun-gorsel"><svg><use href="#i-etiket"/></svg></span>
+              <span><b data-t="demo.upU">Bambu kaşık seti</b><span class="yeni" data-tutar="up">119,20 ₺</span><s data-tutar="upo">149,00 ₺</s></span>
+              <span class="d-rozet" data-t="demo.upR">%20 indirim</span>
+            </div>
+            <div class="d-evet" id="d-evet" data-t="demo.upY">Evet, ekleyin</div>
+            <div class="d-hayir" data-t="demo.upN">Hayır, teşekkürler</div>
+          </div>
+        </div>
+
+        <!-- B: Shopify ödeme sayfası. Alanlar Shopify'ın; boş çubuk. -->
+        <div class="sahne" data-s="b">
+          <span class="d-etiket"><svg><use href="#i-kilit"/></svg><span data-t="demo.co">Shopify ödeme sayfası</span></span>
+          <div class="d-bolum" data-t="demo.coIletisim">İletişim</div>
+          <div class="d-alan" style="--g:52%"></div>
+          <div class="d-bolum" data-t="demo.coTeslimat">Teslimat</div>
+          <div class="d-ikili"><div class="d-alan" style="--g:40%"></div><div class="d-alan" style="--g:55%"></div></div>
+          <div class="d-alan" style="--g:70%"></div>
+          <div class="d-aciklama" data-t="demo.coNot">Müşteri bilgilerini burada, Shopify'ın kendi formunda girer.</div>
+          <div class="d-bolum" data-t="demo.coOdeme">Ödeme</div>
+          <div class="d-yontem" id="d-kart"><span class="d-radyo"></span><span data-t="demo.coKart">Kredi kartı</span></div>
+          <div class="d-yontem" id="d-kapida"><span class="d-radyo"></span><span data-t="demo.coKapida">Kapıda ödeme</span></div>
+          <div class="d-yontem-not" id="d-kapida-not" data-t="demo.coKapidaNot">Teslimatta ödersiniz. Kapıda ödeme ücreti siparişe eklenir.</div>
+          <div class="d-satir" style="margin-top:10px"><span data-t="demo.coToplam">Toplam</span><b data-tutar="top">1.478,92 ₺</b></div>
+          <div class="d-tamamla" id="d-tamamla" data-t="demo.coBtn">Siparişi tamamla</div>
+        </div>
+
+        <!-- C: teşekkür sayfası (Codship eklentisi: ücret + WhatsApp) -->
+        <div class="sahne" data-s="c">
+          <div class="d-tesekkur">
+            <span class="d-tik"><svg><use href="#i-tik"/></svg></span>
+            <span><small data-t="demo.tyNo">Sipariş #1042</small><b data-t="demo.ty">Teşekkürler!</b></span>
+          </div>
+          <div class="d-kutu2">
+            <div class="d-satir"><span data-t="demo.tyUcret">Kapıda ödeme ücreti</span><span data-tutar="ucret">150,00 ₺</span></div>
+            <div class="d-satir"><b data-t="demo.tyToplam">Kapıda ödenecek toplam</b><b data-tutar="odenecek">1.628,92 ₺</b></div>
+            <h5 data-t="demo.tyBaslik">Kapıda ödeme</h5>
+            <p data-t="demo.tyMetin">Bu siparişin ödemesini teslimatta yapacaksınız. Kapıda ödeme ücreti siparişinize eklendi; lütfen kurye için toplam tutarı hazır bulundurun.</p>
+          </div>
+          <div class="d-kutu2">
+            <h5 data-t="demo.waT">Siparişinizi WhatsApp'tan onaylayın</h5>
+            <p data-t="demo.waP">Siparişinizin hızlıca hazırlanması için tek dokunuşla onaylayın.</p>
+            <div class="d-wa" id="d-wa"><svg><use href="#i-mesaj"/></svg><span data-t="demo.waB">WhatsApp'tan onayla</span></div>
+          </div>
+        </div>
+
+        <div class="parmak" id="parmak"></div>
+      </div>
+    </div>
+    <div class="adimlar" id="adimlar">
+      <span data-adim-yak="0"><b>1</b><span data-t="demo.a1">Ürün sayfası</span></span>
+      <span data-adim-yak="1"><b>2</b><span data-t="demo.a2">Upsell</span></span>
+      <span data-adim-yak="2"><b>3</b><span data-t="demo.a3">Ödeme sayfası</span></span>
+      <span data-adim-yak="3"><b>4</b><span data-t="demo.a4">Teşekkür sayfası</span></span>
+    </div>
+  </div>
+ </div>
+</div>
+
+<!-- ─────────────────────── akan şerit ───────────────────────── -->
+<div class="serit" aria-hidden="true">
+  <div class="serit-ic" id="serit"></div>
+</div>
+
+<!-- ───────────────────── gerçekler (sayaç) ────────────────────
+     Kullanım rakamı değil, ürün gerçeği. Kaynaklar CSS yorumunda. -->
+<div class="kap">
+  <div class="gercekler">
+    <div class="gercek gorun"><b data-sayac="22">22</b><span data-t="fact.f1">dilde ürün sayfası bloğu</span></div>
+    <div class="gercek gorun"><b data-sayac="21">21</b><span data-t="fact.f2">dilde yönetim paneli</span></div>
+    <div class="gercek gorun"><b data-sayac="60">60</b><span data-t="fact.f3">sipariş/ay ücretsiz plan</span></div>
+    <div class="gercek gorun"><b data-sayac="25" data-yuzde="1" data-t="fact.n4">%25</b><span data-t="fact.f4">yıllık ödemede indirim</span></div>
+  </div>
+</div>
+
+<!-- ───────────────────────── nasıl çalışır ──────────────────── -->
+<section id="nasil" class="alt-zemin">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="how.eyebrow">Nasıl çalışır</span>
+      <h2 data-t="how.title">Üç adımda kurulu, sipariş akışınız aynı kalır</h2>
+      <p data-t="how.sub">Codship ödeme sayfasının yerine geçmez. Teklifi ürün sayfasında sunar, siparişi Shopify'a bırakır.</p>
+    </div>
+    <div class="uc-adim gorun" id="uc-adim">
+      <div class="adim-kart">
+        <div class="adim-no"><svg><use href="#i-indir"/></svg></div>
+        <h3 data-t="how.s1t">Shopify App Store'dan kurun</h3>
+        <p data-t="how.s1p">Tek tıkla kurulum. Ayda 60 siparişe kadar ücretsiz; ücretli plana geçince ücret Shopify faturanıza eklenir.</p>
+      </div>
+      <div class="adim-kart">
+        <div class="adim-no"><svg><use href="#i-ayar"/></svg></div>
+        <h3 data-t="how.s2t">Tekliflerinizi ayarlayın</h3>
+        <p data-t="how.s2p">Adet kademelerini, ek ürünü ve upsell penceresini panelde kurun; bloğu tema düzenleyicide ürün sayfasına ekleyin. Kod gerekmez.</p>
+      </div>
+      <div class="adim-kart">
+        <div class="adim-no"><svg><use href="#i-grafik"/></svg></div>
+        <h3 data-t="how.s3t">Sipariş Shopify'da tamamlanır</h3>
+        <p data-t="how.s3p">Müşteri Shopify ödeme sayfasında kapıda ödemeyi seçip siparişi verir. Siz panelde teslim edilen siparişleri ve tahsil edilen parayı izlersiniz.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────── sekmeli özellik vitrini ────────────────
+     Her sekmede GERÇEK ekran: docs/app-store-gorseller/yeni-2026-11-22/kaynak
+     → gorsel/tr/s-*.webp (TR) ve gorsel/s-*.webp (EN). Panel ekranlarında
+     örnek veri var (App Store görsellerindeki takımın aynısı). -->
+<section id="ozellikler">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="feat.eyebrow">Özellikler</span>
+      <h2 data-t="feat.title">Kapıda ödeme yapan bir mağazanın ihtiyacı olan her şey, tek uygulamada</h2>
+      <p data-t="feat.sub">Teklif ürün sayfasında seçilir, sipariş Shopify ödeme sayfasında tamamlanır; hangi kampanyanın teslim edilen sipariş getirdiğini görürsünüz.</p>
+    </div>
+
+    <div class="vitrin gorun" id="vitrin">
+      <div class="sekmeler" role="tablist" aria-label="Özellikler">
+        <button class="sekme" role="tab" id="t-1" aria-controls="p-1" aria-selected="true"><svg aria-hidden="true"><use href="#i-paket"/></svg><span data-t="tab.t1">Adet teklifleri</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-2" aria-controls="p-2" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-yukari"/></svg><span data-t="tab.t2">Upsell ve downsell</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-3" aria-controls="p-3" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-hediye"/></svg><span data-t="tab.t3">Teşekkür sayfası</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-4" aria-controls="p-4" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-ucret"/></svg><span data-t="tab.t4">Kapıda ödeme ücreti</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-5" aria-controls="p-5" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-kalkan"/></svg><span data-t="tab.t5">Kurallarla gizleme</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-6" aria-controls="p-6" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-grafik"/></svg><span data-t="tab.t6">Analiz ve A/B testi</span><span class="cubuk"></span></button>
+        <button class="sekme" role="tab" id="t-7" aria-controls="p-7" aria-selected="false" tabindex="-1"><svg aria-hidden="true"><use href="#i-mesaj"/></svg><span data-t="tab.t7">WhatsApp onayı</span><span class="cubuk"></span></button>
+      </div>
+
+      <!-- 1. Adet teklifleri -->
+      <div class="panel" role="tabpanel" id="p-1" aria-labelledby="t-1">
+        <div class="panel-metin">
+          <h3 data-t="tab.p1h">Ürün sayfasında kazancı gösteren paket kartları</h3>
+          <p data-t="tab.p1p">Müşteri 1, 2 ya da 3 adet arasında seçer; her kart indirimi ve kazancı açıkça gösterir. Tek "Sipariş Ver" düğmesi seçimi sepete koyar ve Shopify ödeme sayfasını açar.</p>
+          <ul class="tikler">
+            <li data-t="tab.p1b1">Kademeli adet indirimi, indirim etiketi ve "kazanın" satırı</li>
+            <li data-t="tab.p1b2">İşaretsiz gelen ek ürün kutusu (sipariş eki) <span class="plan-etiket">Growth</span></li>
+            <li data-t="tab.p1b3">Paketlerde hediye ürün, geri sayım ve özel renkler <span class="plan-etiket">Growth</span></li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="mini-tel"><div class="kayan"><img src="../gorsel/tr/s-blok.webp" data-gorsel="s-blok.webp" data-alt="alt.blok" alt="Ürün sayfasında paket kartları, ek ürün kutusu ve Sipariş Ver düğmesi" width="620" height="1170" loading="lazy" decoding="async"></div></div>
+        </div>
+      </div>
+
+      <!-- 2. Upsell ve downsell -->
+      <div class="panel" role="tabpanel" id="p-2" aria-labelledby="t-2" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p2h">Ödeme adımına geçerken bir ürün daha önerin</h3>
+          <p data-t="tab.p2p">Müşteri "Sipariş Ver"e basınca bir pencere açılır ve indirimli bir ürün önerir. Reddederse ikinci, daha uygun bir teklif (downsell) gösterilir. Kabul edilen ürün aynı sepetle ödeme sayfasına gider.</p>
+          <ul class="tikler">
+            <li data-t="tab.p2b1">Geri sayım ve varyant seçimi</li>
+            <li data-t="tab.p2b2">Reddedilince downsell</li>
+            <li data-t="tab.p2b3">Sepet tutarına göre hediye ürün ve ilerleme çubuğu</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici dar sola"><div class="tarayici-ust"><i></i><i></i><i></i><span>Codship</span></div>
+            <img src="../gorsel/tr/s-upsell.webp" data-gorsel="s-upsell.webp" data-alt="alt.upsell" alt="Upsell penceresinin canlı önizlemesi: teklif ve ret edilince gösterilen ikinci teklif" width="760" height="940" loading="lazy" decoding="async"></div>
+          <div class="ikinci" style="--w:40%"><img src="../gorsel/tr/s-hediye.webp" data-gorsel="s-hediye.webp" data-alt="alt.hediye" alt="Sepet tutarına göre hediye: eşiğe ulaşmadan ve eşik geçilince" width="720" height="621" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+
+      <!-- 3. Teşekkür sayfası -->
+      <div class="panel" role="tabpanel" id="p-3" aria-labelledby="t-3" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p3h">Siparişten sonra, teşekkür sayfasında ikinci şans</h3>
+          <p data-t="tab.p3p">Sipariş verildikten sonra teşekkür sayfasında özel bir teklif çıkar. Müşteri tek dokunuşla ürünü aynı siparişe ekler ve teslimatta siparişiyle birlikte öder.</p>
+          <ul class="tikler">
+            <li data-t="tab.p3b1">Ürün aynı siparişe eklenir, ayrı kargo açılmaz</li>
+            <li data-t="tab.p3b2">Teklif süresi için geri sayım</li>
+            <li data-t="tab.p3b3">Kapıda ödeme ücreti ve ödenecek toplam aynı sayfada açıklanır</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span data-t="tab.url3">Teşekkür sayfası</span></div>
+            <img src="../gorsel/tr/s-tesekkur.webp" data-gorsel="s-tesekkur.webp" data-alt="alt.tesekkur" alt="Teşekkür sayfasında siparişe özel teklif" width="820" height="631" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+
+      <!-- 4. Kapıda ödeme ücreti -->
+      <div class="panel" role="tabpanel" id="p-4" aria-labelledby="t-4" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p4h">Ödenmemiş kapıda ödeme siparişlerine ücret</h3>
+          <p data-t="tab.p4p">Sabit ya da yüzde ücret belirleyin. Ücret yalnız kapıda ödeme yöntemiyle verilen, henüz ödenmemiş siparişlere eklenir; online ödenen siparişlere asla eklenmez. Müşteri kuryeye ne ödeyeceğini teşekkür sayfasında görür.</p>
+          <ul class="tikler">
+            <li data-t="tab.p4b1">Belirlediğiniz sipariş tutarının üstünde ücretsiz</li>
+            <li data-t="tab.p4b2">Ücret teşekkür sayfasında ve ödeme yönteminin açıklamasında yazar</li>
+            <li data-t="tab.p4b3">İsterseniz kapıda ödemeyi Shopify'daki ücretli bir kargo seçeneğine bağlayın</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span>Codship</span></div>
+            <img src="../gorsel/tr/s-ucret.webp" data-gorsel="s-ucret.webp" data-alt="alt.ucret" alt="Panelde kapıda ödeme ücreti ayarları ve teşekkür sayfası önizlemesi" width="1400" height="582" loading="lazy" decoding="async"></div>
+          <div class="ikinci"><img src="../gorsel/tr/s-ucret-onizleme.webp" data-gorsel="s-ucret-onizleme.webp" data-alt="alt.ucretOn" alt="Teşekkür sayfasında kapıda ödeme ücreti ve kapıda ödenecek toplam" width="760" height="511" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+
+      <!-- 5. Kurallarla gizleme -->
+      <div class="panel" role="tabpanel" id="p-5" aria-labelledby="t-5" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p5h">Kapıda ödemeyi istemediğiniz siparişte gizleyin</h3>
+          <p data-t="tab.p5p">Sepetteki koleksiyona, sipariş toplamına, ülkeye, hediye kartına ya da seçilen kargoya göre kapıda ödeme Shopify ödeme sayfasında gizlenir. Riskli siparişler baştan önlenir.</p>
+          <ul class="tikler">
+            <li data-t="tab.p5b1">Sipariş toplamı alt ve üst sınırı</li>
+            <li data-t="tab.p5b2">Ürün, koleksiyon, ülke, indirim ve daha fazlası</li>
+            <li data-t="tab.p5b3">Kurallar ödeme sayfasında Shopify'ın kendi altyapısıyla çalışır</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span>Codship</span></div>
+            <img src="../gorsel/tr/s-kurallar.webp" data-gorsel="s-kurallar.webp" data-alt="alt.kurallar" alt="Kapıda ödemeyi gizleyen kurallar listesi" width="1400" height="680" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+
+      <!-- 6. Analiz ve A/B testi -->
+      <div class="panel" role="tabpanel" id="p-6" aria-labelledby="t-6" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p6h">Siparişi değil, teslim edilen parayı görün</h3>
+          <p data-t="tab.p6p">Reklam paneli siparişi sayar; paranın gelip gelmediğini teslim sonucu söyler. Codship teslim edilen, kargodaki, bekleyen ve dönen siparişleri, teklif gelirini ve siparişin geldiği kampanyayı gösterir.</p>
+          <ul class="tikler">
+            <li data-t="tab.p6b1">Kampanya bazında teslim oranı ve tahsil edilen tutar</li>
+            <li data-t="tab.p6b2">Bloğun iki sürümü için A/B testi; kazanan %95 güvende ilan edilir</li>
+            <li data-t="tab.p6b3">Kapıda ödeme siparişlerine otomatik sipariş etiketi</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span>Codship</span></div>
+            <div class="kayan" style="--kh:330px"><img src="../gorsel/tr/s-analitik.webp" data-gorsel="s-analitik.webp" data-alt="alt.analitik" alt="Analiz: tahsil edilen para, teslim sonuçları, günlük siparişler" width="1400" height="990" loading="lazy" decoding="async"></div></div>
+          <div class="ikinci" style="--w:60%"><img src="../gorsel/tr/s-kaynaklar.webp" data-gorsel="s-kaynaklar.webp" data-alt="alt.kaynaklar" alt="Siparişler nereden geliyor: kaynak bazında teslim oranı" width="1200" height="306" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+
+      <!-- 7. WhatsApp onayı -->
+      <div class="panel" role="tabpanel" id="p-7" aria-labelledby="t-7" hidden>
+        <div class="panel-metin">
+          <h3 data-t="tab.p7h">Siparişi WhatsApp'tan onaylatın</h3>
+          <p data-t="tab.p7p">Kapıda ödeme müşterisi teşekkür sayfasında bir düğme görür. Düğme, mağazanızın WhatsApp numarasına sipariş numarası, ürünler ve teslimatta ödenecek tutarla hazır bir mesaj açar. Mesajı gönderen müşteri siparişi onaylamış olur.</p>
+          <ul class="tikler">
+            <li data-t="tab.p7b1">Sahte siparişler kolayca ayrılır</li>
+            <li data-t="tab.p7b2">Mesaj ve düğme yazısını siz belirlersiniz</li>
+            <li data-t="tab.p7b3">Ücretsiz planda dahil</li>
+          </ul>
+        </div>
+        <div class="sahnecik">
+          <div class="tarayici dar"><div class="tarayici-ust"><i></i><i></i><i></i><span data-t="tab.url7">Teşekkür sayfası</span></div>
+            <img src="../gorsel/tr/s-whatsapp.webp" data-gorsel="s-whatsapp.webp" data-alt="alt.whatsapp" alt="Teşekkür sayfasında WhatsApp'tan onayla düğmesi" width="760" height="337" loading="lazy" decoding="async"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────── panel vitrini (eğik → düz) ──────────────── -->
+<section class="alt-zemin" id="panel">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="dash.eyebrow">Yönetim paneli</span>
+      <h2 data-t="dash.title">Hangi teklifin para getirdiğini tek ekranda görün</h2>
+      <p data-t="dash.sub">Tahsil edilen tutar, teklif geliri, eklenen kapıda ödeme ücretleri ve teslim oranı. Panel Türkçe dahil 21 dilde.</p>
+    </div>
+    <div class="ust-goruntu">
+      <div class="egik" id="egik">
+        <div class="tarayici"><div class="tarayici-ust"><i></i><i></i><i></i><span>admin.shopify.com · Codship</span></div>
+          <img src="../gorsel/tr/s-pano.webp" data-gorsel="s-pano.webp" data-alt="alt.pano" alt="Codship paneli: siparişler, tahsil edilen, teklif geliri, teslim oranı" width="1400" height="973" loading="lazy" decoding="async"></div>
+        <div class="ikinci"><img src="../gorsel/tr/s-abtest.webp" data-gorsel="s-abtest.webp" data-alt="alt.abtest" alt="A/B testi: iki sürüm ve kazanan" width="1400" height="1092" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+    <div class="ozet-kartlar">
+      <div class="kart gorun">
+        <div class="ikon"><svg><use href="#i-kilit"/></svg></div>
+        <h3 data-t="dash.k1t">Müşteri bilgisi Shopify'da kalır</h3>
+        <p data-t="dash.k1p">Blok ad, telefon ya da adres istemez. Müşteri bunları Shopify ödeme sayfasında girer; sipariş listenizde sıradan bir Shopify siparişi olarak görünür.</p>
+      </div>
+      <div class="kart gorun">
+        <div class="ikon"><svg><use href="#i-sinyal"/></svg></div>
+        <h3 data-t="dash.k2t">Meta ve TikTok sunucu olayları</h3>
+        <p data-t="dash.k2p">Dönüşüm olayı tarayıcıya ek olarak sunucudan da gönderilir; reklam paneliniz siparişi kaçırmaz. <span class="plan-etiket">Growth</span></p>
+      </div>
+      <div class="kart gorun">
+        <div class="ikon"><svg><use href="#i-destek"/></svg></div>
+        <h3 data-t="dash.k3t">Türkçe destek, canlı sohbet</h3>
+        <p data-t="dash.k3p">Panelin içinden canlı destek sohbeti her planda açık. Sorularınız Türkçe yanıtlanır; Pro planda öncelikli destek.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── entegrasyonlar ─────────────────────
+     Yalnız gerçekten çalışılan yerler (docs/app-store-tr.md, kod:
+     extensions/*, app/lib/capi.server.ts). Marka logosu yok; yazı + simge. -->
+<section id="entegrasyon">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="int.eyebrow">Birlikte çalıştığı yerler</span>
+      <h2 data-t="int.title">Shopify'ın kendi parçalarıyla çalışır</h2>
+      <p data-t="int.sub">Tema, ödeme sayfası ve teşekkür sayfası Shopify'ın; Codship onlara bağlanır, yerlerine geçmez.</p>
+    </div>
+    <div class="entegre">
+      <div class="ent gorun"><span class="ent-ikon" style="background:var(--yesil)"><svg><use href="#i-sayfa"/></svg></span><div><b data-t="int.e1t">Tema düzenleyici</b><p data-t="int.e1p">Blok ürün sayfasına uygulama bloğu olarak eklenir; temanızın görünümünü alır.</p></div></div>
+      <div class="ent gorun"><span class="ent-ikon" style="background:#2f6fd6"><svg><use href="#i-kilit"/></svg></span><div><b data-t="int.e2t">Shopify ödeme sayfası</b><p data-t="int.e2p">Müşteri bilgileri ve ödeme Shopify'da. Kapıda ödeme kuralları ödeme sayfasında Shopify'ın altyapısıyla çalışır.</p></div></div>
+      <div class="ent gorun"><span class="ent-ikon" style="background:var(--amber)"><svg><use href="#i-hediye"/></svg></span><div><b data-t="int.e3t">Teşekkür sayfası</b><p data-t="int.e3p">Ücret açıklaması, siparişe ek teklif ve WhatsApp düğmesi Shopify'ın teşekkür sayfasında.</p></div></div>
+      <div class="ent gorun"><span class="ent-ikon" style="background:#1877f2"><svg><use href="#i-sinyal"/></svg></span><div><b data-t="int.e4t">Meta Dönüşüm API'si</b><p data-t="int.e4p">Satın alma olayı sunucudan Meta'ya gider. <span class="plan-etiket">Growth</span></p></div></div>
+      <div class="ent gorun"><span class="ent-ikon" style="background:#111"><svg><use href="#i-sinyal"/></svg></span><div><b data-t="int.e5t">TikTok Events API</b><p data-t="int.e5p">Satın alma olayı sunucudan TikTok'a gider. <span class="plan-etiket">Growth</span></p></div></div>
+      <div class="ent gorun"><span class="ent-ikon" style="background:#25a35a"><svg><use href="#i-mesaj"/></svg></span><div><b data-t="int.e6t">WhatsApp</b><p data-t="int.e6p">Müşteri siparişini mağazanızın WhatsApp numarasına hazır mesajla onaylar.</p></div></div>
+    </div>
+    <ul class="diller gorun" aria-label="Bloğun dilleri">
+      <li>Türkçe</li><li>English</li><li>العربية</li><li>Deutsch</li><li>Français</li><li>Español</li><li>Italiano</li><li>Nederlands</li>
+      <li>Polski</li><li>Português</li><li>Svenska</li><li>Dansk</li><li>Norsk</li><li>Suomi</li><li>Čeština</li><li>日本語</li><li>한국어</li>
+      <li>中文</li><li>ไทย</li><li>Tiếng Việt</li>
+    </ul>
+    <p class="diller-not gorun" data-t="int.lang">Blok vitrininizin dilinde açılır (22 dil, Arapçada sağdan sola yerleşim dahil); yönetim paneli 21 dilde.</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────── yorumlar ─────────────────────────
+     Shopify App Store'daki yorumların TAMAMI, olduğu gibi (24.11.2026).
+     Yeni yorum gelince aynı kart kalıbıyla eklenir; kırpılmaz,
+     düzeltilmez, çevrilmez. Hero'daki "5,0 · 3 değerlendirme" de güncellenir. -->
+<section id="yorumlar" class="alt-zemin">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="rev.eyebrow">Yorumlar</span>
+      <h2 data-t="rev.title">Mağazalar ne diyor?</h2>
+      <div class="puan-ozet"><span class="yildizlar" aria-hidden="true">★★★★★</span><span data-t="rev.score"><b>5,0</b> · Shopify App Store'da 3 değerlendirme</span></div>
+    </div>
+    <div class="yorumlar">
+      <article class="yorum gorun">
+        <div class="yildiz" aria-hidden="true">★★★★★</div><span class="gizli-okuyucu" data-t="rev.five1">5 üzerinden 5</span>
+        <p lang="tr">Uygulamadan gerçekten çok memnun kaldım. Kullanımı oldukça kolay ve ihtiyaçlarımı fazlasıyla karşılıyor. Özellikle diğer benzer uygulamalarla kıyasladığımda fiyat-performans açısından çok daha avantajlı. Aynı ücrete çok daha fazla kullanım hakkı sunması gerçekten büyük bir artı. Hem ekonomik hem de işlevsel bir uygulama. Kesinlikle tavsiye ediyorum, emeği geçenlere teşekkürler!</p>
+        <div class="yorum-alt"><span class="rumuz" aria-hidden="true">K</span><span><b>Kupart</b><span data-t="rev.r1">Türkiye · 16 Kasım 2026</span></span></div>
+      </article>
+      <article class="yorum gorun">
+        <div class="yildiz" aria-hidden="true">★★★★★</div><span class="gizli-okuyucu" data-t="rev.five2">5 üzerinden 5</span>
+        <p lang="tr">Merhaba, uygulamayı bugün indirdim. 10 yıldız olsa hepsini verirdim. Neden mi? Birçok kapıda ödeme uygulaması kullandım. Ama en büyük isteğimi bu mağaza çözdü. Ödeme sayfasında kapıda ödeme bedelinin sepet toplamına yansımasını istiyordum. Büyük uygulamalara günlerce mail atarak bunu yapmalarını istemiştim olmadı. Tek seferde sorunu hallettiler. İlginize ve hızlı çözümünüze çok çok teşekkür ederim. Bol kazançlarınız olsun</p>
+        <div class="yorum-alt"><span class="rumuz" aria-hidden="true">D</span><span><b>Dua Hanem</b><span data-t="rev.r2">Birleşik Krallık · 14 Kasım 2026</span></span></div>
+      </article>
+      <article class="yorum gorun">
+        <div class="yildiz" aria-hidden="true">★★★★★</div><span class="gizli-okuyucu" data-t="rev.five3">5 üzerinden 5</span>
+        <p lang="tr">Tavsiye ile indirip kullandm. Fİyat olarak daha uygun ve işimi görüyor. kullanım hakkı daha fazla Başarılar</p>
+        <div class="yorum-alt"><span class="rumuz" aria-hidden="true">S</span><span><b>SenTasarla</b><span data-t="rev.r3">Türkiye · 16 Kasım 2026</span></span></div>
+      </article>
+    </div>
+    <p class="yorum-not gorun"><span data-t="rev.note">Yorumlar Shopify App Store'dan olduğu gibi alındı.</span>
+      <a class="magaza-yorum" href="https://apps.shopify.com/codship-cod-form-upsells/reviews?locale=tr" data-t="rev.link">Tüm yorumlar App Store'da</a></p>
+  </div>
+</section>
+
+<!-- ───────────────────────────── fiyat ──────────────────────────
+     Kaynak: docs/app-store-tr.md (canlı listeleme) + app/lib/plan.ts.
+     Ücretsiz deneme YOK (K-267). Unlimited satışta değil (K-269). -->
+<section id="fiyat">
+  <div class="kap">
+    <div class="baslik gorun">
+      <span class="ust-yazi" data-t="price.eyebrow">Fiyat</span>
+      <h2 data-t="price.title">Ücretsiz başlayın, büyüdükçe geçin</h2>
+      <p data-t="price.sub">Ücret Shopify tarafından, USD olarak, mevcut Shopify faturanıza eklenir. Kurulum ücreti yok.</p>
+      <div class="donem" role="group" aria-label="Ödeme dönemi" id="donem">
+        <span class="kizak" id="kizak"></span>
+        <button type="button" data-donem="ay" aria-pressed="true" data-t="price.monthly">Aylık</button>
+        <button type="button" data-donem="yil" aria-pressed="false"><span data-t="price.yearly">Yıllık</span><em data-t="price.save">%25 indirim</em></button>
+      </div>
+    </div>
+    <div class="fiyat-alan" id="fiyat-alan">
+      <div class="fiyatlar">
+        <div class="plan gorun">
+          <div class="ad" data-t="price.p0name">Ücretsiz</div>
+          <div class="ucret">$0</div>
+          <div class="esdeger"></div>
+          <div class="adet" data-t="price.p0q">Ayda 60 sipariş</div>
+          <ul>
+            <li data-t="price.p0f1">Adet teklifleri ve paket kartları</li>
+            <li data-t="price.p0f2">Upsell, downsell ve teşekkür sayfası teklifi</li>
+            <li data-t="price.p0f3">Sepet tutarına göre hediye ürün</li>
+            <li data-t="price.p0f4">Kapıda ödeme ücreti ve sınırlama kuralları</li>
+            <li data-t="price.p0f5">WhatsApp sipariş onayı düğmesi</li>
+            <li data-t="price.p0f6">Otomatik sipariş etiketi, ödeme durumu</li>
+            <li data-t="price.p0f7">A/B testi ve canlı destek sohbeti</li>
+          </ul>
+          <a class="btn ikincil magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr" data-t="price.cta0">Ücretsiz kur</a>
+        </div>
+        <div class="plan one gorun">
+          <div class="etiket" data-t="price.badge">Büyüyen mağazalar için</div>
+          <div class="ad">Growth</div>
+          <div class="ucret"><span class="ay">$9.99 <small data-t="price.mo">/ay</small></span><span class="yil">$89.99 <small data-t="price.yr">/yıl</small></span></div>
+          <div class="esdeger"><span class="yil" data-t="price.eq1">Ayda $7.50'ye denk gelir</span></div>
+          <div class="adet" data-t="price.p1q">Ayda 420 sipariş</div>
+          <ul>
+            <li data-t="price.p1f1">Ücretsiz plandaki her şey</li>
+            <li data-t="price.p1f2">Sipariş eki (ek ürün kutusu)</li>
+            <li data-t="price.p1f3">Paketlerde hediye ürün ve özel renkler</li>
+            <li data-t="price.p1f4">Meta ve TikTok sunucu olayları</li>
+          </ul>
+          <a class="btn magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr" data-t="price.cta1">Kur ve Growth'u seç</a>
+        </div>
+        <div class="plan gorun">
+          <div class="ad">Pro</div>
+          <div class="ucret"><span class="ay">$27.99 <small data-t="price.mo2">/ay</small></span><span class="yil">$251.99 <small data-t="price.yr2">/yıl</small></span></div>
+          <div class="esdeger"><span class="yil" data-t="price.eq2">Ayda $21.00'a denk gelir</span></div>
+          <div class="adet" data-t="price.p2q">Sınırsız sipariş</div>
+          <ul>
+            <li data-t="price.p2f1">Growth'taki her şey</li>
+            <li data-t="price.p2f2">Aşım ücreti yok</li>
+            <li data-t="price.p2f3">Öncelikli destek</li>
+          </ul>
+          <a class="btn ikincil magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr" data-t="price.cta2">Kur ve Pro'yu seç</a>
+        </div>
+      </div>
+    </div>
+    <div class="not gorun" data-t="price.note"><b>Aylık sınırın üstünde:</b> aylık Growth planında 420 siparişten sonra sipariş başına $0.05, en çok $50. Pro'da sipariş sınırı ve aşım ücreti yoktur. Ücretsiz planda ve yıllık planlarda aşım ücreti alınmaz; hak dolunca blok ay sonuna kadar gizlenir, müşteri normal sepet ve ödeme sayfasıyla alışverişe devam eder.</div>
+  </div>
+</section>
+
+<!-- ───────────────────────────── sss ──────────────────────────── -->
+<section id="sss" class="alt-zemin">
+  <div class="kap">
+    <div class="baslik gorun"><span class="ust-yazi" data-t="faq.eyebrow">SSS</span><h2 data-t="faq.title">Sık sorulan sorular</h2></div>
+    <div class="sss">
+      <details open class="gorun">
+        <summary data-t="faq.q1">Uygulama müşterilerimin bilgilerini topluyor mu?</summary>
+        <p data-t="faq.a1">Hayır. Blok ad, telefon, e-posta ya da adres istemez. Müşteri bu bilgileri Shopify ödeme sayfasında, Shopify'ın kendi formunda girer. Uygulama yalnızca sipariş numarasını, tutarı, seçilen teklifi ve teslim sonucunu raporlar için tutar.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q2">Siparişler Shopify'da normal görünmeye devam ediyor mu?</summary>
+        <p data-t="faq.a2">Evet. Siparişi müşteri Shopify ödeme sayfasında kapıda ödemeyi seçerek verir; Codship sipariş oluşturmaz. Sipariş listenizde, raporlarınızda ve kargo akışınızda diğer siparişlerle aynı görünür.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q3">Kapıda ödeme ücreti ödeme sayfasındaki toplamda görünür mü?</summary>
+        <p data-t="faq.a3">Shopify, uygulamaların ödeme sayfasındaki toplamı değiştirmesine izin vermez. Codship ücreti, kapıda ödeme siparişi verildikten birkaç saniye sonra siparişe ayrı satır olarak ekler; müşteri ücreti ödeme yönteminin açıklamasında ve teşekkür sayfasında görür. İsterseniz kapıda ödemeyi Shopify'da açtığınız ücretli bir kargo seçeneğine bağlayabilirsiniz; o zaman ücret ödeme sayfasında kargo ücreti olarak görünür.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q4">Kapıda ödeme nerede seçiliyor?</summary>
+        <p data-t="faq.a4">Shopify ödeme sayfasında. Mağazanızın Ödemeler ayarında manuel "Kapıda ödeme" yöntemini açarsınız; müşteri ödeme sayfasında onu seçer. Codship ödeme almaz.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q5">Kurulum için kod bilmem gerekiyor mu?</summary>
+        <p data-t="faq.a5">Hayır. Uygulamayı App Store'dan kurar, teklifleri panelde ayarlar, bloğu tema düzenleyicide ürün sayfasına eklersiniz. Panel kurulum adımlarını sırayla gösterir.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q6">Plan sınırıma ulaşırsam ne olur?</summary>
+        <p data-t="faq.a6">Aylık Growth planında sipariş yine geçer ve sipariş başına $0.05 tutar, en çok $50. Pro'da sipariş sınırı yoktur. Ücretsiz planda ve yıllık Growth'ta blok ay sonuna kadar gizlenir; müşteri normal sepet ve ödeme sayfasıyla devam eder. İki durumda da satış kaybolmaz.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q7">Ücretsiz deneme var mı?</summary>
+        <p data-t="faq.a7">Ücretli planlarda deneme süresi yok; bunun yerine Ücretsiz plan süresiz ve ayda 60 siparişe kadar bütün temel özellikler açık. Hazır olduğunuzda panelden Growth ya da Pro'ya geçersiniz.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q8">Türkçe destek var mı?</summary>
+        <p data-t="faq.a8">Evet. Yönetim paneli Türkçe dahil 21 dilde; müşterilerinizin gördüğü blok Türkçe ve Arapça dahil 22 dilde. Destek Türkçe yanıtlanır.</p>
+      </details>
+      <details class="gorun">
+        <summary data-t="faq.q9">Nasıl iptal ederim?</summary>
+        <p data-t="faq.a9">Uygulamayı Shopify panelinizden kaldırın. Aboneliği Shopify kendisi iptal eder; bize e-posta atmanıza gerek yok, ihbar süresi de yok.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────── kapanış ─────────────────────────── -->
+<div class="kapanis" style="padding-top:96px">
+  <div class="kap">
+    <div class="kapanis-kutu gorun">
+      <h2 data-t="close.title">Aynı müşteriden daha büyük sepet</h2>
+      <p data-t="close.sub">Ayda 60 siparişe kadar ücretsiz. Kurulum ücreti yok, kod yok; sipariş akışınız Shopify'da kalır.</p>
+      <a class="btn magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr">
+        <svg aria-hidden="true"><use href="#i-indir"/></svg><span data-t="close.cta">Shopify App Store'dan ücretsiz kur</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="kap">
+    <div class="footbar">
+      <div style="max-width:300px">
+        <a class="logo" href="#" style="margin-bottom:14px">
+          <svg viewBox="0 0 512 512" aria-label="Codship">
+            <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#25A385"/><stop offset="1" stop-color="#166B57"/>
+            </linearGradient></defs>
+            <rect width="512" height="512" rx="112" fill="url(#g2)"/>
+            <path d="M256 92 L398 140 V268 c0 82 -58 126 -142 160 c-84 -34 -142 -78 -142 -160 V140 Z" fill="#fff"/>
+            <rect x="196" y="176" width="120" height="180" rx="12" fill="#1F8A70"/>
+            <circle cx="292" cy="272" r="13" fill="#fff"/>
+          </svg>
+          Codship
+        </a>
+        <p data-t="foot.tag">Shopify mağazaları için kapıda ödeme teklifleri ve upsell.</p>
+      </div>
+      <div>
+        <h4 data-t="foot.product">Ürün</h4>
+        <a href="#ozellikler" data-t="foot.feat">Özellikler</a>
+        <a href="#fiyat" data-t="foot.price">Fiyat</a>
+        <a class="magaza" href="https://apps.shopify.com/codship-cod-form-upsells?locale=tr">Shopify App Store</a>
+      </div>
+      <div>
+        <h4 data-t="foot.legal">Hukuki</h4>
+        <a href="https://app.cod-ship.com/gizlilik" data-t="foot.l1">Gizlilik politikası</a>
+        <a href="https://app.cod-ship.com/dpa" data-t="foot.l2">Veri işleme eki (DPA)</a>
+        <a href="https://app.cod-ship.com/veri-isleme" data-t="foot.l3">Veriyi nasıl işliyoruz</a>
+        <a href="https://app.cod-ship.com/veri-talebi" data-t="foot.l4">Veri talebi</a>
+      </div>
+      <div>
+        <h4 data-t="foot.contact">İletişim</h4>
+        <a href="mailto:info@cod-ship.com">info@cod-ship.com</a>
+        <a href="https://www.instagram.com/codship.app/">Instagram</a>
+      </div>
+    </div>
+    <div class="telif" data-t="foot.copy">© 2026 Codship. Shopify Inc. ile bağlantılı değildir ve onun tarafından onaylanmamıştır. Shopify, Shopify Inc.'in ticari markasıdır.</div>
+  </div>
+</footer>
+
+<script>
+/* ──────────────────────────────────────────────────────────────
+   Dil. Sayfanın HTML'i İNGİLİZCE (ana dil; reklam ve arama botları
+   JS'siz HTML'i okur). Türkçe karşılıklar aşağıdaki TR sözlüğünde.
+   İngilizce metni değiştirirsen TR karşılığını da değiştir; sonra
+   `node scripts/site-tr-sayfa.mjs` ile tr/index.html'i yeniden üret.
+   Yorum metinleri (lang="tr") data-t taşımaz: çevrilmez.
+   ────────────────────────────────────────────────────────────── */
+const TR = {
+  "demo.zaman":"Kampanyanın bitmesine kalan süre",
+  "demo.hediye":"600,10 ₺ daha ekleyin, bez çanta hediye",
+  "fact.n4":"%25",
+  "nav.feat":"Özellikler",
+  "nav.how":"Nasıl çalışır",
+  "nav.price":"Fiyat",
+  "nav.reviews":"Yorumlar",
+  "nav.faq":"SSS",
+  "nav.cta":"Ücretsiz kur",
+  "hero.badge":"Shopify App Store'da yayında",
+  "hero.rating":"<b>5,0</b> · 3 değerlendirme",
+  "hero.h1":"Kapıda ödemede <span class=\"vurgu\">daha büyük sepet.</span>",
+  "hero.sub":"Ürün sayfanızda adet teklifleri, upsell ve hediye; ödenmemiş kapıda ödeme siparişlerine ücret, kurallarla kapıda ödemeyi gizleme ve WhatsApp onayı. Her sipariş normal Shopify ödeme sayfasında tamamlanır.",
+  "hero.cta1":"Shopify App Store'dan ücretsiz kur",
+  "hero.cta2":"Özellikleri görün",
+  "hero.g1":"Ayda 60 siparişe kadar ücretsiz",
+  "hero.g2":"Kurulum ücreti yok",
+  "hero.g3":"Müşteri bilgisi yalnız Shopify'da",
+  "demo.c1":"Adet teklifi",
+  "demo.c2":"Sipariş eki",
+  "demo.c3":"Upsell penceresi",
+  "demo.c4":"Shopify ödeme sayfası",
+  "demo.c5":"Ücret + WhatsApp onayı",
+  "demo.h":"Paketinizi seçin",
+  "demo.sub":"Ödeme adımında kapıda ödemeyi seçebilirsiniz.",
+  "demo.k1":"1 adet",
+  "demo.r1":"%10 indirim",
+  "demo.k2":"2 adet",
+  "demo.kazan":"kazanın",
+  "demo.r2":"%18 indirim",
+  "demo.k3":"3 adet",
+  "demo.kazan2":"kazanın",
+  "demo.ek":"Siparişinize bakım kiti ekleyin",
+  "demo.ekAlt":"Yalnız bu siparişe özel fiyat",
+  "demo.ara":"Ara toplam",
+  "demo.kargo":"Kargo ücreti ödeme adımında hesaplanır.",
+  "demo.btn":"Sipariş Ver",
+  "demo.trust":"Teslimat bilgilerinizi bir sonraki adımda gireceksiniz.",
+  "demo.upH":"Bunu da ekleyin, %20 indirimli",
+  "demo.upP":"Bu siparişe özel fiyat. Tek dokunuşla sepetinize ekleyip sizi ödeme adımına yönlendiriyoruz.",
+  "demo.upT":"Teklifin bitmesine",
+  "demo.upU":"Bambu kaşık seti",
+  "demo.upR":"%20 indirim",
+  "demo.upY":"Evet, ekleyin",
+  "demo.upN":"Hayır, teşekkürler",
+  "demo.co":"Shopify ödeme sayfası",
+  "demo.coIletisim":"İletişim",
+  "demo.coTeslimat":"Teslimat",
+  "demo.coNot":"Müşteri bilgilerini burada, Shopify'ın kendi formunda girer.",
+  "demo.coOdeme":"Ödeme",
+  "demo.coKart":"Kredi kartı",
+  "demo.coKapida":"Kapıda ödeme",
+  "demo.coKapidaNot":"Teslimatta ödersiniz. Kapıda ödeme ücreti siparişe eklenir.",
+  "demo.coToplam":"Toplam",
+  "demo.coBtn":"Siparişi tamamla",
+  "demo.tyNo":"Sipariş #1042",
+  "demo.ty":"Teşekkürler!",
+  "demo.tyUcret":"Kapıda ödeme ücreti",
+  "demo.tyToplam":"Kapıda ödenecek toplam",
+  "demo.tyBaslik":"Kapıda ödeme",
+  "demo.tyMetin":"Bu siparişin ödemesini teslimatta yapacaksınız. Kapıda ödeme ücreti siparişinize eklendi; lütfen kurye için toplam tutarı hazır bulundurun.",
+  "demo.waT":"Siparişinizi WhatsApp'tan onaylayın",
+  "demo.waP":"Siparişinizin hızlıca hazırlanması için tek dokunuşla onaylayın.",
+  "demo.waB":"WhatsApp'tan onayla",
+  "demo.a1":"Ürün sayfası",
+  "demo.a2":"Upsell",
+  "demo.a3":"Ödeme sayfası",
+  "demo.a4":"Teşekkür sayfası",
+  "fact.f1":"dilde ürün sayfası bloğu",
+  "fact.f2":"dilde yönetim paneli",
+  "fact.f3":"sipariş/ay ücretsiz plan",
+  "fact.f4":"yıllık ödemede indirim",
+  "how.eyebrow":"Nasıl çalışır",
+  "how.title":"Üç adımda kurulu, sipariş akışınız aynı kalır",
+  "how.sub":"Codship ödeme sayfasının yerine geçmez. Teklifi ürün sayfasında sunar, siparişi Shopify'a bırakır.",
+  "how.s1t":"Shopify App Store'dan kurun",
+  "how.s1p":"Tek tıkla kurulum. Ayda 60 siparişe kadar ücretsiz; ücretli plana geçince ücret Shopify faturanıza eklenir.",
+  "how.s2t":"Tekliflerinizi ayarlayın",
+  "how.s2p":"Adet kademelerini, ek ürünü ve upsell penceresini panelde kurun; bloğu tema düzenleyicide ürün sayfasına ekleyin. Kod gerekmez.",
+  "how.s3t":"Sipariş Shopify'da tamamlanır",
+  "how.s3p":"Müşteri Shopify ödeme sayfasında kapıda ödemeyi seçip siparişi verir. Siz panelde teslim edilen siparişleri ve tahsil edilen parayı izlersiniz.",
+  "feat.eyebrow":"Özellikler",
+  "feat.title":"Kapıda ödeme yapan bir mağazanın ihtiyacı olan her şey, tek uygulamada",
+  "feat.sub":"Teklif ürün sayfasında seçilir, sipariş Shopify ödeme sayfasında tamamlanır; hangi kampanyanın teslim edilen sipariş getirdiğini görürsünüz.",
+  "tab.t1":"Adet teklifleri",
+  "tab.t2":"Upsell ve downsell",
+  "tab.t3":"Teşekkür sayfası",
+  "tab.t4":"Kapıda ödeme ücreti",
+  "tab.t5":"Kurallarla gizleme",
+  "tab.t6":"Analiz ve A/B testi",
+  "tab.t7":"WhatsApp onayı",
+  "tab.p1h":"Ürün sayfasında kazancı gösteren paket kartları",
+  "tab.p1p":"Müşteri 1, 2 ya da 3 adet arasında seçer; her kart indirimi ve kazancı açıkça gösterir. Tek \"Sipariş Ver\" düğmesi seçimi sepete koyar ve Shopify ödeme sayfasını açar.",
+  "tab.p1b1":"Kademeli adet indirimi, indirim etiketi ve \"kazanın\" satırı",
+  "tab.p1b2":"İşaretsiz gelen ek ürün kutusu (sipariş eki) <span class=\"plan-etiket\">Growth</span>",
+  "tab.p1b3":"Paketlerde hediye ürün, geri sayım ve özel renkler <span class=\"plan-etiket\">Growth</span>",
+  "tab.p2h":"Ödeme adımına geçerken bir ürün daha önerin",
+  "tab.p2p":"Müşteri \"Sipariş Ver\"e basınca bir pencere açılır ve indirimli bir ürün önerir. Reddederse ikinci, daha uygun bir teklif (downsell) gösterilir. Kabul edilen ürün aynı sepetle ödeme sayfasına gider.",
+  "tab.p2b1":"Geri sayım ve varyant seçimi",
+  "tab.p2b2":"Reddedilince downsell",
+  "tab.p2b3":"Sepet tutarına göre hediye ürün ve ilerleme çubuğu",
+  "tab.p3h":"Siparişten sonra, teşekkür sayfasında ikinci şans",
+  "tab.p3p":"Sipariş verildikten sonra teşekkür sayfasında özel bir teklif çıkar. Müşteri tek dokunuşla ürünü aynı siparişe ekler ve teslimatta siparişiyle birlikte öder.",
+  "tab.p3b1":"Ürün aynı siparişe eklenir, ayrı kargo açılmaz",
+  "tab.p3b2":"Teklif süresi için geri sayım",
+  "tab.p3b3":"Kapıda ödeme ücreti ve ödenecek toplam aynı sayfada açıklanır",
+  "tab.url3":"Teşekkür sayfası",
+  "tab.p4h":"Ödenmemiş kapıda ödeme siparişlerine ücret",
+  "tab.p4p":"Sabit ya da yüzde ücret belirleyin. Ücret yalnız kapıda ödeme yöntemiyle verilen, henüz ödenmemiş siparişlere eklenir; online ödenen siparişlere asla eklenmez. Müşteri kuryeye ne ödeyeceğini teşekkür sayfasında görür.",
+  "tab.p4b1":"Belirlediğiniz sipariş tutarının üstünde ücretsiz",
+  "tab.p4b2":"Ücret teşekkür sayfasında ve ödeme yönteminin açıklamasında yazar",
+  "tab.p4b3":"İsterseniz kapıda ödemeyi Shopify'daki ücretli bir kargo seçeneğine bağlayın",
+  "tab.p5h":"Kapıda ödemeyi istemediğiniz siparişte gizleyin",
+  "tab.p5p":"Sepetteki koleksiyona, sipariş toplamına, ülkeye, hediye kartına ya da seçilen kargoya göre kapıda ödeme Shopify ödeme sayfasında gizlenir. Riskli siparişler baştan önlenir.",
+  "tab.p5b1":"Sipariş toplamı alt ve üst sınırı",
+  "tab.p5b2":"Ürün, koleksiyon, ülke, indirim ve daha fazlası",
+  "tab.p5b3":"Kurallar ödeme sayfasında Shopify'ın kendi altyapısıyla çalışır",
+  "tab.p6h":"Siparişi değil, teslim edilen parayı görün",
+  "tab.p6p":"Reklam paneli siparişi sayar; paranın gelip gelmediğini teslim sonucu söyler. Codship teslim edilen, kargodaki, bekleyen ve dönen siparişleri, teklif gelirini ve siparişin geldiği kampanyayı gösterir.",
+  "tab.p6b1":"Kampanya bazında teslim oranı ve tahsil edilen tutar",
+  "tab.p6b2":"Bloğun iki sürümü için A/B testi; kazanan %95 güvende ilan edilir",
+  "tab.p6b3":"Kapıda ödeme siparişlerine otomatik sipariş etiketi",
+  "tab.p7h":"Siparişi WhatsApp'tan onaylatın",
+  "tab.p7p":"Kapıda ödeme müşterisi teşekkür sayfasında bir düğme görür. Düğme, mağazanızın WhatsApp numarasına sipariş numarası, ürünler ve teslimatta ödenecek tutarla hazır bir mesaj açar. Mesajı gönderen müşteri siparişi onaylamış olur.",
+  "tab.p7b1":"Sahte siparişler kolayca ayrılır",
+  "tab.p7b2":"Mesaj ve düğme yazısını siz belirlersiniz",
+  "tab.p7b3":"Ücretsiz planda dahil",
+  "tab.url7":"Teşekkür sayfası",
+  "dash.eyebrow":"Yönetim paneli",
+  "dash.title":"Hangi teklifin para getirdiğini tek ekranda görün",
+  "dash.sub":"Tahsil edilen tutar, teklif geliri, eklenen kapıda ödeme ücretleri ve teslim oranı. Panel Türkçe dahil 21 dilde.",
+  "dash.k1t":"Müşteri bilgisi Shopify'da kalır",
+  "dash.k1p":"Blok ad, telefon ya da adres istemez. Müşteri bunları Shopify ödeme sayfasında girer; sipariş listenizde sıradan bir Shopify siparişi olarak görünür.",
+  "dash.k2t":"Meta ve TikTok sunucu olayları",
+  "dash.k2p":"Dönüşüm olayı tarayıcıya ek olarak sunucudan da gönderilir; reklam paneliniz siparişi kaçırmaz. <span class=\"plan-etiket\">Growth</span>",
+  "dash.k3t":"Türkçe destek, canlı sohbet",
+  "dash.k3p":"Panelin içinden canlı destek sohbeti her planda açık. Sorularınız Türkçe yanıtlanır; Pro planda öncelikli destek.",
+  "int.eyebrow":"Birlikte çalıştığı yerler",
+  "int.title":"Shopify'ın kendi parçalarıyla çalışır",
+  "int.sub":"Tema, ödeme sayfası ve teşekkür sayfası Shopify'ın; Codship onlara bağlanır, yerlerine geçmez.",
+  "int.e1t":"Tema düzenleyici",
+  "int.e1p":"Blok ürün sayfasına uygulama bloğu olarak eklenir; temanızın görünümünü alır.",
+  "int.e2t":"Shopify ödeme sayfası",
+  "int.e2p":"Müşteri bilgileri ve ödeme Shopify'da. Kapıda ödeme kuralları ödeme sayfasında Shopify'ın altyapısıyla çalışır.",
+  "int.e3t":"Teşekkür sayfası",
+  "int.e3p":"Ücret açıklaması, siparişe ek teklif ve WhatsApp düğmesi Shopify'ın teşekkür sayfasında.",
+  "int.e4t":"Meta Dönüşüm API'si",
+  "int.e4p":"Satın alma olayı sunucudan Meta'ya gider. <span class=\"plan-etiket\">Growth</span>",
+  "int.e5t":"TikTok Events API",
+  "int.e5p":"Satın alma olayı sunucudan TikTok'a gider. <span class=\"plan-etiket\">Growth</span>",
+  "int.e6t":"WhatsApp",
+  "int.e6p":"Müşteri siparişini mağazanızın WhatsApp numarasına hazır mesajla onaylar.",
+  "int.lang":"Blok vitrininizin dilinde açılır (22 dil, Arapçada sağdan sola yerleşim dahil); yönetim paneli 21 dilde.",
+  "rev.eyebrow":"Yorumlar",
+  "rev.title":"Mağazalar ne diyor?",
+  "rev.score":"<b>5,0</b> · Shopify App Store'da 3 değerlendirme",
+  "rev.five1":"5 üzerinden 5",
+  "rev.r1":"Türkiye · 16 Kasım 2026",
+  "rev.five2":"5 üzerinden 5",
+  "rev.r2":"Birleşik Krallık · 14 Kasım 2026",
+  "rev.five3":"5 üzerinden 5",
+  "rev.r3":"Türkiye · 16 Kasım 2026",
+  "rev.note":"Yorumlar Shopify App Store'dan olduğu gibi alındı.",
+  "rev.link":"Tüm yorumlar App Store'da",
+  "price.eyebrow":"Fiyat",
+  "price.title":"Ücretsiz başlayın, büyüdükçe geçin",
+  "price.sub":"Ücret Shopify tarafından, USD olarak, mevcut Shopify faturanıza eklenir. Kurulum ücreti yok.",
+  "price.monthly":"Aylık",
+  "price.yearly":"Yıllık",
+  "price.save":"%25 indirim",
+  "price.p0name":"Ücretsiz",
+  "price.p0q":"Ayda 60 sipariş",
+  "price.p0f1":"Adet teklifleri ve paket kartları",
+  "price.p0f2":"Upsell, downsell ve teşekkür sayfası teklifi",
+  "price.p0f3":"Sepet tutarına göre hediye ürün",
+  "price.p0f4":"Kapıda ödeme ücreti ve sınırlama kuralları",
+  "price.p0f5":"WhatsApp sipariş onayı düğmesi",
+  "price.p0f6":"Otomatik sipariş etiketi, ödeme durumu",
+  "price.p0f7":"A/B testi ve canlı destek sohbeti",
+  "price.cta0":"Ücretsiz kur",
+  "price.badge":"Büyüyen mağazalar için",
+  "price.mo":"/ay",
+  "price.yr":"/yıl",
+  "price.eq1":"Ayda $7.50'ye denk gelir",
+  "price.p1q":"Ayda 420 sipariş",
+  "price.p1f1":"Ücretsiz plandaki her şey",
+  "price.p1f2":"Sipariş eki (ek ürün kutusu)",
+  "price.p1f3":"Paketlerde hediye ürün ve özel renkler",
+  "price.p1f4":"Meta ve TikTok sunucu olayları",
+  "price.cta1":"Kur ve Growth'u seç",
+  "price.mo2":"/ay",
+  "price.yr2":"/yıl",
+  "price.eq2":"Ayda $21.00'a denk gelir",
+  "price.p2q":"Sınırsız sipariş",
+  "price.p2f1":"Growth'taki her şey",
+  "price.p2f2":"Aşım ücreti yok",
+  "price.p2f3":"Öncelikli destek",
+  "price.cta2":"Kur ve Pro'yu seç",
+  "price.note":"<b>Aylık sınırın üstünde:</b> aylık Growth planında 420 siparişten sonra sipariş başına $0.05, en çok $50. Pro'da sipariş sınırı ve aşım ücreti yoktur. Ücretsiz planda ve yıllık planlarda aşım ücreti alınmaz; hak dolunca blok ay sonuna kadar gizlenir, müşteri normal sepet ve ödeme sayfasıyla alışverişe devam eder.",
+  "faq.eyebrow":"SSS",
+  "faq.title":"Sık sorulan sorular",
+  "faq.q1":"Uygulama müşterilerimin bilgilerini topluyor mu?",
+  "faq.a1":"Hayır. Blok ad, telefon, e-posta ya da adres istemez. Müşteri bu bilgileri Shopify ödeme sayfasında, Shopify'ın kendi formunda girer. Uygulama yalnızca sipariş numarasını, tutarı, seçilen teklifi ve teslim sonucunu raporlar için tutar.",
+  "faq.q2":"Siparişler Shopify'da normal görünmeye devam ediyor mu?",
+  "faq.a2":"Evet. Siparişi müşteri Shopify ödeme sayfasında kapıda ödemeyi seçerek verir; Codship sipariş oluşturmaz. Sipariş listenizde, raporlarınızda ve kargo akışınızda diğer siparişlerle aynı görünür.",
+  "faq.q3":"Kapıda ödeme ücreti ödeme sayfasındaki toplamda görünür mü?",
+  "faq.a3":"Shopify, uygulamaların ödeme sayfasındaki toplamı değiştirmesine izin vermez. Codship ücreti, kapıda ödeme siparişi verildikten birkaç saniye sonra siparişe ayrı satır olarak ekler; müşteri ücreti ödeme yönteminin açıklamasında ve teşekkür sayfasında görür. İsterseniz kapıda ödemeyi Shopify'da açtığınız ücretli bir kargo seçeneğine bağlayabilirsiniz; o zaman ücret ödeme sayfasında kargo ücreti olarak görünür.",
+  "faq.q4":"Kapıda ödeme nerede seçiliyor?",
+  "faq.a4":"Shopify ödeme sayfasında. Mağazanızın Ödemeler ayarında manuel \"Kapıda ödeme\" yöntemini açarsınız; müşteri ödeme sayfasında onu seçer. Codship ödeme almaz.",
+  "faq.q5":"Kurulum için kod bilmem gerekiyor mu?",
+  "faq.a5":"Hayır. Uygulamayı App Store'dan kurar, teklifleri panelde ayarlar, bloğu tema düzenleyicide ürün sayfasına eklersiniz. Panel kurulum adımlarını sırayla gösterir.",
+  "faq.q6":"Plan sınırıma ulaşırsam ne olur?",
+  "faq.a6":"Aylık Growth planında sipariş yine geçer ve sipariş başına $0.05 tutar, en çok $50. Pro'da sipariş sınırı yoktur. Ücretsiz planda ve yıllık Growth'ta blok ay sonuna kadar gizlenir; müşteri normal sepet ve ödeme sayfasıyla devam eder. İki durumda da satış kaybolmaz.",
+  "faq.q7":"Ücretsiz deneme var mı?",
+  "faq.a7":"Ücretli planlarda deneme süresi yok; bunun yerine Ücretsiz plan süresiz ve ayda 60 siparişe kadar bütün temel özellikler açık. Hazır olduğunuzda panelden Growth ya da Pro'ya geçersiniz.",
+  "faq.q8":"Türkçe destek var mı?",
+  "faq.a8":"Evet. Yönetim paneli Türkçe dahil 21 dilde; müşterilerinizin gördüğü blok Türkçe ve Arapça dahil 22 dilde. Destek Türkçe yanıtlanır.",
+  "faq.q9":"Nasıl iptal ederim?",
+  "faq.a9":"Uygulamayı Shopify panelinizden kaldırın. Aboneliği Shopify kendisi iptal eder; bize e-posta atmanıza gerek yok, ihbar süresi de yok.",
+  "close.title":"Aynı müşteriden daha büyük sepet",
+  "close.sub":"Ayda 60 siparişe kadar ücretsiz. Kurulum ücreti yok, kod yok; sipariş akışınız Shopify'da kalır.",
+  "close.cta":"Shopify App Store'dan ücretsiz kur",
+  "foot.tag":"Shopify mağazaları için kapıda ödeme teklifleri ve upsell.",
+  "foot.product":"Ürün",
+  "foot.feat":"Özellikler",
+  "foot.price":"Fiyat",
+  "foot.legal":"Hukuki",
+  "foot.l1":"Gizlilik politikası",
+  "foot.l2":"Veri işleme eki (DPA)",
+  "foot.l3":"Veriyi nasıl işliyoruz",
+  "foot.l4":"Veri talebi",
+  "foot.contact":"İletişim",
+  "foot.copy":"© 2026 Codship. Shopify Inc. ile bağlantılı değildir ve onun tarafından onaylanmamıştır. Shopify, Shopify Inc.'in ticari markasıdır.",
+  "alt.blok":"Ürün sayfasında paket kartları, ek ürün kutusu ve Sipariş Ver düğmesi",
+  "alt.upsell":"Upsell penceresinin canlı önizlemesi: teklif ve ret edilince gösterilen ikinci teklif",
+  "alt.hediye":"Sepet tutarına göre hediye: eşiğe ulaşmadan ve eşik geçilince",
+  "alt.tesekkur":"Teşekkür sayfasında siparişe özel teklif",
+  "alt.ucret":"Panelde kapıda ödeme ücreti ayarları ve teşekkür sayfası önizlemesi",
+  "alt.ucretOn":"Teşekkür sayfasında kapıda ödeme ücreti ve kapıda ödenecek toplam",
+  "alt.kurallar":"Kapıda ödemeyi gizleyen kurallar listesi",
+  "alt.analitik":"Analiz: tahsil edilen para, teslim sonuçları, günlük siparişler",
+  "alt.kaynaklar":"Siparişler nereden geliyor: kaynak bazında teslim oranı",
+  "alt.whatsapp":"Teşekkür sayfasında WhatsApp'tan onayla düğmesi",
+  "alt.pano":"Codship paneli: siparişler, tahsil edilen, teklif geliri, teslim oranı",
+  "alt.abtest":"A/B testi: iki sürüm ve kazanan",
+  "serit":["Adet teklifleri","Upsell ve downsell","Teşekkür sayfası teklifi","Kapıda ödeme ücreti","Kurallarla gizleme","WhatsApp onayı","A/B testi","Teslim oranı raporu","Meta ve TikTok sunucu olayları","22 dil"]
+};
+const SERIT_EN = ["Quantity offers","Upsell & downsell","Thank-you page offer","Cash on delivery fee","Hide COD with rules","WhatsApp confirmation","A/B testing","Delivery rate report","Meta & TikTok server events","22 languages"];
+
+const MAGAZA = "https://apps.shopify.com/codship-cod-form-upsells";
+
+/* Sayfanın kendi dili HTML'de yazılı: kök sayfa (index.html) İngilizce,
+   tr/index.html Türkçe. tr/ sayfası elle yazılmaz; bu dosyadan
+   `node scripts/site-tr-sayfa.mjs` ile üretilir (README). Öbür dilin
+   metni sözlükten gelir: kökte TR sözlüğü yukarıda; tr/ sayfasında
+   İngilizce metin üretici tarafından EN_HAZIR'a gömülür. */
+const SAYFA_DILI = document.documentElement.lang === "tr" ? "tr" : "en";
+const KOK = document.documentElement.dataset.kok || "";
+const EN_HAZIR = {"nav.feat":"Features","nav.how":"How it works","nav.price":"Pricing","nav.reviews":"Reviews","nav.faq":"FAQ","nav.cta":"Install free","hero.badge":"Live on the Shopify App Store","hero.rating":"<b>5.0</b> · 3 reviews","hero.h1":"<span class=\"vurgu\">Bigger orders</span> from every cash on delivery customer.","hero.sub":"Quantity breaks, upsells and free gifts on your product page. COD fees, rules that hide COD and WhatsApp order confirmation after the sale. Every order still goes through the native Shopify checkout.","hero.cta1":"Install free on Shopify","hero.cta2":"Explore features","hero.g1":"Free up to 60 orders a month","hero.g2":"No setup fee","hero.g3":"Customer data stays in Shopify checkout","demo.c1":"Quantity offer","demo.c2":"Order bump","demo.c3":"Upsell window","demo.c4":"Shopify checkout","demo.c5":"Fee + WhatsApp confirmation","demo.zaman":"Offer ends in","demo.h":"Choose your bundle","demo.sub":"Cash on delivery is available at checkout.","demo.k1":"1 item","demo.r1":"Save 10%","demo.k2":"2 items","demo.kazan":"Save","demo.r2":"Save 18%","demo.k3":"3 items","demo.kazan2":"Save","demo.ek":"Add a care kit to your order","demo.ekAlt":"A special price for this order only","demo.hediye":"Add $60.01 more to get a tote bag free","demo.ara":"Subtotal","demo.kargo":"Shipping is calculated at checkout.","demo.btn":"Continue to checkout","demo.trust":"You enter your delivery details at checkout.","demo.upH":"Add this too, 20% off","demo.upP":"A special price for this order only. One tap adds it to your cart and takes you to checkout.","demo.upT":"Offer ends in","demo.upU":"Bamboo spoon set","demo.upR":"20% off","demo.upY":"Yes, add it","demo.upN":"No thanks, go to checkout","demo.co":"Shopify checkout","demo.coIletisim":"Contact","demo.coTeslimat":"Delivery","demo.coNot":"The customer enters their details here, in Shopify's own form.","demo.coOdeme":"Payment","demo.coKart":"Credit card","demo.coKapida":"Cash on delivery","demo.coKapidaNot":"Pay when it arrives. A cash on delivery fee is added to the order.","demo.coToplam":"Total","demo.coBtn":"Complete order","demo.tyNo":"Order #1042","demo.ty":"Thank you!","demo.tyUcret":"Cash on delivery fee","demo.tyToplam":"Total to pay on delivery","demo.tyBaslik":"Paying on delivery","demo.tyMetin":"You'll pay for this order when it arrives. A cash on delivery fee has been added, so please have the total ready for the courier.","demo.waT":"Confirm your order on WhatsApp","demo.waP":"Confirm with one tap so we can prepare your order quickly.","demo.waB":"Confirm on WhatsApp","demo.a1":"Product page","demo.a2":"Upsell","demo.a3":"Checkout","demo.a4":"Thank-you page","fact.f1":"languages for the product page block","fact.f2":"languages for the admin","fact.f3":"orders a month on the free plan","fact.n4":"25%","fact.f4":"off with yearly billing","how.eyebrow":"How it works","how.title":"Live in three steps. Your order flow doesn't change.","how.sub":"Codship doesn't replace your checkout. It sells the offer on the product page and hands the order to Shopify.","how.s1t":"Install from the Shopify App Store","how.s1p":"One-click install. Free up to 60 orders a month; paid plans are added to your Shopify bill.","how.s2t":"Set up your offers","how.s2p":"Build quantity tiers, an add-on and the upsell window in the admin; add the block to your product page in the theme editor. No code.","how.s3t":"The order is completed in Shopify","how.s3p":"The customer chooses cash on delivery in Shopify checkout and places the order. You follow delivered orders and collected cash in the admin.","feat.eyebrow":"Features","feat.title":"Everything a cash on delivery store needs, in one app","feat.sub":"Customers pick the offer on the product page and finish in Shopify checkout. You see which campaigns bring orders that actually get delivered.","tab.t1":"Quantity offers","tab.t2":"Upsell & downsell","tab.t3":"Thank-you page","tab.t4":"COD fee","tab.t5":"Hide with rules","tab.t6":"Analytics & A/B test","tab.t7":"WhatsApp confirmation","tab.p1h":"Bundle cards that make the savings obvious","tab.p1p":"Customers choose 1, 2 or 3 items, and every card spells out the discount and how much they save. One button adds the bundle to the cart and opens Shopify checkout.","tab.p1b1":"Tiered quantity discounts, discount badge and a savings line","tab.p1b2":"An unticked add-on box (order bump) <span class=\"plan-etiket\">Growth</span>","tab.p1b3":"Free gifts in bundles, countdown and custom colors <span class=\"plan-etiket\">Growth</span>","tab.p2h":"Offer one more product on the way to checkout","tab.p2p":"When the customer taps the checkout button, a window offers a discounted product. If they decline, a second, cheaper offer (downsell) appears. An accepted product goes to checkout in the same cart.","tab.p2b1":"Countdown and variant picker","tab.p2b2":"Downsell after a decline","tab.p2b3":"Gift by cart value, with a progress bar","tab.p3h":"A second chance after the order, on the thank-you page","tab.p3p":"After the order is placed, a special offer appears on the thank-you page. One tap adds the product to the same order, paid on delivery together with it.","tab.p3b1":"Added to the same order, no separate shipment","tab.p3b2":"Countdown for the offer","tab.p3b3":"The cash on delivery fee and the total to pay are explained on the same page","tab.url3":"Thank-you page","tab.p4h":"A fee on unpaid cash-on-delivery orders","tab.p4p":"Set a fixed or percentage fee. It is only added to unpaid orders placed with cash on delivery, never to orders paid online. The customer sees what to pay the courier on the thank-you page.","tab.p4b1":"Free above an order total you choose","tab.p4b2":"The fee is shown on the thank-you page and in the payment method description","tab.p4b3":"Optionally link cash on delivery to a paid shipping option in Shopify","tab.p5h":"Hide cash on delivery where you don't want it","tab.p5p":"Cash on delivery is hidden in Shopify checkout based on collections in the cart, order total, country, gift cards or the chosen shipping rate. Risky orders are stopped before they happen.","tab.p5b1":"Minimum and maximum order total","tab.p5b2":"Product, collection, country, discount and more","tab.p5b3":"Rules run in checkout on Shopify's own infrastructure","tab.p6h":"See delivered cash, not just orders","tab.p6p":"Ad managers count orders; delivery tells you whether the money came in. Codship shows delivered, in-transit, awaiting and refused orders, offer revenue and the campaign each order came from.","tab.p6b1":"Delivery rate and collected cash per campaign","tab.p6b2":"A/B test two versions of the block; the winner is declared at 95% confidence","tab.p6b3":"Automatic order tags on cash-on-delivery orders","tab.p7h":"Have orders confirmed on WhatsApp","tab.p7p":"Cash-on-delivery customers see a button on the thank-you page. It opens a ready message to your store's WhatsApp number with the order number, items and amount to pay on delivery. A customer who sends it has confirmed the order.","tab.p7b1":"Fake orders are easy to spot","tab.p7b2":"You set the message and button text","tab.p7b3":"Included in the free plan","tab.url7":"Thank-you page","dash.eyebrow":"Admin","dash.title":"See which offers actually bring in cash","dash.sub":"Collected cash, offer revenue, cash on delivery fees added and delivery rate. The admin is available in 21 languages.","dash.k1t":"Customer details stay in Shopify","dash.k1p":"The block never asks for a name, phone or address. Customers enter them in Shopify checkout; the order shows up as a regular Shopify order.","dash.k2t":"Meta and TikTok server events","dash.k2p":"Conversion events are also sent from the server, not only the browser, so your ad manager doesn't miss orders. <span class=\"plan-etiket\">Growth</span>","dash.k3t":"Live chat support","dash.k3p":"Live support chat inside the admin on every plan, plus priority support on Pro.","int.eyebrow":"Works with","int.title":"Built on Shopify's native building blocks","int.sub":"The theme, checkout and thank-you page belong to Shopify; Codship plugs into them instead of replacing them.","int.e1t":"Theme editor","int.e1p":"The block is added to the product page as an app block and takes on your theme's look.","int.e2t":"Shopify checkout","int.e2p":"Customer details and payment stay in Shopify. Cash on delivery rules run in checkout on Shopify's infrastructure.","int.e3t":"Thank-you page","int.e3p":"Fee explanation, add-to-order offer and the WhatsApp button live on Shopify's thank-you page.","int.e4t":"Meta Conversions API","int.e4p":"The purchase event goes to Meta from the server. <span class=\"plan-etiket\">Growth</span>","int.e5t":"TikTok Events API","int.e5p":"The purchase event goes to TikTok from the server. <span class=\"plan-etiket\">Growth</span>","int.e6t":"WhatsApp","int.e6p":"Customers confirm their order to your store's WhatsApp number with a ready message.","int.lang":"The block opens in your storefront's language (22 languages, including right-to-left Arabic); the admin is in 21 languages.","rev.eyebrow":"Reviews","rev.title":"What stores say","rev.score":"<b>5.0</b> · 3 reviews on the Shopify App Store","rev.five1":"5 out of 5","rev.r1":"Türkiye · November 16, 2026","rev.five2":"5 out of 5","rev.r2":"United Kingdom · November 14, 2026","rev.five3":"5 out of 5","rev.r3":"Türkiye · November 16, 2026","rev.note":"Reviews are shown exactly as written on the Shopify App Store (in Turkish).","rev.link":"All reviews on the App Store","price.eyebrow":"Pricing","price.title":"Start free. Upgrade when you grow.","price.sub":"Billed by Shopify in USD, added to your existing Shopify bill. No setup fee.","price.monthly":"Monthly","price.yearly":"Yearly","price.save":"25% off","price.p0name":"Free","price.p0q":"60 orders a month","price.p0f1":"Quantity offers and bundle cards","price.p0f2":"Upsell, downsell and thank-you page offer","price.p0f3":"Gift by cart value","price.p0f4":"Cash on delivery fee and limit rules","price.p0f5":"WhatsApp order confirmation button","price.p0f6":"Automatic order tags, payment status","price.p0f7":"A/B testing and live chat support","price.cta0":"Install free","price.badge":"For growing stores","price.mo":"/mo","price.yr":"/yr","price.eq1":"Works out to $7.50 a month","price.p1q":"420 orders a month","price.p1f1":"Everything in Free","price.p1f2":"Order bump (add-on box)","price.p1f3":"Free gifts in bundles and custom colors","price.p1f4":"Meta and TikTok server events","price.cta1":"Install and choose Growth","price.mo2":"/mo","price.yr2":"/yr","price.eq2":"Works out to $21.00 a month","price.p2q":"Unlimited orders","price.p2f1":"Everything in Growth","price.p2f2":"No overage fees","price.p2f3":"Priority support","price.cta2":"Install and choose Pro","price.note":"<b>Above your monthly limit:</b> on monthly Growth, each order after 420 costs $0.05, capped at $50. Pro has no order limit and no overage fee. Free and yearly plans never charge overage; when the quota is used up, the block is hidden until the end of the month and customers keep shopping through the normal cart and checkout.","faq.eyebrow":"FAQ","faq.title":"Frequently asked questions","faq.q1":"Does the app collect my customers' details?","faq.a1":"No. The block never asks for a name, phone, email or address. Customers enter those in Shopify checkout, in Shopify's own form. The app only keeps the order number, amount, chosen offer and delivery outcome for reports.","faq.q2":"Do orders still look normal in Shopify?","faq.a2":"Yes. The customer places the order in Shopify checkout by choosing cash on delivery; Codship doesn't create orders. They appear in your order list, reports and fulfillment flow like any other order.","faq.q3":"Does the cash on delivery fee show in the checkout total?","faq.a3":"Shopify doesn't let apps change the checkout total. Codship adds the fee to the cash-on-delivery order as a separate line a few seconds after it is placed; the customer sees the fee in the payment method description and on the thank-you page. If you prefer, you can link cash on delivery to a paid shipping option you create in Shopify; the fee then shows in checkout as shipping.","faq.q4":"Where is cash on delivery chosen?","faq.a4":"In Shopify checkout. You turn on the manual \"Cash on Delivery\" method in your store's Payments settings, and the customer picks it in checkout. Codship takes no payments.","faq.q5":"Do I need to code to set it up?","faq.a5":"No. Install from the App Store, set up offers in the admin and add the block to your product page in the theme editor. The admin walks you through the steps.","faq.q6":"What happens if I reach my plan limit?","faq.a6":"On monthly Growth, orders keep going through at $0.05 each, capped at $50. Pro has no order limit. On Free and yearly Growth, the block is hidden until the end of the month and customers continue with the normal cart and checkout. Either way, no sale is lost.","faq.q7":"Is there a free trial?","faq.a7":"Paid plans have no trial period; instead, the Free plan has no time limit and includes all core features up to 60 orders a month. Upgrade to Growth or Pro from the admin when you're ready.","faq.q8":"Which languages are supported?","faq.a8":"The admin is available in 21 languages; the block your customers see comes in 22, including Turkish and right-to-left Arabic.","faq.q9":"How do I cancel?","faq.a9":"Uninstall the app from your Shopify admin. Shopify cancels the subscription itself; no email needed and no notice period.","close.title":"Get more from every cash on delivery order","close.sub":"Free up to 60 orders a month. No setup fee, no code; your order flow stays in Shopify.","close.cta":"Install free on Shopify","foot.tag":"Cash-on-delivery offers and upsells for Shopify stores.","foot.product":"Product","foot.feat":"Features","foot.price":"Pricing","foot.legal":"Legal","foot.l1":"Privacy policy","foot.l2":"Data processing addendum (DPA)","foot.l3":"How we process data","foot.l4":"Data request","foot.contact":"Contact","foot.copy":"© 2026 Codship. Not affiliated with or endorsed by Shopify Inc. Shopify is a trademark of Shopify Inc.","alt.blok":"Bundle cards, add-on box and checkout button on the product page","alt.upsell":"Live preview of the upsell window: the offer and the second offer after a decline","alt.hediye":"Gift by cart value: before and after the threshold","alt.tesekkur":"Special offer for the order on the thank-you page","alt.ucret":"Cash on delivery fee settings and thank-you page preview in the admin","alt.ucretOn":"Cash on delivery fee and total to pay on the thank-you page","alt.kurallar":"List of rules that hide cash on delivery","alt.analitik":"Analytics: collected cash, delivery outcomes, daily orders","alt.kaynaklar":"Where orders come from: delivery rate by source","alt.whatsapp":"Confirm on WhatsApp button on the thank-you page","alt.pano":"Codship dashboard: orders, collected, offer revenue, delivery rate","alt.abtest":"A/B test: two versions and the winner"}; /*EN_HAZIR*/
+const TOPLANAN = {};
+document.querySelectorAll("[data-t]").forEach(el => { TOPLANAN[el.dataset.t] = el.innerHTML; });
+document.querySelectorAll("[data-alt]").forEach(el => { TOPLANAN[el.dataset.alt] = el.alt; });
+const SOZLUK = { tr: TR, en: EN_HAZIR || TOPLANAN };
+
+const SAYFA_BASLIK = {
+  en: "Codship — COD fees, quantity offers and upsells for Shopify",
+  tr: "Codship — Kapıda ödeme mağazaları için adet teklifleri ve upsell"
+};
+
+/* ── demo tutarları ─────────────────────────────────────────
+   Türkçede ₺ ve virgül (699,90 ₺), İngilizcede $ — README'deki görsel
+   kuralıyla aynı. Hesaplar: 2 adet %10, 3 adet %18 indirim. */
+const TUTAR = {
+  tr:{p0:699.90,p1:1259.82,o1:1399.80,s1:139.98,p2:1721.75,o2:2099.70,s2:377.95,ek:99.90,up:119.20,upo:149.00,ucret:150.00},
+  en:{p0:69.99,p1:125.98,o1:139.98,s1:14.00,p2:172.18,o2:209.97,s2:37.79,ek:9.99,up:11.92,upo:14.90,ucret:5.00}
+};
+for (const d of ["tr","en"]) {
+  const t = TUTAR[d];
+  t.top = +(t.p1 + t.ek + t.up).toFixed(2);
+  t.odenecek = +(t.top + t.ucret).toFixed(2);
+}
+let dil = SAYFA_DILI;
+const bicimTR = new Intl.NumberFormat("tr-TR",{minimumFractionDigits:2,maximumFractionDigits:2});
+const bicimEN = new Intl.NumberFormat("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+const para = n => dil === "en" ? "$" + bicimEN.format(n) : bicimTR.format(n) + " ₺";
+function tutarlariBas(){
+  document.querySelectorAll("[data-tutar]").forEach(el => { el.textContent = para(TUTAR[dil][el.dataset.tutar]); });
+  araGoster(araDeger);
+  tasarrufGoster();
+}
+
+function dilUygula(d, kaydet){
+  dil = d;
+  const s = SOZLUK[d];
+  document.querySelectorAll("[data-t]").forEach(el => {
+    const v = s[el.dataset.t];
+    if (v != null) el.innerHTML = v;
+  });
+  document.documentElement.lang = d;
+  document.title = SAYFA_BASLIK[d];
+  /* Ekran görüntüleri de dile uyar: Türkçe takım gorsel/tr/, İngilizce gorsel/. */
+  document.querySelectorAll("[data-gorsel]").forEach(img => {
+    img.src = KOK + (d === "tr" ? "gorsel/tr/" : "gorsel/") + img.dataset.gorsel;
+    const a = s[img.dataset.alt];
+    if (a != null) img.alt = a;
+  });
+  /* App Store bağlantıları: Türkçede ?locale=tr */
+  const ek = d === "tr" ? "?locale=tr" : "";
+  document.querySelectorAll("a.magaza").forEach(a => { a.href = MAGAZA + ek; });
+  document.querySelectorAll("a.magaza-yorum").forEach(a => { a.href = MAGAZA + "/reviews" + ek; });
+  document.querySelectorAll(".dil button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.dil === d)));
+  seritDoldur(d === "en" ? SERIT_EN : TR.serit);
+  tutarlariBas();
+  sureGoster();
+  kizakYerlestir();
+  if (kaydet) { try { localStorage.setItem("codship-dil", d); } catch(e){} }
+}
+
+/* Şerit iki kez basılır: animasyon -50% kaydığında dikiş görünmesin. */
+function seritDoldur(kelimeler){
+  document.getElementById("serit").innerHTML = [...kelimeler, ...kelimeler].map(k => `<span>${k}</span>`).join("");
+}
+
+const azHareket = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ──────────────────────────────────────────────────────────────
+   Hero demosu. Zaman çizelgesi adım adım ilerler; telefon ekranda
+   değilken ya da sekme gizliyken durur. Hareketi azaltan ziyaretçide
+   hiç başlamaz: paket ve ek ürün seçili, okunur bir kare kalır.
+   ────────────────────────────────────────────────────────────── */
+const ekran = document.getElementById("ekran");
+const parmak = document.getElementById("parmak");
+const araEl = document.getElementById("d-ara");
+let araDeger = TUTAR[SAYFA_DILI].p0;
+let sureSn = 897;
+/* Sepet tutarına göre hediye çubuğu (gerçek bloktaki gift_bar / gift_won metinleri). */
+/* Paket tasarruf özeti (gerçek bloktaki paket_summary). */
+const TASARRUF = { tr: k => `Bu siparişte ${k} tasarruf ediyorsunuz`, en: k => `You save ${k} on this order` };
+let seciliKart = 0;
+function tasarrufGoster(){
+  const el = document.getElementById("d-tasarruf");
+  if (seciliKart > 0) el.textContent = TASARRUF[dil](para(TUTAR[dil]["s" + seciliKart]));
+  el.classList.toggle("ac", seciliKart > 0);
+}
+const HEDIYE = {
+  tr: { esik: 1300, bar: k => `${k} daha ekleyin, bez çanta hediye`, won: "Bez çanta hediye kazandınız" },
+  en: { esik: 130, bar: k => `Add ${k} more to get a tote bag free`, won: "You've earned a tote bag as a free gift" }
+};
+function araGoster(n){
+  araDeger = n; araEl.textContent = para(n);
+  const h = HEDIYE[dil], kalan = h.esik - n;
+  document.getElementById("d-hediye").classList.toggle("tamam", kalan <= 0);
+  document.getElementById("d-hediye-yazi").textContent = kalan > 0 ? h.bar(para(kalan)) : h.won;
+  document.getElementById("d-hediye-cubuk").style.width = Math.min(100, n / h.esik * 100) + "%";
+}
+/* Bloğun üstündeki kampanya geri sayımı (Growth: paket geri sayımı). */
+let kampanyaSn = 2*3600 + 14*60 + 37;
+function kampanyaGoster(){
+  const s = kampanyaSn, iki = x => String(x).padStart(2,"0");
+  document.getElementById("d-zaman").textContent = iki(Math.floor(s/3600)) + ":" + iki(Math.floor(s%3600/60)) + ":" + iki(s%60);
+}
+function sureGoster(){
+  const el = document.getElementById("d-sure");
+  el.textContent = String(Math.floor(sureSn/60)).padStart(2,"0") + ":" + String(sureSn%60).padStart(2,"0");
+}
+/* Ara toplam yeni değere sayarak gider. */
+function araSay(hedef){
+  const bas = araDeger, t0 = performance.now(), sure = 600;
+  const adim = now => {
+    const k = Math.min(1,(now - t0)/sure), e = 1 - Math.pow(1-k,3);
+    araGoster(bas + (hedef - bas)*e);
+    if (k < 1) requestAnimationFrame(adim); else araGoster(hedef);
+  };
+  requestAnimationFrame(adim);
+}
+function adimYak(n){
+  ekran.dataset.adim = n;
+  document.querySelectorAll("[data-adim-yak]").forEach(el => el.classList.toggle("yanik", +el.dataset.adimYak === n));
+}
+function parmakGit(el){
+  const e = ekran.getBoundingClientRect(), r = el.getBoundingClientRect();
+  /* Ekran ölçekli olabilir (telefon salınıyor); oranla düzelt. */
+  const olcek = e.width / ekran.offsetWidth || 1;
+  parmak.style.left = ((r.left - e.left + r.width*0.62) / olcek) + "px";
+  parmak.style.top = ((r.top - e.top + r.height*0.55) / olcek) + "px";
+  parmak.classList.add("gor");
+}
+function dokun(el){
+  parmak.classList.remove("bas"); void parmak.offsetWidth; parmak.classList.add("bas");
+  if (el) { el.classList.add("basili"); setTimeout(() => el.classList.remove("basili"), 180); }
+  setTimeout(() => parmak.classList.remove("bas"), 220);
+}
+const $ = s => ekran.querySelector(s);
+function sifirla(){
+  adimYak(0);
+  ekran.querySelectorAll(".d-kart").forEach(k => k.classList.toggle("secili", k.dataset.k === "0"));
+  seciliKart = 0; tasarrufGoster();
+  $("#d-ek").classList.remove("secili");
+  $("#d-kapida").classList.remove("secili");
+  $("#d-kart").classList.add("secili");
+  $("#d-kapida-not").classList.remove("ac");
+  $("#d-wa").classList.remove("nabiz");
+  araGoster(TUTAR[dil].p0);
+  sureSn = 897; sureGoster();
+  parmak.classList.remove("gor");
+}
+const kareler = [
+  [900,  () => parmakGit($('[data-k="1"]'))],
+  [800,  () => { dokun(); ekran.querySelectorAll(".d-kart").forEach(k => k.classList.toggle("secili", k.dataset.k === "1")); seciliKart = 1; tasarrufGoster(); araSay(TUTAR[dil].p1); }],
+  [1100, () => parmakGit($("#d-ek .d-kutu"))],
+  [700,  () => { dokun(); $("#d-ek").classList.add("secili"); araSay(TUTAR[dil].p1 + TUTAR[dil].ek); }],
+  [1100, () => parmakGit($("#d-siparis"))],
+  [700,  () => { dokun($("#d-siparis")); }],
+  [350,  () => { adimYak(1); parmak.classList.remove("gor"); }],
+  [1500, () => parmakGit($("#d-evet"))],
+  [800,  () => { dokun($("#d-evet")); }],
+  [450,  () => { adimYak(2); parmak.classList.remove("gor"); }],
+  [1300, () => parmakGit($("#d-kapida"))],
+  [700,  () => { dokun(); $("#d-kart").classList.remove("secili"); $("#d-kapida").classList.add("secili"); $("#d-kapida-not").classList.add("ac"); }],
+  [1300, () => parmakGit($("#d-tamamla"))],
+  [700,  () => { dokun($("#d-tamamla")); }],
+  [400,  () => { adimYak(3); parmak.classList.remove("gor"); }],
+  [1900, () => parmakGit($("#d-wa"))],
+  [700,  () => { dokun(); $("#d-wa").classList.add("nabiz"); }],
+  [3200, () => { parmak.classList.remove("gor"); }],
+  [500,  () => sifirla()]
+];
+let kare = 0, zamanlayici = null, demoGorunur = false;
+function sonraki(){
+  zamanlayici = null;
+  if (!demoGorunur || document.hidden) return;
+  const [bekle, is] = kareler[kare];
+  zamanlayici = setTimeout(() => {
+    is();
+    kare = (kare + 1) % kareler.length;
+    sonraki();
+  }, bekle);
+}
+function demoDevam(){ if (!zamanlayici && demoGorunur && !document.hidden) sonraki(); }
+function demoDur(){ clearTimeout(zamanlayici); zamanlayici = null; }
+/* Geri sayım yalnız upsell penceresi açıkken akar. */
+setInterval(() => {
+  if (azHareket) return;
+  if (ekran.dataset.adim === "1" && sureSn > 0) { sureSn--; sureGoster(); }
+  if (kampanyaSn > 0) { kampanyaSn--; kampanyaGoster(); }
+}, 1000);
+
+/* ──────────────────────────────────────────────────────────────
+   Sekmeli vitrin. Görünür olunca kendiliğinden ilerler; üstüne
+   gelince durur (CSS), tıklanınca otomatik geçiş tamamen kapanır.
+   Ok tuşlarıyla sekmeler arası gezilir (erişilebilirlik).
+   ────────────────────────────────────────────────────────────── */
+const vitrin = document.getElementById("vitrin");
+const sekmeler = [...vitrin.querySelectorAll(".sekme")];
+function sekmeAc(i, odak){
+  sekmeler.forEach((s, j) => {
+    const ac = i === j;
+    s.setAttribute("aria-selected", String(ac));
+    s.tabIndex = ac ? 0 : -1;
+    const p = document.getElementById(s.getAttribute("aria-controls"));
+    p.hidden = !ac;
+    if (ac) { p.classList.remove("giris"); void p.offsetWidth; p.classList.add("giris"); }
+    /* Çubuk animasyonu yeniden başlasın. */
+    const c = s.querySelector(".cubuk"); c.style.animation = "none"; void c.offsetWidth; c.style.animation = "";
+  });
+  if (odak) sekmeler[i].focus();
+  /* Telefonda seçili sekme görünür alana kaysın (sayfa kaymadan). */
+  const kutu = sekmeler[i].parentElement, s = sekmeler[i];
+  if (kutu.scrollWidth > kutu.clientWidth) kutu.scrollTo({ left: s.offsetLeft - 24, behavior: azHareket ? "auto" : "smooth" });
+}
+sekmeler.forEach((s, i) => {
+  s.addEventListener("click", () => { vitrin.classList.remove("oto"); vitrin.classList.add("durdu"); sekmeAc(i); });
+  s.addEventListener("keydown", e => {
+    if (e.key !== "ArrowRight" && e.key !== "ArrowLeft") return;
+    e.preventDefault();
+    vitrin.classList.remove("oto");
+    sekmeAc((i + (e.key === "ArrowRight" ? 1 : sekmeler.length - 1)) % sekmeler.length, true);
+  });
+  s.querySelector(".cubuk").addEventListener("animationend", () => {
+    if (vitrin.classList.contains("oto")) sekmeAc((i + 1) % sekmeler.length);
+  });
+});
+if (!azHareket && "IntersectionObserver" in window) {
+  new IntersectionObserver(g => {
+    if (vitrin.classList.contains("durdu")) return;
+    vitrin.classList.toggle("oto", g[0].isIntersecting);
+  }, { threshold: 0.35 }).observe(vitrin);
+}
+
+/* ── fiyat dönemi ── */
+const fiyatAlan = document.getElementById("fiyat-alan");
+const donemBtn = [...document.querySelectorAll("#donem button")];
+const kizak = document.getElementById("kizak");
+function kizakYerlestir(){
+  const b = donemBtn.find(x => x.getAttribute("aria-pressed") === "true");
+  if (!b) return;
+  kizak.style.width = b.offsetWidth + "px";
+  kizak.style.transform = `translateX(${b.offsetLeft - 4}px)`;
+}
+donemBtn.forEach(b => b.addEventListener("click", () => {
+  donemBtn.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  fiyatAlan.classList.toggle("yillik", b.dataset.donem === "yil");
+  kizakYerlestir();
+}));
+kizakYerlestir();
+addEventListener("resize", kizakYerlestir);
+
+/* ──────────────────────────────────────────────────────────────
+   Kaydırınca beliren öğeler, sayaçlar, eğik panel görüntüsü.
+   IntersectionObserver yoksa ya da hareket azaltılmışsa her şey
+   doğrudan görünür — animasyon yüzünden içerik kaybolmaz.
+   ────────────────────────────────────────────────────────────── */
+function say(el){
+  const hedef = +el.dataset.sayac, yuzde = !!el.dataset.yuzde, t0 = performance.now(), sure = 1300;
+  const adim = now => {
+    const k = Math.min(1,(now - t0)/sure), e = 1 - Math.pow(1-k,3), v = Math.round(hedef*e);
+    /* Türkçede yüzde işareti önde (%25), İngilizcede sonda (25%). */
+    el.textContent = yuzde ? (dil === "tr" ? "%" + v : v + "%") : v;
+    if (k < 1) requestAnimationFrame(adim);
+  };
+  requestAnimationFrame(adim);
+}
+if (!azHareket && "IntersectionObserver" in window) {
+  const gozlemci = new IntersectionObserver(girisler => {
+    girisler.forEach(g => {
+      if (!g.isIntersecting) return;
+      g.target.classList.add("ac");
+      g.target.querySelectorAll?.("[data-sayac]").forEach(say);
+      gozlemci.unobserve(g.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px", threshold: 0.12 });
+  document.querySelectorAll(".gorun, #egik").forEach(el => {
+    const kardes = [...(el.parentElement?.children || [])].filter(x => x.classList.contains("gorun")).indexOf(el);
+    if (kardes > 0) el.style.transitionDelay = (Math.min(kardes, 6) * 80) + "ms";
+    gozlemci.observe(el);
+  });
+} else {
+  document.querySelectorAll(".gorun, #egik").forEach(el => el.classList.add("ac"));
+}
+
+/* Kartlarda imleci izleyen ışık. */
+document.querySelectorAll(".kart").forEach(k => k.addEventListener("pointermove", e => {
+  const r = k.getBoundingClientRect();
+  k.style.setProperty("--mx", (e.clientX - r.left) + "px");
+  k.style.setProperty("--my", (e.clientY - r.top) + "px");
+}));
+
+/* Üst bar: kaydırınca çizgi, ilerleme çubuğu dolar. */
+const ustBar = document.querySelector("header");
+const ilerleme = document.getElementById("ilerleme");
+const barKontrol = () => {
+  ustBar.classList.toggle("kaydi", scrollY > 8);
+  const h = document.documentElement.scrollHeight - innerHeight;
+  ilerleme.style.transform = `scaleX(${h > 0 ? Math.min(1, scrollY / h) : 0})`;
+};
+barKontrol();
+addEventListener("scroll", barKontrol, { passive: true });
+/* ── ilk dil ── */
+let secili = null;
+try { secili = localStorage.getItem("codship-dil"); } catch(e){}
+/* tr/ adresi her zaman Türkçe açılır (reklam ve arama oraya Türkçe diye gelir).
+   Kökte: önce ziyaretçinin seçimi, yoksa tarayıcı dili. */
+if (SAYFA_DILI === "tr") secili = "tr";
+else if (secili !== "tr" && secili !== "en") secili = (navigator.language || "en").toLowerCase().startsWith("tr") ? "tr" : "en";
+document.querySelectorAll(".dil button").forEach(b => b.addEventListener("click", () => dilUygula(b.dataset.dil, true)));
+
+if (azHareket) {
+  /* Sabit kare: 2 adet + ek ürün seçili. */
+  ekran.querySelectorAll(".d-kart").forEach(k => k.classList.toggle("secili", k.dataset.k === "1"));
+  seciliKart = 1;
+  document.getElementById("d-ek").classList.add("secili");
+  dilUygula(secili);
+  araGoster(TUTAR[dil].p1 + TUTAR[dil].ek);
+  adimYak(0);
+} else {
+  dilUygula(secili);
+  adimYak(0);
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(g => {
+      demoGorunur = g[0].isIntersecting;
+      demoGorunur ? demoDevam() : demoDur();
+    }, { threshold: 0.25 }).observe(ekran);
+  } else { demoGorunur = true; demoDevam(); }
+  document.addEventListener("visibilitychange", () => document.hidden ? demoDur() : demoDevam());
+}
+</script>
+</body>
+</html>

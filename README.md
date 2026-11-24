@@ -1,110 +1,121 @@
 # cod-ship.com — tanıtım sayfası
 
-Tek dosya: `index.html`. Derleme yok, bağımlılık yok, dış kaynak yok.
-Görseller `gorsel/` altında, `marka/vitrin/`'den kopyalandı.
+İki sayfa, derleme yok, dış kaynak yok (CDN font/JS yok):
 
-## Dil
+| Adres | Dosya | Dil | Nasıl yazılır |
+|---|---|---|---|
+| `cod-ship.com/` | `index.html` | **İngilizce** (ana dil) | elle — tek kaynak bu |
+| `cod-ship.com/tr/` | `tr/index.html` | Türkçe | **üretilir**: `node scripts/site-tr-sayfa.mjs` |
 
-**Sayfanın HTML'i Türkçe yazıldı** — öncelik Türkiye. İngilizce karşılıklar
-dosyanın sonundaki `EN` sözlüğünde duruyor; metinler `data-t="anahtar"`
-özniteliğiyle eşleşiyor.
+Görseller `gorsel/` (İngilizce takım) ve `gorsel/tr/` (Türkçe takım) altında.
+Tasarımın rakip incelemesi: `docs/site-rakip-inceleme.md` (24.11.2026).
 
-- Varsayılan: tarayıcı dili `tr` ile başlıyorsa Türkçe, değilse İngilizce.
-- Kullanıcı TR/EN düğmesiyle seçerse tercih `localStorage`'a yazılır,
-  ikinci ziyarette tekrar sorulmaz.
-- **Türkçe metni değiştirirsen İngilizcesini de değiştir.** Türkçe doğrudan
-  HTML'de, İngilizce sözlükte; ikisi ayrı yerde. Anahtarların tamamının
-  karşılığı var mı diye bakmak için:
+## Dil (24.11.2026'dan beri ana dil İngilizce)
+
+Yurt dışı reklamı için ana dil İngilizce: **`index.html`'in HTML metni İngilizce**,
+Türkçe karşılıklar dosyanın sonundaki `const TR = { … }` sözlüğünde. Metinler
+`data-t="anahtar"` özniteliğiyle eşleşir. Reklam ve arama botları JS çalıştırmadan
+HTML'i okuduğu için Türkçe sayfanın da metni HTML'de olmalı; bu yüzden `tr/index.html`
+üretilir (Türkçe HTML + `lang="tr"` + İngilizce metin `EN_HAZIR` içinde gömülü).
+
+- **İngilizce metni değiştirirsen TR sözlüğünü de değiştir**, sonra
+  `node scripts/site-tr-sayfa.mjs` çalıştır. `tr/index.html`'i elle düzenleme.
+  Güncellik denetimi: `node scripts/site-tr-sayfa.mjs --kontrol` (güncel değilse 1 ile çıkar).
+- Anahtarların tamamının Türkçesi var mı (boş dizi basmalı):
   ```
-  node -e 'const s=require("fs").readFileSync("site/index.html","utf8");const k=[...s.matchAll(/data-t="([^"]+)"/g)].map(m=>m[1]);const en=s.slice(s.indexOf("const EN = {"),s.indexOf("const SERIT_TR"));const e=new Set([...en.matchAll(/"([a-z]+\.[A-Za-z0-9]+)"\s*:/g)].map(m=>m[1]));console.log([...new Set(k)].filter(x=>!e.has(x)))'
+  node -e 'const s=require("fs").readFileSync("site/index.html","utf8");const k=[...s.matchAll(/data-(?:t|alt)="([^"]+)"/g)].map(m=>m[1]);const tr=s.slice(s.indexOf("const TR = {"),s.indexOf("const SERIT_EN"));const e=new Set([...tr.matchAll(/"([a-z]+\.[A-Za-z0-9]+)"\s*:/g)].map(m=>m[1]));console.log([...new Set(k)].filter(x=>!e.has(x)))'
   ```
-  Boş dizi basmalı.
+  Üretici de eksik anahtarda durur.
+- Kök sayfada açılış dili: ziyaretçinin önceki seçimi (`localStorage` `codship-dil`, yalnız
+  TR/EN düğmesine basınca yazılır), yoksa tarayıcı dili `tr` ile başlıyorsa Türkçe, değilse
+  İngilizce. `tr/` adresi her zaman Türkçe açılır. TR/EN düğmesi iki sayfada da yerinde çevirir.
+- `<head>`: iki sayfada `canonical` (kendi adresi) ve `hreflang` en / tr / x-default=en.
+  Türkçe `title`/`description`/`og` metinleri üreticideki `META` nesnesinde.
+- Dili değişen başka şeyler: App Store bağlantıları (`a.magaza`, `a.magaza-yorum`;
+  Türkçede `?locale=tr`), demo tutarları (`TUTAR`: Türkçede ₺ ve virgül, İngilizcede $),
+  şerit (`SERIT_EN` / `TR.serit`), yüzde yazımı (25% / %25).
+- Yorum metinleri (`<p lang="tr">`) `data-t` taşımaz: iki dilde de olduğu gibi kalır.
 
-**Görseller de dile göre değişiyor.** İki takım var, ikisi de 1600×900:
+**Görseller de dile göre değişir.** `<img data-gorsel="s-blok.webp" data-alt="alt.blok">`:
+dil değişince `src` `gorsel/` ↔ `gorsel/tr/` arasında, `alt` sözlükten değişir. Görsel
+eklersen **iki klasörde de** aynı dosya adı bulunmalı.
 
-| Dil | Klasör | Üreten komut |
-|---|---|---|
-| Türkçe | `gorsel/tr/` | `node scripts/vitrin-gorsel.mjs --tr` |
-| İngilizce | `gorsel/` | `node scripts/vitrin-gorsel.mjs` |
+| Dosya (`s-*.webp`) | Kaynak (`docs/app-store-gorseller/yeni-2026-11-22/kaynak/`) |
+|---|---|
+| s-blok | blok-{tr,en}-secili.png (620 genişlik) |
+| s-upsell, s-hediye | upsell-pencere-*, hediye-* |
+| s-tesekkur | tesekkur-teklif-* |
+| s-ucret, s-ucret-onizleme | ucret-*, ucret-onizleme-* |
+| s-kurallar, s-kaynaklar | kurallar-*, kaynaklar-* |
+| s-analitik | analitik-* (üstten 1400 px kırpıldı) |
+| s-abtest, s-pano | abtest-*, pano-* |
+| s-whatsapp | whatsapp-* |
+| og-kapak.jpg | ../{tr,en}-0-kapak.png |
 
-`<img data-gorsel="01-form.png">` özniteliği taşıyor; dil değişince `src`
-ve `alt` birlikte güncelleniyor. Görsel ekler ya da adını değiştirirsen
-**iki klasörde de** aynı dosya adı bulunmalı, yoksa dil değiştirince
-kırık görsel çıkar.
+Dönüştürme: `cwebp -q 82 -m 6 -resize GENISLIK 0`. Panel ekranlarındaki rakamlar örnek veridir
+(App Store görsel takımıyla aynı); sayfa metninde kullanım rakamı yok.
 
-Türkçe takımda tutarlar ₺ ve ondalık ayracı virgül (699,90 ₺); dolar
-göstermek Türk mağazası anlatırken sahte duruyordu. Dil panosu
-(`05-dil`) her iki takımda da Arapça ve dolar — anlatılan şey sağdan
-sola yerleşim, oraya ₺ koymak anlamsız.
+Eski görseller (`00-kapak.png`, `01-blok.png`, `03-teklif.png`, `04-kasa.png`, `05-dil.png`,
+iki klasörde de) artık sayfada kullanılmıyor; silinmedi.
 
-Kaynak dosyalar `marka/vitrin/` ve `marka/vitrin/tr/`; `site/gorsel/`
-oradan kopya. Görselleri yeniden üretirsen kopyalamayı unutma.
+## Bölümler ve hareketler
 
-## Hero'daki telefon
+1. **Hero** — solda başlık, App Store rozeti (puan ve değerlendirme sayısı App Store'dan),
+   iki CTA; sağda **canlı demo telefonu** (aşağıda).
+2. **Şerit** — özellik adları kayar (saf CSS), üstüne gelince durur.
+3. **Gerçekler** — sayaçlar: 22 (blok dili, `extensions/cod-form/locales`), 21 (panel dili,
+   `app/lib/i18n`), 60 (ücretsiz plan, `PLAN_ORDER_QUOTA`), %25 (yıllık indirim). Kullanım rakamı değil.
+4. **Nasıl çalışır** — 3 adım; bağlayıcı çizgi görününce çizilir (telefonda dikey).
+5. **Özellik vitrini** — 7 sekme, her birinde gerçek ekran (tarayıcı/telefon çerçevesi CSS).
+   Görünür olunca kendiliğinden ilerler (sekmenin altında dolan çubuk), üstüne gelince durur,
+   tıklanınca otomatik geçiş kapanır, ok tuşlarıyla gezilir. Uzun ekranlar çerçevede yavaşça kayar.
+6. **Panel** — eğik (3B) panel görüntüsü kaydırınca düzleşir + A/B testi kartı; altında 3 kart.
+7. **Entegrasyonlar** — yalnız gerçekten olanlar: tema düzenleyici (uygulama bloğu), Shopify
+   ödeme sayfası (kurallar: `extensions/cod-limit`), teşekkür sayfası (`extensions/cod-thankyou`),
+   Meta ve TikTok sunucu olayları (`app/lib/capi.server.ts`, Growth), WhatsApp. Marka logosu yok.
+8. **Yorumlar** — App Store'daki yorumların tamamı (aşağıda).
+9. **Fiyat** — aylık/yıllık düğmesi (kayan seçici). Kaynak `docs/app-store-tr.md` + `app/lib/plan.ts`.
+   Ücretsiz deneme yok (K-267); SSS'de de böyle yazıyor.
+10. **SSS**, **kapanış CTA**, alt bilgi.
 
-Sayfanın üstündeki telefon **görsel değil, canlı HTML**. Böylece dil
-düğmesi formun içindeki yazıları da çeviriyor — ekran görüntüsü olsaydı
-Türkçe sayfada İngilizce form kalırdı.
+Belirme animasyonları `IntersectionObserver` ile. `prefers-reduced-motion: reduce` diyen
+ziyaretçide **hepsi kapanır**: demo telefonu okunur bir karede (2 adet + ek ürün seçili) durur,
+sekmeler kendiliğinden geçmez. JavaScript kapalıysa `<noscript>` içeriği görünür kılar.
+Üst barda kaydırma ilerleme çizgisi var.
 
-Form dolduruluyormuş gibi sırayla beliriyor; ad alanında daktilo
-efekti var, eklenti kutusu kendi kendine işaretleniyor. Arkadaki
-kıvrımlar SVG, `stroke-dashoffset` ile çiziliyor.
+## Hero'daki demo telefonu
 
-Telefon yüksekliği `aspect-ratio` ile sabit; metin uzayınca
-(ör. İngilizce) içerik `margin-top:auto` sayesinde alta yaslanıyor.
+Görsel değil, **canlı HTML** — dil düğmesi telefonun içini de çevirir. Yazılar gerçek blok ve
+teşekkür sayfası metinleri (`extensions/cod-form/locales/*.json`, `extensions/cod-thankyou/locales/*.json`).
+Akış (`kareler` dizisi, ~20 sn döngü): kampanya geri sayımı → 2 adet kartı seçilir (ara toplam
+sayarak artar, tasarruf özeti açılır) → ek ürün işaretlenir (sepet tutarına göre hediye çubuğu
+dolar) → "Continue to checkout / Sipariş Ver" → upsell penceresi (geri sayım akar) → "Yes, add it"
+→ **Shopify ödeme sayfası** (müşteri bilgisi alanları bilerek boş çubuk: o form Shopify'ın, K-242)
+→ kapıda ödeme seçilir → teşekkür sayfası (kapıda ödeme ücreti + WhatsApp onay düğmesi).
+Telefon ekranda değilken ya da sekme gizliyken durur. Telefonun çevresindeki etiketler ve alttaki
+adım çubuğu o anki adımda yanar (etiketler 1100 px altında gizli).
 
-## Kapsama bölümü
+## Yorumlar bölümü (AÇIK, 24.11.2026)
 
-Rakipte (Releasit) bu yerde *"100'den fazla ülkeden 115.000 mutlu
-işletme"* yazıyor. O bir **kullanım rakamı**; bizde sıfır, yazılamaz.
-Aynı alanı doğrulanabilir bir **ürün gerçeğiyle** doldurduk: hangi
-ülkede hazır idari birim listesi var, form kaç dilde.
+Shopify App Store'daki yorumların **tamamı** (3 adet, hepsi 5 yıldız): Kupart (Türkiye, 16 Kasım 2026),
+Dua Hanem (Birleşik Krallık, 14 Kasım 2026), SenTasarla (Türkiye, 16 Kasım 2026). Metinler
+`apps.shopify.com/codship-cod-form-upsells/reviews?locale=tr` sayfasından **olduğu gibi** alındı
+(yazım hataları dahil; kırpma, düzeltme, çeviri yok). İngilizce sayfada da Türkçe asıllarıyla
+durur, altında "Türkçe yazıldı" notu var.
 
-| Ülke | Birim | Sayı |
-|---|---|---|
-| Türkiye | il | 81 |
-| Fas | vilayet / prefektörlük | 75 |
-| Mısır | valilik | 27 |
-| Suudi Arabistan | bölge | 13 |
+Yeni yorum gelince: aynı `<article class="yorum">` kalıbıyla ekle, hero rozetindeki ve bölüm
+başlığındaki "5.0 · 3 reviews" sayısını (EN HTML + TR sözlük: `hero.rating`, `rev.score`) güncelle,
+`tr/` sayfasını yeniden üret. Built for Shopify rozeti **yok**; koyma.
 
-Sayılar `app/lib/regions.ts` dosyasından **sayıldı**, tahmin değil.
-Diller `extensions/cod-form/locales` altından. **O dosyalar değişirse
-buradaki sayılar da güncellenmeli** — bu bölümün tek değeri
-doğrulanabilir olması.
+## Bağlantılar
 
-Listesi olmayan ülkede bölge alanı serbest metne düşüyor
-(`regionsFor()` boş dizi döndürüyor); bölümdeki not bunu söylüyor.
+| Yer | Adres |
+|---|---|
+| Kurulum düğmeleri | `https://apps.shopify.com/codship-cod-form-upsells` (TR: `?locale=tr`) |
+| Yorum bağlantıları | `…/codship-cod-form-upsells/reviews` (TR: `?locale=tr`) |
+| Yasal | `https://app.cod-ship.com/{gizlilik,dpa,veri-isleme,veri-talebi}` (24.11'de 200) |
 
-## Yorumlar bölümü (GİZLİ)
-
-`#yorumlar` bölümü **`hidden` ile kapalı** — sayfada görünmüyor.
-İçinde gerçek yorum yok; olmayan mağaza adıyla referans yazmak
-sahteciliktir ve Shopify incelemesinde ret sebebidir.
-
-Bölümün içinde iki parça var: görünen `.yorum-yok` bloğu (durumu
-dürüstçe açıklayan metin) ve onun altında `hidden` duran `.yorumlar`
-ızgarası (tek bir **yer tutucu kart**). İlk gerçek yorumlar gelince:
-
-1. `<section id="yorumlar">` üzerindeki `hidden`i kaldır
-2. `.yorum-yok` bloğunu sil
-3. `.yorumlar`dan `hidden`i kaldır
-4. Kartları Shopify App Store'daki yorumlardan **olduğu gibi** doldur —
-   mağaza adı, ülke, puan, metin. Kırpıp güzelleştirme.
-
-Bölüm `.alt-zemin` taşıyor: açıldığında zemin sırası koyu-açık-koyu
-diye devam etsin diye.
-
-> **Dikkat:** `.yorumlar{display:grid}` tarayıcının kendi `[hidden]`
-> kuralını eziyor; `hidden` yazmak tek başına yetmiyor, yer tutucu kart
-> sayfada görünüyor. Bunun için `.yorumlar[hidden]{display:none}` kuralı
-> kondu. Izgaraya benzer bir bölüm daha eklersen aynı tuzağa dikkat.
-
-## Hareket
-
-Belirme animasyonları `IntersectionObserver` ile; şerit saf CSS.
-`prefers-reduced-motion: reduce` diyen ziyaretçide **hepsi kapanır**,
-sayfa sabit durur. JavaScript kapalıysa `<noscript>` bloğu içeriği
-görünür kılar — animasyon yüzünden metin kaybolmaz.
+App Store'daki demo mağaza bağlantısı süreli şifre-atlama jetonu taşıdığı için siteye konmadı.
 
 ## Yerelde bakmak
 
@@ -112,45 +123,25 @@ görünür kılar — animasyon yüzünden metin kaybolmaz.
 cd site && python3 -m http.server 8765
 ```
 
-Sonra `http://127.0.0.1:8765/`.
-
-> `index.html`'i çift tıklayıp `file://` ile açma — görseller yüklenir ama
-> bazı tarayıcılarda göreli yollar ve `prefers-color-scheme` farklı
-> davranıyor. Sunucuyla bak.
+Sonra `http://127.0.0.1:8765/` ve `http://127.0.0.1:8765/tr/`. `file://` ile açma (göreli yollar).
+Önizleme görüntüleri: `docs/site-yeni-onizleme/`.
 
 ## Neden Remix uygulamasının içinde değil
 
-Uygulama (`app/`) Shopify incelemesine girecek. Tanıtım sayfasının her
-değişikliği uygulamanın yeni sürümünü gerektirmesin diye ayrı tutuldu.
-Uygulamanın kendi kök sayfası (`app/routes/_index/`) duruyor; orası
-mağaza alan adı girilen teknik giriş sayfası, pazarlama sayfası değil.
+Uygulama (`app/`) Shopify incelemesine girer. Tanıtım sayfasının her değişikliği uygulamanın yeni
+sürümünü gerektirmesin diye ayrı tutuldu.
 
 ## Yayına alırken
 
-Statik barındırmanın herhangi biri yeter (Cloudflare Pages, Netlify,
-GoDaddy). `cod-ship.com` GoDaddy'de; DNS'te **MX/SPF/DKIM kayıtlarına
-dokunma** — mail oradan geçiyor, bkz. `[[codship-mail-bahngo-diger-adi]]`.
-Sadece A/CNAME eklenecek.
-
-## Henüz gerçek olmayan bağlantılar
-
-| Yer | Şu an | Olması gereken |
-|---|---|---|
-| "Start free" / "Install on Shopify" düğmeleri | `#fiyat`'a gidiyor | App Store listeleme adresi — uygulama **yayımlanınca** |
-| Yasal bağlantılar | `kapida-odeme-production-817b.up.railway.app` | Kendi alan adına taşınırsa güncellenecek |
-
-Uygulama App Store'da yayımlanmadan önce düğmeleri gerçek adrese
-bağlama — kırık bağlantı, olmayan bir yere giden düğmeden iyidir.
+Statik barındırmanın herhangi biri yeter. `tr/` klasörü de yüklenmeli. `cod-ship.com` GoDaddy'de;
+DNS'te **MX/SPF/DKIM kayıtlarına dokunma** — mail oradan geçiyor. Yayın Gökhan onayıyla.
 
 ## Bilerek yapmadıklarımız
 
-- **Müşteri yorumu yok.** Henüz kullanıcımız yok; uydurma referans
-  koymadık. Rakip (Releasit) sayfasının yarısı yorum. Bizde `#yorumlar`
-  bölümü hazır ama **gizli** — bkz. "Yorumlar bölümü".
-- **"115.000 mağaza", "dönüşümü %X artırır" gibi rakam yok.** Kanıtlanamaz
-  iddia hem yanlış hem de Shopify incelemesinde sorun çıkarıyor.
-- **Rakip metni kopyalanmadı.** Yapı benzer (hero → özellik → fiyat →
-  SSS) çünkü kategori standardı bu; cümleler bize ait.
-- **Analytics/çerez yok.** Çerez yoksa çerez bandı da gerekmiyor.
-  (Dil tercihi `localStorage`'da tutuluyor; bu izleme değil, kullanıcının
-  kendi seçimi — onay bandı gerektirmiyor.)
+- **"115.000 mağaza", "dönüşümü %X artırır" gibi rakam yok.** Kanıtlanamaz iddia hem yanlış hem
+  Shopify incelemesinde sorun. Sayaçlar yalnız ürün gerçeği.
+- **Uygulama form toplamaz** (K-242): sitede "kapıda ödeme formu", "müşteri bilgisi toplar" yok.
+- **Destek dili iddiası İngilizcede yok** (App Store listelemesinde destek dili yazmıyor);
+  Türkçede eskiden beri "Türkçe yanıtlanır" duruyor.
+- **Rakip metni kopyalanmadı**; yapı kategori standardı.
+- **Analytics/çerez yok**, çerez bandı da gerekmiyor (dil tercihi kullanıcının kendi seçimi).
